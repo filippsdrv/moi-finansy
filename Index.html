@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#111214">
+<title>Мои финансы</title>
+<style>
+:root{color-scheme:dark;--bg:#101113;--panel:#191a1e;--line:#2b2c31;--muted:#92949e;--white:#f5f5f7;--blue:#8caaff;--green:#8ed9b0;--red:#f18f98}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--white);font:15px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding-bottom:95px}
+header{padding:27px 21px 15px;display:flex;justify-content:space-between;align-items:center}
+.brand{font-size:13px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase}.date{font-size:12px;color:var(--muted);margin-top:7px}
+main{max-width:720px;margin:auto;padding:0 16px}.hero{padding:25px 22px 22px;border:1px solid #30323a;border-radius:25px;background:radial-gradient(ellipse at 100% 0%,#293650 0%,transparent 58%),linear-gradient(140deg,#202228,#17181c);margin:10px 0 18px}
+.eyebrow{font-size:12px;color:#a9abb5}.total{font-size:36px;letter-spacing:-1.5px;font-weight:650;margin:9px 0 22px}.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px}.stat{border-top:1px solid #393a42;padding-top:13px}.stat span{display:block;color:var(--muted);font-size:12px;margin-bottom:6px}.stat b{font-size:16px}
+.actions{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:16px 0 28px}.action{border:1px solid var(--line);background:var(--panel);color:var(--white);border-radius:16px;padding:15px 5px;font-size:13px}.action i{display:block;font-style:normal;font-size:21px;margin-bottom:8px;color:var(--blue)}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin:25px 3px 13px}.section-head h2{font-size:18px;font-weight:600;margin:0;letter-spacing:-.3px}.subtle{font-size:12px;color:var(--muted)}
+.card{border:1px solid var(--line);background:var(--panel);border-radius:20px;overflow:hidden}
+.envelope{padding:16px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #292a2f}.envelope:last-child{border:0}.symbol{width:42px;height:42px;border-radius:14px;background:#272b34;display:grid;place-items:center;font-size:19px;flex-shrink:0}.env-info{flex:1;min-width:0}.env-name{font-size:14px}.env-note{font-size:11px;color:var(--muted);margin-top:5px}.env-amount{font-size:14px;font-weight:600;text-align:right;white-space:nowrap}.progress{height:3px;background:#303139;margin-top:9px;border-radius:3px;overflow:hidden}.progress div{height:100%;background:var(--blue);border-radius:3px}
+.history-row{display:flex;align-items:center;gap:12px;padding:15px;border-bottom:1px solid #292a2f}.history-row:last-child{border:0}.history-info{flex:1}.history-title{font-size:13px}.history-date{font-size:11px;color:var(--muted);margin-top:5px}.amount{font-size:13px;font-weight:600}.positive{color:var(--green)}.negative{color:var(--red)}
+footer{position:fixed;bottom:0;left:0;right:0;padding:12px 18px calc(12px + env(safe-area-inset-bottom));background:#141518ed;backdrop-filter:blur(20px);border-top:1px solid var(--line);display:flex;justify-content:center;gap:28px;z-index:2}footer button{background:none;border:0;color:var(--muted);font-size:11px;padding:5px}footer button span{display:block;font-size:20px;margin-bottom:4px}footer button.active{color:var(--blue)}
+button{cursor:pointer;font-family:inherit}
+.modal{display:none;position:fixed;inset:0;background:#000a;z-index:5;align-items:flex-end;justify-content:center}.modal.open{display:flex}.sheet{background:#1b1c20;border:1px solid #35363d;border-radius:25px 25px 0 0;padding:24px 20px calc(25px + env(safe-area-inset-bottom));width:100%;max-width:520px;max-height:90vh;overflow:auto}.sheet h2{margin:0 0 20px;font-size:21px}.field{margin:14px 0}.field label{display:block;color:var(--muted);font-size:12px;margin-bottom:8px}.field input,.field select{width:100%;background:#101114;color:white;border:1px solid #35363d;border-radius:12px;padding:13px;font-size:15px;min-height:46px}.primary{width:100%;border:0;border-radius:13px;background:#dce5ff;color:#171b25;padding:15px;font-weight:650;margin-top:13px}.cancel{width:100%;border:0;background:none;color:var(--muted);padding:13px}.small-btn{background:none;border:1px solid var(--line);color:var(--muted);padding:8px 10px;border-radius:10px;font-size:12px}.empty{padding:25px;color:var(--muted);font-size:13px;text-align:center}.notice{font-size:11px;color:var(--muted);line-height:1.5;margin:20px 4px}
+</style>
+</head>
+<body>
+<header><div><div class="brand">Personal finance</div><div class="date" id="today"></div></div><button class="small-btn" onclick="exportCSV()">↗ Экспорт</button></header>
+<main>
+<section class="hero">
+<div class="eyebrow">Все конверты · доступный баланс</div>
+<div class="total" id="total">0 ₽</div>
+<div class="stats"><div class="stat"><span>Получено за месяц</span><b id="income">0 ₽</b></div><div class="stat"><span>Потрачено за месяц</span><b id="expense">0 ₽</b></div></div>
+</section>
+<div class="actions">
+<button class="action" onclick="openModal('income')"><i>＋</i>Доход</button>
+<button class="action" onclick="openModal('expense')"><i>−</i>Расход</button>
+<button class="action" onclick="openModal('transfer')"><i>⇄</i>Перевод</button>
+</div>
+<div class="section-head"><h2>Мои конверты</h2><span class="subtle" id="count"></span></div>
+<div class="card" id="envelopes"></div>
+<div class="section-head"><h2>История операций</h2><button class="small-btn" onclick="exportCSV()">CSV ↓</button></div>
+<div class="card" id="history"></div>
+<div class="notice">Демо-версия. Данные сохраняются в этом браузере на этом устройстве. Начальные суммы примерные — замени их на свои. Это не банковский счёт.</div>
+</main>
+<footer><button class="active" onclick="scrollTo(0,0)"><span>⌂</span>Главная</button><button onclick="document.getElementById('envelopes').scrollIntoView({behavior:'smooth'})"><span>▤</span>Конверты</button><button onclick="document.getElementById('history').scrollIntoView({behavior:'smooth'})"><span>◷</span>История</button></footer>
+<div class="modal" id="modal" onclick="if(event.target===this)closeModal()"><div class="sheet"><h2 id="modalTitle">Новая операция</h2><div id="fields"></div><button class="primary" onclick="saveOperation()">Сохранить операцию</button><button class="cancel" onclick="closeModal()">Отмена</button></div></div>
+<script>
+const defaults=[
+{id:'rent',name:'Аренда',icon:'⌂',note:'Жильё и обязательные платежи',balance:15500},
+{id:'buffer',name:'Буфер',icon:'◈',note:'Текущие денежные потоки',balance:3000},
+{id:'big',name:'Крупные хотелки',icon:'✧',note:'Большие цели',balance:12468},
+{id:'small',name:'Мелкие хотелки',icon:'◇',note:'Небольшие желания',balance:777},
+{id:'alimony',name:'Алименты',icon:'♡',note:'Обязательства перед сыном',balance:181},
+{id:'debts',name:'Другие долги',icon:'↗',note:'Погашение задолженностей',balance:64},
+{id:'invest',name:'Инвестиции',icon:'▥',note:'Капитал на будущее',balance:22257},
+{id:'reserve',name:'Подушка',icon:'⛨',note:'Финансовая безопасность',balance:4575},
+{id:'home',name:'Дом и быт',icon:'⌑',note:'Повседневные расходы',balance:1536},
+{id:'food',name:'Питание',icon:'＋',note:'Продукты и еда',balance:0},
+{id:'transport',name:'Транспорт',icon:'⇢',note:'Поездки и проезд',balance:327},
+{id:'health',name:'Здоровье',icon:'✚',note:'Здоровье и уход',balance:999}
+];
+let data;
+try{data=JSON.parse(localStorage.getItem('mf-data'))}catch(e){}
+if(!data||!Array.isArray(data.envelopes)||!Array.isArray(data.ops))data={envelopes:defaults.map(x=>({...x})),ops:[]};
+let kind='income';
+const rub=n=>new Intl.NumberFormat('ru-RU',{maximumFractionDigits:2}).format(n)+' ₽';
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function persist(){localStorage.setItem('mf-data',JSON.stringify(data))}
+function render(){
+const total=data.envelopes.reduce((s,e)=>s+e.balance,0);
+document.getElementById('total').textContent=rub(total);
+const month=new Date().toISOString().slice(0,7);
+document.getElementById('income').textContent=rub(data.ops.filter(o=>o.type==='income'&&o.date.startsWith(month)).reduce((s,o)=>s+o.amount,0));
+document.getElementById('expense').textContent=rub(data.ops.filter(o=>o.type==='expense'&&o.date.startsWith(month)).reduce((s,o)=>s+o.amount,0));
+document.getElementById('count').textContent=data.envelopes.length+' конвертов';
+document.getElementById('envelopes').innerHTML=data.envelopes.map(e=>`<div class="envelope"><div class="symbol">${e.icon}</div><div class="env-info"><div class="env-name">${esc(e.name)}</div><div class="env-note">${esc(e.note)}</div></div><div class="env-amount">${rub(e.balance)}</div></div>`).join('');
+const ops=[...data.ops].reverse().slice(0,20);
+document.getElementById('history').innerHTML=ops.length?ops.map(o=>`<div class="history-row"><div class="symbol">${o.type==='income'?'＋':o.type==='expense'?'−':'⇄'}</div><div class="history-info"><div class="history-title">${esc(o.title)}</div><div class="history-date">${esc(o.date)} · ${esc(o.note||'Без комментария')}</div></div><div class="amount ${o.type==='income'?'positive':o.type==='expense'?'negative':''}">${o.type==='income'?'+':o.type==='expense'?'−':''}${rub(o.amount)}</div></div>`).join(''):'<div class="empty">Здесь появятся твои операции</div>';
+}
+function selectField(label,id){return `<div class="field"><label>${label}</label><select id="${id}">${data.envelopes.map(e=>`<option value="${e.id}">${esc(e.name)} — ${rub(e.balance)}</option>`).join('')}</select></div>`}
+function openModal(type){
+kind=type;
+document.getElementById('modalTitle').textContent=type==='income'?'Добавить доход':type==='expense'?'Добавить расход':'Перевод между конвертами';
+let html=`<div class="field"><label>Сумма, ₽</label><input id="amount" type="number" inputmode="decimal" min="0.01" step="0.01" placeholder="0" /></div><div class="field"><label>Дата</label><input id="date" type="date" value="${new Date().toLocaleDateString('en-CA')}"/></div>`;
+if(type==='income')html+=`<div class="field"><label>Источник дохода</label><input id="source" placeholder="Например, подработка"/></div>`+selectField('Зачислить в конверт','to');
+if(type==='expense')html+=`<div class="field"><label>Категория / описание</label><input id="source" placeholder="Например, продукты"/></div>`+selectField('Списать из конверта','from');
+if(type==='transfer')html+=selectField('Откуда','from')+selectField('Куда','to');
+html+=`<div class="field"><label>Комментарий (необязательно)</label><input id="note" placeholder="Добавить заметку"/></div>`;
+document.getElementById('fields').innerHTML=html;document.getElementById('modal').classList.add('open');
+}
+function closeModal(){document.getElementById('modal').classList.remove('open')}
+function saveOperation(){
+const amount=Number(document.getElementById('amount').value),date=document.getElementById('date').value;
+if(!Number.isFinite(amount)||amount<=0||!date){alert('Укажи корректную сумму и дату.');return}
+const get=id=>data.envelopes.find(e=>e.id===document.getElementById(id).value);
+const note=(document.getElementById('note')||{}).value||'';
+let op={amount,date,note,type:kind,title:''};
+if(kind==='income'){let e=get('to');e.balance+=amount;op.title='Доход: '+((document.getElementById('source').value)||'Без названия')+' → '+e.name}
+if(kind==='expense'){let e=get('from');if(e.balance<amount){alert('В этом конверте недостаточно денег.');return}e.balance-=amount;op.title=((document.getElementById('source').value)||'Расход')+' · '+e.name}
+if(kind==='transfer'){let a=get('from'),b=get('to');if(a.id===b.id){alert('Выбери разные конверты.');return}if(a.balance<amount){alert('В исходном конверте недостаточно денег.');return}a.balance-=amount;b.balance+=amount;op.title=a.name+' → '+b.name}
+data.ops.push(op);persist();render();closeModal()
+}
+function exportCSV(){
+const rows=[['Дата','Тип','Описание','Сумма','Комментарий'],...data.ops.map(o=>[o.date,o.type,o.title,o.amount,o.note||''])];
+const csv='\ufeff'+rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(';')).join('\r\n');
+const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'})),a=document.createElement('a');a.href=url;a.download='moi-finansy.csv';a.click();URL.revokeObjectURL(url)
+}
+document.getElementById('today').textContent=new Date().toLocaleDateString('ru-RU',{day:'numeric',month:'long',year:'numeric'});
+render();
+</script>
+</body>
+</html>
