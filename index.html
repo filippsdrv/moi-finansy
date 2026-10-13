@@ -1,112 +1,86 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="theme-color" content="#111214">
-<title>Мои финансы</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#101216"><title>Мои финансы — распределение</title>
 <style>
-:root{color-scheme:dark;--bg:#101113;--panel:#191a1e;--line:#2b2c31;--muted:#92949e;--white:#f5f5f7;--blue:#8caaff;--green:#8ed9b0;--red:#f18f98}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--white);font:15px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding-bottom:95px}
-header{padding:27px 21px 15px;display:flex;justify-content:space-between;align-items:center}
-.brand{font-size:13px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase}.date{font-size:12px;color:var(--muted);margin-top:7px}
-main{max-width:720px;margin:auto;padding:0 16px}.hero{padding:25px 22px 22px;border:1px solid #30323a;border-radius:25px;background:radial-gradient(ellipse at 100% 0%,#293650 0%,transparent 58%),linear-gradient(140deg,#202228,#17181c);margin:10px 0 18px}
-.eyebrow{font-size:12px;color:#a9abb5}.total{font-size:36px;letter-spacing:-1.5px;font-weight:650;margin:9px 0 22px}.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px}.stat{border-top:1px solid #393a42;padding-top:13px}.stat span{display:block;color:var(--muted);font-size:12px;margin-bottom:6px}.stat b{font-size:16px}
-.actions{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:16px 0 28px}.action{border:1px solid var(--line);background:var(--panel);color:var(--white);border-radius:16px;padding:15px 5px;font-size:13px}.action i{display:block;font-style:normal;font-size:21px;margin-bottom:8px;color:var(--blue)}
-.section-head{display:flex;justify-content:space-between;align-items:center;margin:25px 3px 13px}.section-head h2{font-size:18px;font-weight:600;margin:0;letter-spacing:-.3px}.subtle{font-size:12px;color:var(--muted)}
-.card{border:1px solid var(--line);background:var(--panel);border-radius:20px;overflow:hidden}
-.envelope{padding:16px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #292a2f}.envelope:last-child{border:0}.symbol{width:42px;height:42px;border-radius:14px;background:#272b34;display:grid;place-items:center;font-size:19px;flex-shrink:0}.env-info{flex:1;min-width:0}.env-name{font-size:14px}.env-note{font-size:11px;color:var(--muted);margin-top:5px}.env-amount{font-size:14px;font-weight:600;text-align:right;white-space:nowrap}.progress{height:3px;background:#303139;margin-top:9px;border-radius:3px;overflow:hidden}.progress div{height:100%;background:var(--blue);border-radius:3px}
-.history-row{display:flex;align-items:center;gap:12px;padding:15px;border-bottom:1px solid #292a2f}.history-row:last-child{border:0}.history-info{flex:1}.history-title{font-size:13px}.history-date{font-size:11px;color:var(--muted);margin-top:5px}.amount{font-size:13px;font-weight:600}.positive{color:var(--green)}.negative{color:var(--red)}
-footer{position:fixed;bottom:0;left:0;right:0;padding:12px 18px calc(12px + env(safe-area-inset-bottom));background:#141518ed;backdrop-filter:blur(20px);border-top:1px solid var(--line);display:flex;justify-content:center;gap:28px;z-index:2}footer button{background:none;border:0;color:var(--muted);font-size:11px;padding:5px}footer button span{display:block;font-size:20px;margin-bottom:4px}footer button.active{color:var(--blue)}
-button{cursor:pointer;font-family:inherit}
-.modal{display:none;position:fixed;inset:0;background:#000a;z-index:5;align-items:flex-end;justify-content:center}.modal.open{display:flex}.sheet{background:#1b1c20;border:1px solid #35363d;border-radius:25px 25px 0 0;padding:24px 20px calc(25px + env(safe-area-inset-bottom));width:100%;max-width:520px;max-height:90vh;overflow:auto}.sheet h2{margin:0 0 20px;font-size:21px}.field{margin:14px 0}.field label{display:block;color:var(--muted);font-size:12px;margin-bottom:8px}.field input,.field select{width:100%;background:#101114;color:white;border:1px solid #35363d;border-radius:12px;padding:13px;font-size:15px;min-height:46px}.primary{width:100%;border:0;border-radius:13px;background:#dce5ff;color:#171b25;padding:15px;font-weight:650;margin-top:13px}.cancel{width:100%;border:0;background:none;color:var(--muted);padding:13px}.small-btn{background:none;border:1px solid var(--line);color:var(--muted);padding:8px 10px;border-radius:10px;font-size:12px}.empty{padding:25px;color:var(--muted);font-size:13px;text-align:center}.notice{font-size:11px;color:var(--muted);line-height:1.5;margin:20px 4px}
-</style>
-</head>
-<body>
-<header><div><div class="brand">Personal finance</div><div class="date" id="today"></div></div><button class="small-btn" onclick="exportCSV()">↗ Экспорт</button></header>
+:root{color-scheme:dark;--bg:#0e1014;--panel:#171a20;--panel2:#1d2129;--line:#2b303a;--text:#f4f5f8;--muted:#929baa;--blue:#a8c5ff;--green:#9ce4bd;--pink:#f2b1c5;--gold:#f3d49b}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 85% -10%,#202d45 0,transparent 38%),var(--bg);color:var(--text);font:15px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding:0 0 calc(35px + env(safe-area-inset-bottom))}
+main{max-width:760px;margin:auto;padding:0 16px 30px}header{max-width:760px;margin:auto;padding:28px 20px 16px;display:flex;justify-content:space-between;align-items:center}.brand{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}h1{font-size:29px;letter-spacing:-.9px;margin:9px 0 6px}.subtitle{font-size:13px;line-height:1.5;color:var(--muted);max-width:500px}.topmark{width:43px;height:43px;border:1px solid #3b4558;background:linear-gradient(145deg,#27344a,#171d28);border-radius:15px;display:grid;place-items:center;color:var(--blue);font-size:20px}
+.card{background:linear-gradient(145deg,rgba(29,33,41,.96),rgba(21,24,30,.98));border:1px solid var(--line);border-radius:23px;padding:19px;margin:16px 0;box-shadow:0 12px 36px #00000014}.sectionhead{display:flex;align-items:flex-start;gap:11px;margin-bottom:18px}.step{width:29px;height:29px;border-radius:10px;display:grid;place-items:center;background:#26354c;color:var(--blue);font-weight:700;flex-shrink:0}.sectionhead h2{font-size:17px;margin:2px 0 5px}.hint{font-size:12px;color:var(--muted);line-height:1.45}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.field{min-width:0}.field.full{grid-column:1/-1}.field label{display:block;font-size:12px;color:#b2bac8;margin:0 0 8px}.field input,.field select{width:100%;min-height:47px;border:1px solid #343b48;border-radius:13px;background:#101318;color:var(--text);padding:12px;font:inherit;outline:none}.field input:focus,.field select:focus{border-color:#7fa5ed;box-shadow:0 0 0 3px #759de51b}.money{font-size:20px!important;font-weight:650}.toggle{display:grid;grid-template-columns:1fr 1fr;gap:5px;padding:5px;background:#101318;border:1px solid #303640;border-radius:14px}.toggle button{border:0;border-radius:10px;padding:12px 7px;background:transparent;color:var(--muted);font-size:13px}.toggle button.active{background:linear-gradient(135deg,#304563,#26354b);color:#e3edff;box-shadow:inset 0 0 0 1px #506b92}.note{margin-top:13px;border-radius:13px;background:#11151b;padding:12px;color:var(--muted);font-size:12px;line-height:1.5}.summary{padding:20px;border-radius:19px;background:radial-gradient(ellipse at 100% 0,#2a3d5a 0,transparent 60%),linear-gradient(140deg,#222832,#171a20);border:1px solid #364050;margin-bottom:15px}.summary small{color:#aeb9ca}.summary .big{font-size:34px;font-weight:720;letter-spacing:-1px;margin:7px 0 15px}.chips{display:grid;grid-template-columns:1fr 1fr;gap:9px}.chip{background:#11151bbd;border:1px solid #333a46;border-radius:13px;padding:12px}.chip span{display:block;font-size:11px;color:var(--muted);margin-bottom:6px}.chip b{font-size:16px}.alloc-list{display:flex;flex-direction:column;gap:9px}.alloc{border:1px solid #2d333d;background:#15181e;border-radius:15px;padding:13px}.alloc-top{display:flex;align-items:center;gap:10px}.emoji{width:36px;height:36px;border-radius:12px;background:#242b36;display:grid;place-items:center;font-size:17px}.alloc-name{flex:1;font-size:13px}.alloc-amount{font-weight:700;font-size:15px;text-align:right}.alloc-percent{font-size:11px;color:var(--muted);margin-top:4px}.bar{height:4px;background:#2a3039;border-radius:9px;margin-top:11px;overflow:hidden}.bar div{height:100%;background:linear-gradient(90deg,#6e91d4,#b2cbff);border-radius:9px}.suballoc{margin:11px 0 0 45px;padding-top:9px;border-top:1px solid #292e37;display:flex;justify-content:space-between;gap:8px;font-size:12px}.suballoc span{color:var(--muted)}.charity{margin-top:11px;border:1px dashed #635340;background:#29241c;border-radius:13px;padding:12px;display:flex;gap:10px;font-size:12px;line-height:1.45}.charity b{color:var(--gold)}.warning{display:none;margin-top:12px;border:1px solid #6a4d34;background:#2a2119;color:#f1cc9c;padding:12px;border-radius:12px;font-size:12px;line-height:1.5}.warning.show{display:block}.actions{display:flex;gap:10px;margin-top:17px}.primary,.secondary{border-radius:14px;padding:14px 12px;font:600 14px inherit;cursor:pointer}.primary{flex:1;border:0;background:linear-gradient(135deg,#dbe7ff,#a9c6ff);color:#111927}.secondary{border:1px solid #343b47;background:#171b22;color:#dce4f3}.status{display:none;padding:13px;border:1px solid #355d49;background:#18271f;color:#b5f0cd;border-radius:12px;margin-top:13px;font-size:13px}.status.show{display:block}.small{font-size:11px;color:var(--muted);line-height:1.5;margin:17px 4px}.footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:14px}.footer button{background:none;border:0;color:var(--muted);text-decoration:underline;font-size:12px;padding:8px 0}
+@media(min-width:620px){.chips{grid-template-columns:repeat(4,1fr)}.alloc-list{display:grid;grid-template-columns:1fr 1fr}.summary .big{font-size:40px}.card{padding:23px}}
+</style></head><body>
+<header><div><div class="brand">Personal finance system</div><h1>Распределение дохода</h1><div class="subtitle">Введи параметры и посмотри, как распределить поступление по твоим правилам.</div></div><div class="topmark">◈</div></header>
 <main>
-<section class="hero">
-<div class="eyebrow">Все конверты · доступный баланс</div>
-<div class="total" id="total">0 ₽</div>
-<div class="stats"><div class="stat"><span>Получено за месяц</span><b id="income">0 ₽</b></div><div class="stat"><span>Потрачено за месяц</span><b id="expense">0 ₽</b></div></div>
+<section class="card">
+<div class="sectionhead"><div class="step">1</div><div><h2>Исходные данные</h2><div class="hint">Пока ввод вручную. Позже значения можно будет получать из счетов.</div></div></div>
+<div class="grid">
+<div class="field"><label for="amount">Сумма дохода, ₽</label><input class="money" id="amount" type="number" min="0" step="0.01" value="25000" inputmode="decimal"></div>
+<div class="field"><label for="date">Дата</label><input id="date" type="date"></div>
+<div class="field full"><label for="source">Источник дохода</label><select id="source"><option>Подработка</option><option>Зарплата</option><option>Оплата за услуги</option><option>Возврат долга</option><option>Премия</option><option>Другое поступление</option></select></div>
+<div class="field"><label for="buffer">Буфер сейчас, ₽</label><input id="buffer" type="number" min="0" step="0.01" value="3000" inputmode="decimal"></div>
+<div class="field"><label for="reserveDebt">Долги резервам, ₽</label><input id="reserveDebt" type="number" min="0" step="0.01" value="0" inputmode="decimal"></div>
+<div class="field full"><label>Статус аренды</label><div class="toggle"><button id="rentNo" class="active" type="button" onclick="setRent(false)">Не накоплена</button><button id="rentYes" type="button" onclick="setRent(true)">Уже накоплена</button></div><div class="note" id="rentHint">До накопления аренды: 70% дохода направляется на аренду, 30% — в буфер.</div></div>
+<div class="field full"><label for="rentSaved">Уже накоплено на аренду, ₽ (необязательно)</label><input id="rentSaved" type="number" min="0" step="0.01" value="0" inputmode="decimal"><div class="hint" style="margin-top:7px">Справочное поле для понимания, сколько ещё нужно до цели 25 000 ₽. Режим аренды выбираешь переключателем выше.</div></div>
+</div></section>
+<section class="card">
+<div class="sectionhead"><div class="step">2</div><div><h2>Результат распределения</h2><div class="hint">Предварительный план. Деньги никуда не перемещаются до подтверждения.</div></div></div>
+<div class="summary"><small>Сумма поступления</small><div class="big" id="total">25 000 ₽</div><div class="chips"><div class="chip"><span>Буфер / жизнь</span><b id="bufferResult">7 500 ₽</b></div><div class="chip"><span>Возврат в резервы</span><b id="reserveResult">0 ₽</b></div><div class="chip"><span>Аренда</span><b id="rentResult">17 500 ₽</b></div><div class="chip"><span>Остаток распределения</span><b id="remaining">0 ₽</b></div></div></div>
+<div class="alloc-list" id="allocations"></div>
+<div id="charity" class="charity" style="display:none"><div>♡</div><div><b>Благотворительность: <span id="charityAmount">0 ₽</span></b><br>1% от общего дохода, выделяется из крупных хотелок только после накопления аренды.</div></div>
+<div id="warning" class="warning"></div>
+<div class="actions"><button class="primary" onclick="confirmPlan()">Подтвердить план</button><button class="secondary" onclick="resetForm()">Сбросить</button></div><div class="status" id="status"></div>
+<div class="small">Расчёт использует параметры листа «2026_10_Параметры»: аренда 25 000 ₽, целевой буфер 5 000 ₽, после аренды — хотелки 40%, обязательства 40%, подушка 15%, инвестиции 5%; сверхдоход — 50% в подушку. Возврат долгов резервам показывается отдельной строкой и не считается автоматически частью процентных долей, пока не задан точный приоритет формулы.</div>
 </section>
-<div class="actions">
-<button class="action" onclick="openModal('income')"><i>＋</i>Доход</button>
-<button class="action" onclick="openModal('expense')"><i>−</i>Расход</button>
-<button class="action" onclick="openModal('transfer')"><i>⇄</i>Перевод</button>
-</div>
-<div class="section-head"><h2>Мои конверты</h2><span class="subtle" id="count"></span></div>
-<div class="card" id="envelopes"></div>
-<div class="section-head"><h2>История операций</h2><button class="small-btn" onclick="exportCSV()">CSV ↓</button></div>
-<div class="card" id="history"></div>
-<div class="notice">Демо-версия. Данные сохраняются в этом браузере на этом устройстве. Начальные суммы примерные — замени их на свои. Это не банковский счёт.</div>
+<div class="footer"><button onclick="exportPlan()">Экспорт расчёта в CSV</button><button onclick="window.print()">Печать / PDF</button></div>
 </main>
-<footer><button class="active" onclick="scrollTo(0,0)"><span>⌂</span>Главная</button><button onclick="document.getElementById('envelopes').scrollIntoView({behavior:'smooth'})"><span>▤</span>Конверты</button><button onclick="document.getElementById('history').scrollIntoView({behavior:'smooth'})"><span>◷</span>История</button></footer>
-<div class="modal" id="modal" onclick="if(event.target===this)closeModal()"><div class="sheet"><h2 id="modalTitle">Новая операция</h2><div id="fields"></div><button class="primary" onclick="saveOperation()">Сохранить операцию</button><button class="cancel" onclick="closeModal()">Отмена</button></div></div>
 <script>
-const defaults=[
-{id:'rent',name:'Аренда',icon:'⌂',note:'Жильё и обязательные платежи',balance:15500},
-{id:'buffer',name:'Буфер',icon:'◈',note:'Текущие денежные потоки',balance:3000},
-{id:'big',name:'Крупные хотелки',icon:'✧',note:'Большие цели',balance:12468},
-{id:'small',name:'Мелкие хотелки',icon:'◇',note:'Небольшие желания',balance:777},
-{id:'alimony',name:'Алименты',icon:'♡',note:'Обязательства перед сыном',balance:181},
-{id:'debts',name:'Другие долги',icon:'↗',note:'Погашение задолженностей',balance:64},
-{id:'invest',name:'Инвестиции',icon:'▥',note:'Капитал на будущее',balance:22257},
-{id:'reserve',name:'Подушка',icon:'⛨',note:'Финансовая безопасность',balance:4575},
-{id:'home',name:'Дом и быт',icon:'⌑',note:'Повседневные расходы',balance:1536},
-{id:'food',name:'Питание',icon:'＋',note:'Продукты и еда',balance:0},
-{id:'transport',name:'Транспорт',icon:'⇢',note:'Поездки и проезд',balance:327},
-{id:'health',name:'Здоровье',icon:'✚',note:'Здоровье и уход',balance:999}
-];
-let data;
-try{data=JSON.parse(localStorage.getItem('mf-data'))}catch(e){}
-if(!data||!Array.isArray(data.envelopes)||!Array.isArray(data.ops))data={envelopes:defaults.map(x=>({...x})),ops:[]};
-let kind='income';
-const rub=n=>new Intl.NumberFormat('ru-RU',{maximumFractionDigits:2}).format(n)+' ₽';
-const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-function persist(){localStorage.setItem('mf-data',JSON.stringify(data))}
-function render(){
-const total=data.envelopes.reduce((s,e)=>s+e.balance,0);
-document.getElementById('total').textContent=rub(total);
-const month=new Date().toISOString().slice(0,7);
-document.getElementById('income').textContent=rub(data.ops.filter(o=>o.type==='income'&&o.date.startsWith(month)).reduce((s,o)=>s+o.amount,0));
-document.getElementById('expense').textContent=rub(data.ops.filter(o=>o.type==='expense'&&o.date.startsWith(month)).reduce((s,o)=>s+o.amount,0));
-document.getElementById('count').textContent=data.envelopes.length+' конвертов';
-document.getElementById('envelopes').innerHTML=data.envelopes.map(e=>`<div class="envelope"><div class="symbol">${e.icon}</div><div class="env-info"><div class="env-name">${esc(e.name)}</div><div class="env-note">${esc(e.note)}</div></div><div class="env-amount">${rub(e.balance)}</div></div>`).join('');
-const ops=[...data.ops].reverse().slice(0,20);
-document.getElementById('history').innerHTML=ops.length?ops.map(o=>`<div class="history-row"><div class="symbol">${o.type==='income'?'＋':o.type==='expense'?'−':'⇄'}</div><div class="history-info"><div class="history-title">${esc(o.title)}</div><div class="history-date">${esc(o.date)} · ${esc(o.note||'Без комментария')}</div></div><div class="amount ${o.type==='income'?'positive':o.type==='expense'?'negative':''}">${o.type==='income'?'+':o.type==='expense'?'−':''}${rub(o.amount)}</div></div>`).join(''):'<div class="empty">Здесь появятся твои операции</div>';
+const fmt=n=>new Intl.NumberFormat('ru-RU',{maximumFractionDigits:2}).format(Math.round((n+Number.EPSILON)*100)/100)+' ₽';
+const num=id=>Math.max(0,Number(document.getElementById(id).value)||0);
+let rentAccumulated=false,lastPlan=null;
+document.getElementById('date').value=new Date().toLocaleDateString('en-CA');
+function setRent(v){rentAccumulated=v;document.getElementById('rentNo').classList.toggle('active',!v);document.getElementById('rentYes').classList.toggle('active',v);document.getElementById('rentHint').textContent=v?'Аренда уже накоплена: включаются основные доли 40% / 40% / 15% / 5%.':'До накопления аренды: 70% дохода направляется на аренду, 30% — в буфер.';calculate()}
+function addItem(a,name,amount,percent,icon,children=[]){a.push({name,amount,percent,icon,children})}
+function calculate(){
+const income=num('amount'),buffer=num('buffer'),debt=num('reserveDebt'),rentSaved=num('rentSaved');
+let items=[],rent=0,bufferPart=0,reservePay=0,remaining=income,charity=0,superIncome=0;
+if(!rentAccumulated){
+ rent=Math.round(income*.70*100)/100;bufferPart=income-rent;
+ addItem(items,'Аренда',rent,70,'⌂');
+ addItem(items,'Буфер',bufferPart,30,'◈');
+ remaining=0;
+}else{
+ // Reserve repayment is displayed separately as an editable planning input, capped by income.
+ reservePay=Math.min(income,debt);remaining=income-reservePay;
+ if(reservePay>0)addItem(items,'Возврат в резервы',reservePay,income?reservePay/income*100:0,'↩');
+ // When buffer is below target, use 50% of available income as a conservative "surplus" allocation to buffer until the target is reached.
+ const targetBuffer=5000, gap=Math.max(0,targetBuffer-buffer);
+ const surplus=Math.min(remaining,gap);
+ if(surplus>0){bufferPart=surplus;remaining-=surplus;addItem(items,'Буфер — пополнение до цели',surplus,income?surplus/income*100:0,'◈')}
+ // Remaining proceeds follow base proportions; if buffer reached its target, normal percentages apply.
+ const want=remaining*.40, obligations=remaining*.40, cushion=remaining*.15, invest=remaining*.05;
+ charity=income*.01;
+ const big=Math.max(0,want*.70-charity),small=want*.30;
+ addItem(items,'Хотелки',want,remaining?want/income*100:0,'✧',[['Крупные хотелки',big],['Мелкие хотелки',small]]);
+ addItem(items,'Обязательства',obligations,remaining?obligations/income*100:0,'◎',[['Алименты',obligations*.40],['Долги людям',obligations*.36],['Долги банкам',obligations*.24]]);
+ addItem(items,'Подушка',cushion,remaining?cushion/income*100:0,'⛨');
+ addItem(items,'Инвестиции',invest,remaining?invest/income*100:0,'▥');
+ remaining=0;
 }
-function selectField(label,id){return `<div class="field"><label>${label}</label><select id="${id}">${data.envelopes.map(e=>`<option value="${e.id}">${esc(e.name)} — ${rub(e.balance)}</option>`).join('')}</select></div>`}
-function openModal(type){
-kind=type;
-document.getElementById('modalTitle').textContent=type==='income'?'Добавить доход':type==='expense'?'Добавить расход':'Перевод между конвертами';
-let html=`<div class="field"><label>Сумма, ₽</label><input id="amount" type="number" inputmode="decimal" min="0.01" step="0.01" placeholder="0" /></div><div class="field"><label>Дата</label><input id="date" type="date" value="${new Date().toLocaleDateString('en-CA')}"/></div>`;
-if(type==='income')html+=`<div class="field"><label>Источник дохода</label><input id="source" placeholder="Например, подработка"/></div>`+selectField('Зачислить в конверт','to');
-if(type==='expense')html+=`<div class="field"><label>Категория / описание</label><input id="source" placeholder="Например, продукты"/></div>`+selectField('Списать из конверта','from');
-if(type==='transfer')html+=selectField('Откуда','from')+selectField('Куда','to');
-html+=`<div class="field"><label>Комментарий (необязательно)</label><input id="note" placeholder="Добавить заметку"/></div>`;
-document.getElementById('fields').innerHTML=html;document.getElementById('modal').classList.add('open');
+document.getElementById('total').textContent=fmt(income);
+document.getElementById('bufferResult').textContent=fmt(bufferPart);
+document.getElementById('reserveResult').textContent=fmt(reservePay);
+document.getElementById('rentResult').textContent=fmt(rent);
+document.getElementById('remaining').textContent=fmt(remaining);
+document.getElementById('charity').style.display=rentAccumulated?'flex':'none';
+document.getElementById('charityAmount').textContent=fmt(charity);
+document.getElementById('allocations').innerHTML=items.map(x=>`<div class="alloc"><div class="alloc-top"><div class="emoji">${x.icon}</div><div class="alloc-name">${x.name}</div><div class="alloc-amount">${fmt(x.amount)}<div class="alloc-percent">${x.percent.toFixed(1).replace('.',',')}% дохода</div></div></div><div class="bar"><div style="width:${Math.min(100,Math.max(0,x.percent))}%"></div></div>${x.children.map(c=>`<div class="suballoc"><span>${c[0]}</span><b>${fmt(c[1])}</b></div>`).join('')}</div>`).join('');
+let warn='';if(rentAccumulated&&debt>income)warn='Долг резервам больше текущего дохода: в расчёт включён возврат только в пределах поступления.';if(rentAccumulated&&buffer<5000)warn+=(warn?' ':'')+'Буфер ниже целевых 5 000 ₽. Прототип показывает отдельное пополнение буфера до цели перед процентным распределением; это правило нужно сверить с точной формулой сверхдохода в таблице.';const w=document.getElementById('warning');w.textContent=warn;w.classList.toggle('show',!!warn);
+lastPlan={date:document.getElementById('date').value,source:document.getElementById('source').value,income,buffer,debt,rentAccumulated,items,bufferPart,reservePay,rent,charity};document.getElementById('status').classList.remove('show');
 }
-function closeModal(){document.getElementById('modal').classList.remove('open')}
-function saveOperation(){
-const amount=Number(document.getElementById('amount').value),date=document.getElementById('date').value;
-if(!Number.isFinite(amount)||amount<=0||!date){alert('Укажи корректную сумму и дату.');return}
-const get=id=>data.envelopes.find(e=>e.id===document.getElementById(id).value);
-const note=(document.getElementById('note')||{}).value||'';
-let op={amount,date,note,type:kind,title:''};
-if(kind==='income'){let e=get('to');e.balance+=amount;op.title='Доход: '+((document.getElementById('source').value)||'Без названия')+' → '+e.name}
-if(kind==='expense'){let e=get('from');if(e.balance<amount){alert('В этом конверте недостаточно денег.');return}e.balance-=amount;op.title=((document.getElementById('source').value)||'Расход')+' · '+e.name}
-if(kind==='transfer'){let a=get('from'),b=get('to');if(a.id===b.id){alert('Выбери разные конверты.');return}if(a.balance<amount){alert('В исходном конверте недостаточно денег.');return}a.balance-=amount;b.balance+=amount;op.title=a.name+' → '+b.name}
-data.ops.push(op);persist();render();closeModal()
-}
-function exportCSV(){
-const rows=[['Дата','Тип','Описание','Сумма','Комментарий'],...data.ops.map(o=>[o.date,o.type,o.title,o.amount,o.note||''])];
-const csv='\ufeff'+rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(';')).join('\r\n');
-const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'})),a=document.createElement('a');a.href=url;a.download='moi-finansy.csv';a.click();URL.revokeObjectURL(url)
-}
-document.getElementById('today').textContent=new Date().toLocaleDateString('ru-RU',{day:'numeric',month:'long',year:'numeric'});
-render();
-</script>
-</body>
-</html>
+function confirmPlan(){if(!lastPlan)return;const s=document.getElementById('status');s.textContent='План подтверждён в этом окне. Никакие реальные счета не изменены. Экспортируй CSV, если хочешь сохранить расчёт.';s.classList.add('show')}
+function resetForm(){document.getElementById('amount').value='';document.getElementById('buffer').value='0';document.getElementById('reserveDebt').value='0';document.getElementById('rentSaved').value='0';document.getElementById('source').selectedIndex=0;setRent(false);calculate()}
+function exportPlan(){if(!lastPlan)calculate();let rows=[['Дата','Источник','Сумма дохода','Буфер сейчас','Долги резервам','Аренда накоплена','Конверт','Сумма','Доля от дохода'],...lastPlan.items.map(x=>[lastPlan.date,lastPlan.source,lastPlan.income,lastPlan.buffer,lastPlan.debt,lastPlan.rentAccumulated?'Да':'Нет',x.name,x.amount,x.percent])];let csv='\ufeff'+rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(';')).join('\r\n');let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download='raspredelenie-dohoda.csv';a.click();URL.revokeObjectURL(a.href)}
+['amount','date','source','buffer','reserveDebt','rentSaved'].forEach(id=>document.getElementById(id).addEventListener('input',calculate));calculate();
+</script></body></html>
