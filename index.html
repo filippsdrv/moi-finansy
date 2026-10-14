@@ -17,9 +17,14 @@ button.primary{background:linear-gradient(100deg,#2f82ff,#70aaff);color:#07152b;
 /* Главный экран: минималистичные балансы */
 .dashboard-grid{display:grid;grid-template-columns:1fr;gap:12px}
 .dash-card{min-width:0}
-.dash-hero{background:linear-gradient(135deg,#172b48,#111923);border:1px solid #2c4668;border-radius:18px;padding:20px}
-.dash-hero small{display:block;color:var(--muted);font-size:12px}
-.dash-hero strong{display:block;font-size:clamp(34px,9vw,46px);letter-spacing:-1.2px;margin:7px 0 3px;overflow-wrap:anywhere}
+.dash-hero-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.dash-hero,.dash-total{border-radius:18px;padding:16px;min-width:0}
+.dash-hero{background:linear-gradient(135deg,#172b48,#111923);border:1px solid #2c4668}
+.dash-total{background:#15181e;border:1px solid #303640}
+.dash-hero small,.dash-total small{display:block;color:var(--muted);font-size:12px}
+.dash-hero strong,.dash-total strong{display:block;font-size:clamp(22px,6vw,34px);letter-spacing:-.8px;margin:9px 0 12px;overflow-wrap:anywhere}
+.dash-total strong{margin-bottom:8px}
+@media(max-width:360px){.dash-hero-row{grid-template-columns:1fr}.dash-hero strong,.dash-total strong{font-size:30px}}
 .dash-track{height:5px;background:#26313f;border-radius:8px;overflow:hidden;margin-top:12px}
 .dash-track i{display:block;height:100%;background:#78a9ff;border-radius:8px}
 .dash-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
@@ -31,10 +36,19 @@ button.primary{background:linear-gradient(100deg,#2f82ff,#70aaff);color:#07152b;
 .dash-action span{display:none}
 .dash-action.expense{background:#252a33;border-color:#454b56}
 .dash-section-title{font-size:18px;margin:20px 2px 10px}
-.dash-list{display:grid;grid-template-columns:1fr;gap:0;border-top:1px solid #282e38}
-.dash-envelope{display:flex;align-items:center;gap:10px;justify-content:space-between;border-bottom:1px solid #282e38;padding:14px 4px;min-width:0}
-.dash-envelope .label{font-size:14px;color:#d9dee8;flex:1}
-.dash-envelope b{font-size:16px;margin:0 2px;white-space:nowrap}
+/* Счета: отдельные компактные карточки с мягкими цветными контурами */
+.dash-list{display:grid;grid-template-columns:1fr 1fr;gap:10px;border:0}
+.dash-envelope{position:relative;display:flex;align-items:center;gap:8px;justify-content:space-between;min-width:0;min-height:76px;padding:13px 10px 13px 13px;border:1px solid var(--account-border,#34435d);border-radius:15px;background:linear-gradient(135deg,var(--account-glow,#17243a),#111a29 78%);box-shadow:inset 3px 0 0 var(--account-accent,#69a7ff),0 5px 16px #0002;transition:border-color .18s,transform .18s}
+.dash-envelope:nth-child(6n+1){--account-accent:#69a7ff;--account-border:#345783;--account-glow:#172b46}
+.dash-envelope:nth-child(6n+2){--account-accent:#54dfb0;--account-border:#286c5c;--account-glow:#142f2e}
+.dash-envelope:nth-child(6n+3){--account-accent:#c19aff;--account-border:#604783;--account-glow:#29203f}
+.dash-envelope:nth-child(6n+4){--account-accent:#ffc76b;--account-border:#75572f;--account-glow:#33291b}
+.dash-envelope:nth-child(6n+5){--account-accent:#ff82ad;--account-border:#744056;--account-glow:#321e2b}
+.dash-envelope:nth-child(6n){--account-accent:#65d8ed;--account-border:#2e6474;--account-glow:#172e3a}
+.dash-envelope .label{font-size:12px;line-height:1.35;color:#c8d3e5;flex:1;min-width:0;overflow-wrap:anywhere}
+.dash-envelope b{font-size:14px;letter-spacing:-.25px;margin:0;white-space:nowrap;text-align:right}
+.dash-envelope .dash-edit{flex-shrink:0;width:28px;height:28px;margin-left:1px;border-color:var(--account-border);background:#0a1320;color:var(--account-accent);box-shadow:0 0 10px color-mix(in srgb,var(--account-accent) 12%,transparent)}
+@media(max-width:350px){.dash-list{grid-template-columns:1fr}.dash-envelope{min-height:66px;padding:12px 13px}.dash-envelope .label{font-size:13px}.dash-envelope b{font-size:15px}}
 .dash-edit{border:1px solid #343b47;background:#1a1e26;color:#b9c8df;border-radius:9px;padding:7px 9px;font-size:15px;cursor:pointer}
 .dash-note{padding:10px 2px;color:var(--muted);font-size:11px;line-height:1.45;margin-top:6px}
 .custom-account-form{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
@@ -45,7 +59,10 @@ button.primary{background:linear-gradient(100deg,#2f82ff,#70aaff);color:#07152b;
 <main><nav class="tabs"><button class="tab active" data-page="home">Главная</button><button class="tab" data-page="distribution">Распределение</button><button class="tab" data-page="history">История</button><button class="tab" data-page="parameters">Настройки</button></nav>
 <section id="home" class="page active">
 <div class="dashboard-grid">
-<div class="dash-card dash-hero"><small>Буфер · деньги на карте</small><strong id="dashBuffer">0 ₽</strong><div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><small>Деньги на карте</small><button class="dash-edit" type="button" onclick="editBalance('buffer','Буфер')">✎ Изменить</button></div></div>
+<div class="dash-hero-row">
+<div class="dash-card dash-hero"><small>Буфер · на карте</small><strong id="dashBuffer">0 ₽</strong><button class="dash-edit" type="button" onclick="editBalance('buffer','Буфер')">✎ Изменить</button></div>
+<div class="dash-card dash-total"><small>Общий баланс</small><strong id="dashTotalBalance">0 ₽</strong><small>На всех счетах</small></div>
+</div>
 <div class="dash-stats">
 <div class="dash-stat"><span>Накоплено на аренду</span><b id="dashRent">0 ₽</b></div>
 <div class="dash-stat"><span>Долг резервам</span><b id="dashReserveDebt">0 ₽</b></div>
@@ -107,7 +124,11 @@ function renderHistory(){const total=state.records.reduce((a,r)=>a+r.income,0);$
 function csvCell(v){return '"'+String(v??'').replace(/"/g,'""')+'"'}function exportPlan(){const cols=['Тип записи','ID поступления','Дата','Источник','Комментарий','Сумма дохода','Конверт','Сумма распределения','Доля дохода %','Буфер до дохода','Долг резервам до дохода','Аренда накоплена до дохода','Аренда накоплено до дохода','Версия параметров','ID версии параметров','Аренда цель ₽','Буфер цель ₽','Хотелки %','Обязательства %','Подушка %','Инвестиции %','Аренда базовая %','Жизнь/буфер базовая %','Сверхдоход/резервы %','Крупные хотелки %','Мелкие хотелки %','Алименты %','Долги людям %','Долги банкам %','Дата сохранения'];const rows=[cols];for(const r of state.records){const p=r.params||DEFAULTS;for(const item of r.items){rows.push(['Распределение',r.id,r.date,r.source,r.comment||'',r.income,item.name,item.amount,item.percent,r.buffer,r.debt,r.rentAccumulated?'Да':'Нет',r.rentSaved,'Версия '+r.paramsVersionId,r.paramsVersionId,p.rentTarget,p.bufferTarget,p.wants,p.obligations,p.cushion,p.investments,p.rentShare,p.lifeShare,p.excess,p.large,p.small,p.alimony,p.people,p.banks,r.confirmedAt])}}for(const v of state.paramsVersions){const p=v.params;rows.push(['Параметры','','','','','', 'Снимок параметров версии '+v.id,'','','','','','',v.label,v.id,p.rentTarget,p.bufferTarget,p.wants,p.obligations,p.cushion,p.investments,p.rentShare,p.lifeShare,p.excess,p.large,p.small,p.alimony,p.people,p.banks,v.createdAt])}const csv='\ufeff'+rows.map(row=>row.map(csvCell).join(';')).join('\r\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='moi-finansy-istoriya.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
 function renderDashboard(){
 const b=state.balances||{},p=currentVersion().params;
-$('dashBuffer').textContent=fmt(b.buffer||0);$('dashRent').textContent=fmt(b.rent||0);$('dashReserveDebt').textContent=fmt(b.reserveDebt||0);$('dashCushion').textContent=fmt(b.cushion||0);
+$('dashBuffer').textContent=fmt(b.buffer||0);
+const builtInTotal=['rent','buffer','wantsLarge','wantsSmall','alimony','people','banks','cushion','investments','charity','reserveDebt'].reduce((sum,key)=>sum+Number(b[key]||0),0);
+const customTotal=(state.customAccounts||[]).reduce((sum,acc)=>sum+Number(acc.balance||0),0);
+$('dashTotalBalance').textContent=fmt(builtInTotal+customTotal);
+$('dashRent').textContent=fmt(b.rent||0);$('dashReserveDebt').textContent=fmt(b.reserveDebt||0);$('dashCushion').textContent=fmt(b.cushion||0);
 const env=[['Аренда','rent'],['Крупные хотелки','wantsLarge'],['Мелкие хотелки','wantsSmall'],['Алименты','alimony'],['Долги людям','people'],['Долги банкам','banks'],['Подушка','cushion'],['Инвестиции','investments'],['Благотворительность','charity']];
 let html=env.map(([name,key])=>`<div class="dash-envelope"><span class="label">${name}</span><b>${fmt(b[key]||0)}</b><button class="dash-edit" type="button" aria-label="Изменить остаток ${name}" onclick="editBalance('${key}','${name}')">✎</button></div>`).join('');
 (state.customAccounts||[]).forEach(acc=>{html+=`<div class="dash-envelope"><span class="label">${escapeHtml(acc.name)}</span><b>${fmt(acc.balance||0)}</b><button class="dash-edit" type="button" aria-label="Изменить остаток ${escapeHtml(acc.name)}" onclick="editCustomAccount('${acc.id}')">✎</button></div>`});
