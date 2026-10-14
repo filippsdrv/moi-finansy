@@ -35,7 +35,7 @@ button.primary{background:linear-gradient(100deg,#2f82ff,#70aaff);color:#07152b;
 .dash-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:14px 0 22px}
 .dash-action{border:1px solid #3c5b86;border-radius:13px;padding:14px 12px;text-align:center;color:#fff;font:inherit;font-weight:650;cursor:pointer;background:#246fe5}
 .dash-action span{display:none}
-.dash-action.expense{background:#252a33;border-color:#454b56}.dash-action.income{background:linear-gradient(135deg,#147d61,#22b98b);border-color:#36c79b}.dash-action.transfer{background:linear-gradient(135deg,#6844c7,#9975ff);border-color:#9c80f7}
+.dash-action.expense{background:linear-gradient(135deg,#b92f45,#f05263);border-color:#ff6978;box-shadow:0 4px 14px #ed40502e}.dash-action.income{background:linear-gradient(135deg,#147d61,#22b98b);border-color:#36c79b}.dash-action.transfer{background:linear-gradient(135deg,#6844c7,#9975ff);border-color:#9c80f7}
 .dash-section-title{font-size:18px;margin:20px 2px 10px}
 /* Счета: отдельные компактные карточки с мягкими цветными контурами */
 .dash-list{display:grid;grid-template-columns:1fr 1fr;gap:10px;border:0}
@@ -78,8 +78,9 @@ button.primary{background:linear-gradient(100deg,#2f82ff,#70aaff);color:#07152b;
   display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;
   min-width:0;min-height:88px;padding:11px 10px 10px;
   border:1px solid #ffffff12;border-radius:13px;
-  background:linear-gradient(145deg,#182338 0%,#111a2a 100%);
-  box-shadow:0 3px 10px #00000012;text-align:left;
+  background:linear-gradient(145deg,rgba(105,145,205,.19) 0%,rgba(31,48,76,.24) 100%);
+  border-color:rgba(177,205,255,.17);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  box-shadow:0 5px 18px rgba(0,0,0,.14),inset 0 1px rgba(255,255,255,.07);text-align:left;
 }
 /* Верхний ряд: две крупные карточки */
 .health-grid>.health-buffer{grid-column:1 / span 3;grid-row:1}
@@ -94,7 +95,7 @@ button.primary{background:linear-gradient(100deg,#2f82ff,#70aaff);color:#07152b;
 }
 .health-grid>.health-metric>b{
   display:block;width:100%;margin-top:8px;color:#fff;
-  font-size:clamp(17px,4.6vw,22px);font-weight:800;
+  font-size:clamp(17px,4.6vw,22px);font-weight:650;
   letter-spacing:-.45px;line-height:1.08;overflow-wrap:anywhere;text-align:left;
 }
 /* Главные показатели сверху визуально важнее */
@@ -102,9 +103,9 @@ button.primary{background:linear-gradient(100deg,#2f82ff,#70aaff);color:#07152b;
   font-size:12px;font-weight:600;min-height:27px;
 }
 .health-grid>.health-total>b,.health-grid>.health-buffer>b{
-  font-size:clamp(22px,6vw,28px);font-weight:900;color:#fff;letter-spacing:-.6px;
+  font-size:clamp(22px,6vw,28px);font-weight:700;color:#fff;letter-spacing:-.6px;
 }
-.health-grid>.health-debt{background:linear-gradient(145deg,#242536 0%,#171b29 100%)}
+.health-grid>.health-debt{background:linear-gradient(145deg,rgba(150,112,145,.18) 0%,rgba(39,35,56,.26) 100%);border-color:rgba(220,180,220,.17)}
 @media(max-width:380px){
  .health-grid{gap:7px 6px}
  .health-grid>.health-metric{min-height:84px;padding:9px 7px 9px;border-radius:11px}
@@ -118,7 +119,7 @@ button.primary{background:linear-gradient(100deg,#2f82ff,#70aaff);color:#07152b;
 <main><nav class="tabs" aria-label="Основная навигация"><button class="tab active" data-page="home"><span class="nav-icon">⌂</span><span>Главная</span></button><button class="tab" data-page="distribution"><span class="nav-icon">⑂</span><span>План</span></button><button class="tab" data-page="debts"><span class="nav-icon">↔</span><span>Долги</span></button><button class="tab" data-page="history"><span class="nav-icon">◷</span><span>История</span></button><button class="tab" data-page="parameters" aria-label="Настройки" title="Настройки"><span class="nav-icon">☷</span><span class="nav-label-settings">Настройки</span></button></nav>
 <section id="home" class="page active">
 <section class="financial-health" aria-label="Быстрая оценка финансового состояния">
-<div class="health-heading"><div><span class="health-kicker">СВОДКА</span><h2>Финансовое состояние</h2></div><span class="health-pulse" aria-hidden="true"></span></div>
+
 <div class="health-grid">
 <div class="health-metric health-total"><span>Общий баланс</span><b id="dashTotalBalance">0 ₽</b></div>
 <div class="health-metric health-buffer"><span>В буфере</span><b id="dashBuffer">0 ₽</b></div>
