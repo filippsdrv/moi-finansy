@@ -119,7 +119,7 @@ button.primary{background:linear-gradient(100deg,#2f82ff,#70aaff);color:#07152b;
 /* Главная: месячный поток и стопка счетов */
 .month-flow{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:0 0 13px}
 .month-flow-item{min-width:0;padding:12px 13px;border-radius:13px;background:#121b29;border:1px solid #2b3a51}
-.month-flow-item span{display:block;color:#9eacc2;font-size:11px;line-height:1.35;margin-bottom:7px}
+.month-flow-item span{display:block;color:#9eacc2;font-size:clamp(9px,2.8vw,11px);line-height:1.2;white-space:nowrap;margin-bottom:7px}
 .month-flow-item b{display:block;color:#f3f6fc;font-size:clamp(17px,4.7vw,22px);letter-spacing:-.4px;overflow-wrap:anywhere}
 .month-flow-item.income-flow{border-left:2px solid #4fc9a0}
 .month-flow-item.expense-flow{border-left:2px solid #e78c9d}
@@ -166,10 +166,10 @@ button.primary{background:linear-gradient(100deg,#2f82ff,#70aaff);color:#07152b;
 </div>
 </section>
 <section class="month-flow" aria-label="Доходы и расходы за текущий месяц">
-  <div class="month-flow-item income-flow"><span id="dashMonthIncomeLabel">Доход · текущий месяц</span><b id="dashMonthIncome">0 ₽</b></div>
-  <div class="month-flow-item expense-flow"><span id="dashMonthExpenseLabel">Расходы · текущий месяц</span><b id="dashMonthExpense">0 ₽</b></div>
+  <div class="month-flow-item income-flow"><span id="dashMonthIncomeLabel">Доход за месяц</span><b id="dashMonthIncome">0 ₽</b></div>
+  <div class="month-flow-item expense-flow"><span id="dashMonthExpenseLabel">Расход за месяц</span><b id="dashMonthExpense">0 ₽</b></div>
 </section>
-<div class="dash-actions"><button class="dash-action income" id="dashAddIncome" type="button">Доход</button><button class="dash-action expense" id="dashAddExpense" type="button">Расход</button><button class="dash-action transfer" id="dashAddTransfer" type="button">Перевод</button></div>
+<div class="dash-actions"><button class="dash-action income" id="dashAddIncome" type="button">Доход</button><button class="dash-action transfer" id="dashAddTransfer" type="button">Перевод</button><button class="dash-action expense" id="dashAddExpense" type="button">Расход</button></div>
 <button class="accounts-stack" id="openAccountsStack" type="button" aria-label="Открыть все счета">
   <span class="stack-visual" aria-hidden="true"><i></i><i></i><i></i><b>₽</b></span>
   <span class="stack-copy"><strong>Все счета</strong><small id="dashAccountCount">10 счетов</small></span>
