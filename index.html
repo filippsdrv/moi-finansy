@@ -114,33 +114,6 @@ button.primary{background:linear-gradient(100deg,#2f82ff,#70aaff);color:#07152b;
  .health-grid>.health-metric>b{font-size:clamp(14px,4vw,17px)}
  .health-grid>.health-total>b,.health-grid>.health-buffer>b{font-size:clamp(19px,5.5vw,24px)}
 }
-/* Главный экран: стопка реальных счетов */
-.accounts-stack-section{margin:4px 0 10px;min-height:0}
-.accounts-stack-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:4px}
-.accounts-stack-heading .dash-section-title{margin:0}
-.accounts-stack{position:relative;display:block;width:100%;height:190px;padding:0;border:0;background:transparent;box-shadow:none;text-align:left;isolation:isolate;overflow:visible;cursor:pointer;color:inherit}
-.stack-layer,.stack-front{position:absolute;left:10px;right:10px;height:72px;border:1px solid #344968;border-radius:15px;background:linear-gradient(145deg,#172b47ed,#0e1b30f5);box-shadow:0 5px 12px #0002;display:flex;align-items:center;gap:12px;padding:0 15px;transition:transform .18s ease}
-.stack-layer{justify-content:space-between;color:#aebed4;font-size:13px}
-.stack-layer::after{content:attr(data-balance);font-weight:550;color:#e6edf8;white-space:nowrap}
-.stack-layer-4{top:57px;transform:translateX(0);border-color:#a66d48;background:linear-gradient(135deg,#30272b,#172238)}
-.stack-layer-3{top:40px;left:7px;right:7px;border-color:#7861a7;background:linear-gradient(135deg,#292746,#14223a)}
-.stack-layer-2{top:23px;left:3px;right:3px;border-color:#3679bd;background:linear-gradient(135deg,#173b63,#14243e)}
-.stack-front{top:0;left:0;right:0;height:76px;justify-content:space-between;border-color:#42628c;background:linear-gradient(120deg,#183352,#101d31 78%);box-shadow:inset 3px 0 0 #67a8ff,0 8px 18px #0003;z-index:2}
-.stack-account-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:15px;font-weight:500;letter-spacing:-.15px;color:#f0f5ff}
-.stack-account-balance{font-size:15px;font-weight:550;white-space:nowrap;color:#f4f7ff;margin-left:auto}
-.stack-chevron{font-size:25px;color:#a8bad4;font-weight:300;margin-left:2px}
-.accounts-stack:active .stack-front{transform:translateY(2px)}
-.accounts-stack:active .stack-layer-2{transform:translateY(2px)}
-.accounts-stack:active .stack-layer-3{transform:translateY(3px)}
-.accounts-stack:active .stack-layer-4{transform:translateY(4px)}
-.accounts-modal{z-index:1200;align-items:flex-end;padding:0}
-.accounts-sheet{width:100%;max-width:620px;max-height:min(84vh,780px);padding:19px 16px calc(18px + env(safe-area-inset-bottom));border-radius:25px 25px 0 0;border-bottom:0;overflow:auto}
-.accounts-modal-list{display:grid;grid-template-columns:1fr;gap:5px}
-.accounts-modal-list .dash-envelope{min-height:55px;padding:10px 40px 10px 14px;border-radius:12px;box-shadow:none;background:linear-gradient(110deg,var(--account-glow,#172b46),#111b2b 75%);display:flex;align-items:center;justify-content:space-between;gap:10px}
-.accounts-modal-list .dash-envelope .label{font-size:13px;text-align:left;flex:1;min-width:0}
-.accounts-modal-list .dash-envelope b{font-size:15px;font-weight:500;text-align:right;white-space:nowrap;margin-left:auto}
-.accounts-modal-footnote{margin-top:10px;font-size:11px;line-height:1.4}
-@media(min-width:620px){.accounts-modal{align-items:center;padding:18px}.accounts-sheet{border:1px solid #344968;border-radius:24px;max-height:86vh}}
 /* Главная: компактный экран без прокрутки; остальные разделы не затрагиваются */
 @media(max-width:600px){
  body:has(#home.active){overflow:hidden}
@@ -178,7 +151,7 @@ button.primary{background:linear-gradient(100deg,#2f82ff,#70aaff);color:#07152b;
 </div>
 </section>
 <div class="dash-actions"><button class="dash-action income" id="dashAddIncome" type="button">Доход</button><button class="dash-action expense" id="dashAddExpense" type="button">Расход</button><button class="dash-action transfer" id="dashAddTransfer" type="button">Перевод</button></div>
-<div class="accounts-stack-section"><div class="accounts-stack-heading"><h2 class="dash-section-title">Счета</h2></div><button class="accounts-stack" id="openAccountsModal" type="button" aria-haspopup="dialog" aria-controls="accountsModal" aria-label="Открыть счета"><span class="stack-layer stack-layer-4" id="stackLayer4"></span><span class="stack-layer stack-layer-3" id="stackLayer3"></span><span class="stack-layer stack-layer-2" id="stackLayer2"></span><span class="stack-front" id="stackFront"><span class="stack-account-name" id="stackFrontName">Буфер</span><b class="stack-account-balance" id="stackFrontBalance">0 ₽</b><span class="stack-chevron" aria-hidden="true">›</span></span></button></div>
+<h2 class="dash-section-title">Счета</h2><div class="dash-list" id="dashEnvelopes"></div>
 </section>
 <section id="distribution" class="page">
 <div class="card"><div class="sectionhead"><div class="step">1</div><div><h2>Исходные данные</h2><div class="hint">План считается по текущей версии параметров. После подтверждения он сохраняется вместе со снимком этих правил.</div></div></div>
@@ -309,7 +282,7 @@ const builtInTotal=Object.entries(b).reduce((sum,[key,value])=>sum+(key==='reser
 const customTotal=(state.customAccounts||[]).reduce((sum,acc)=>sum+(state.accountVisibility?.['custom:'+acc.id]===false?0:(Number(acc.balance)||0)),0);$('dashTotalBalance').textContent=fmt(builtInTotal+customTotal);$('dashRent').textContent=fmt(b.rent||0);$('dashReserveDebt').textContent=fmt(b.reserveDebt||0);$('dashCushion').textContent=fmt(b.cushion||0);
 const env=[['Буфер','buffer'],['Аренда','rent'],['Крупные хотелки','wantsLarge'],['Мелкие хотелки','wantsSmall'],['Алименты','alimony'],['Долги людям','people'],['Долги банкам','banks'],['Подушка','cushion'],['Инвестиции','investments'],['Благотворительность','charity']];const order=state.accountOrder||[];env.sort((a,b)=>{const ia=order.indexOf(a[1]),ib=order.indexOf(b[1]);return (ia<0?999:ia)-(ib<0?999:ib)});
 let html=env.map(([name,key])=>`<div class="dash-envelope ${state.accountVisibility?.[key]===false?'account-excluded':''}" draggable="true" data-account-key="${key}"><span class="label">${name}</span><b>${fmt(b[key]||0)}</b><button class="dash-edit" type="button" aria-label="Изменить остаток ${name}" onclick="editBalance('${key}','${name}')">✎</button></div>`).join('');
-const custom=[...(state.customAccounts||[])].sort((a,b)=>{const ia=order.indexOf('custom:'+a.id),ib=order.indexOf('custom:'+b.id);return (ia<0?999:ia)-(ib<0?999:ib)});custom.forEach(acc=>{const key='custom:'+acc.id;html+=`<div class="dash-envelope ${state.accountVisibility?.[key]===false?'account-excluded':''}" draggable="true" data-account-key="${key}"><span class="label">${escapeHtml(acc.name)}</span><b>${fmt(acc.balance||0)}</b><button class="dash-edit" type="button" aria-label="Изменить счёт ${escapeHtml(acc.name)}" onclick="editCustomAccount('${acc.id}')">✎</button></div>`});$('dashEnvelopes').innerHTML=html;const stackAccounts=[...env.map(([name,key])=>({name,key,balance:Number(b[key])||0})),...custom.map(acc=>({name:acc.name,key:'custom:'+acc.id,balance:Number(acc.balance)||0}))].filter(acc=>state.accountVisibility?.[acc.key]!==false);const stackEls=[['stackFrontName','stackFrontBalance'],['stackLayer2',''],['stackLayer3',''],['stackLayer4','']];stackEls.forEach((ids,i)=>{const acc=stackAccounts[i];const el=$(ids[0]);if(!el)return;if(i===0){$('stackFrontName').textContent=acc?acc.name:'Нет счетов';$('stackFrontBalance').textContent=acc?fmt(acc.balance):'—';}else{el.textContent=acc?acc.name:'';el.setAttribute('data-balance',acc?fmt(acc.balance):'');el.style.visibility=acc?'visible':'hidden';}});renderUnifiedOperations();renderCustomAccountsSettings();wireDragSort('dashEnvelopes','[data-account-key]','accountOrder','data-account-key');
+const custom=[...(state.customAccounts||[])].sort((a,b)=>{const ia=order.indexOf('custom:'+a.id),ib=order.indexOf('custom:'+b.id);return (ia<0?999:ia)-(ib<0?999:ib)});custom.forEach(acc=>{const key='custom:'+acc.id;html+=`<div class="dash-envelope ${state.accountVisibility?.[key]===false?'account-excluded':''}" draggable="true" data-account-key="${key}"><span class="label">${escapeHtml(acc.name)}</span><b>${fmt(acc.balance||0)}</b><button class="dash-edit" type="button" aria-label="Изменить счёт ${escapeHtml(acc.name)}" onclick="editCustomAccount('${acc.id}')">✎</button></div>`});$('dashEnvelopes').innerHTML=html;renderUnifiedOperations();renderCustomAccountsSettings();wireDragSort('dashEnvelopes','[data-account-key]','accountOrder','data-account-key');
 }
 function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function setAccountVisibility(key,visible){if(!state.accountVisibility)state.accountVisibility={};state.accountVisibility[key]=!!visible;persist();renderDashboard();}
