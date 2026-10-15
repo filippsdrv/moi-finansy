@@ -394,7 +394,50 @@ function driveClientId(){return String($('driveClientId')?.value||localStorage.g
 function initDriveBackup(){const input=$('driveClientId');if(!input)return;input.value=localStorage.getItem(DRIVE_CLIENT_KEY)||'';input.addEventListener('change',()=>{localStorage.setItem(DRIVE_CLIENT_KEY,input.value.trim());driveReady=false;driveAccessToken=null;driveTokenClient=null;driveStatus('Client ID сохранён. Нажми «Подключить Google Drive».');});$('driveConnect').addEventListener('click',connectGoogleDrive);$('driveBackupNow').addEventListener('click',()=>{if(!driveAccessToken)return connectGoogleDrive(true);uploadDriveBackup(true);});const last=Number(localStorage.getItem(DRIVE_LAST_KEY)||0);if(last)$('driveBackupInfo').textContent='Последняя успешная копия: '+new Date(last).toLocaleString('ru-RU')+'. Ежедневная копия создаётся при открытом приложении и действующем разрешении Google.';}
 function connectGoogleDrive(backupAfter=false){const clientId=driveClientId();if(!clientId)return driveStatus('Сначала вставь Google OAuth Client ID.');localStorage.setItem(DRIVE_CLIENT_KEY,clientId);if(!window.google?.accounts?.oauth2)return driveStatus('Модуль Google ещё загружается. Подожди несколько секунд и нажми ещё раз.');try{driveTokenClient=google.accounts.oauth2.initTokenClient({client_id:clientId,scope:'https://www.googleapis.com/auth/drive.file',callback:async(resp)=>{if(resp.error){driveStatus('Google не выдал разрешение: '+resp.error);return;}driveAccessToken=resp.access_token;driveReady=true;driveStatus('Google Drive подключён. Проверяю резервную копию…',true);await uploadDriveBackup(backupAfter);}});driveTokenClient.requestAccessToken({prompt:'consent'});}catch(e){driveStatus('Не удалось подключить Google Drive: '+e.message);}}
 async function driveApi(url,options={}){const response=await fetch(url,{...options,headers:{Authorization:'Bearer '+driveAccessToken,...(options.headers||{})}});if(!response.ok){const body=await response.text().catch(()=> '');if(response.status===401){driveAccessToken=null;driveReady=false;}throw new Error('Google Drive API '+response.status+(body?': '+body.slice(0,180):''));}return response.status===204?null:response.json();}
-async function uploadDriveBackup(force=false){if(!driveAccessToken)return;const last=Number(localStorage.getItem(DRIVE_LAST_KEY)||0);if(!force&&last&&Date.now()-last<24*60*60*1000){driveStatus('Google Drive подключён. Следующая ежедневная копия — после истечения 24 часов.',true);return;}const button=$('driveBackupNow');if(button)button.disabled=true;try{const payload={format:'moi-finansy-backup',version:1,exportedAt:new Date().toISOString(),storeKey:STORE,state:JSON.parse(JSON.stringify(state))};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});let fileId=localStorage.getItem(DRIVE_FILE_KEY);if(fileId){try{await driveApi('https://www.googleapis.com/drive/v3/files/'+encodeURIComponent(fileId)+'?fields=id,name');}catch(e){if(!String(e.message).includes('404'))throw e;fileId=null;localStorage.removeItem(DRIVE_FILE_KEY);}}if(!fileId){const meta=await driveApi('https://www.googleapis.com/drive/v3/files?fields=id,name',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:'moi-finansy-autobackup.json',mimeType:'application/json'})});fileId=meta.id;localStorage.setItem(DRIVE_FILE_KEY,fileId);const form=new FormData();form.append('metadata',new Blob([JSON.stringify({name:'moi-finansy-autobackup.json',mimeType:'application/json'})],{type:'application/json'}));form.append('file',blob);await driveApi('https://www.googleapis.com/upload/drive/v3/files/'+encodeURIComponent(fileId)+'?uploadType=multipart&fields=id,name',{method:'PATCH',body:form});}else{const form=new FormData();form.append('metadata',new Blob([JSON.stringify({name:'moi-finansy-autobackup.json',mimeType:'application/json'})],{type:'application/json'}));form.append('file',blob);await driveApi('https://www.googleapis.com/upload/drive/v3/files/'+encodeURIComponent(fileId)+'?uploadType=multipart&fields=id,name',{method:'PATCH',body:form});}const now=Date.now();localStorage.setItem(DRIVE_LAST_KEY,String(now));driveStatus('Резервная копия успешно сохранена в Google Drive: '+new Date(now).toLocaleString('ru-RU')+'.',true);$('driveBackupInfo').textContent='Файл: moi-finansy-autobackup.json. Последняя успешная копия: '+new Date(now).toLocaleString('ru-RU')+'. Для безопасности периодически скачивай также отдельный JSON.';}catch(e){driveStatus('Не удалось сохранить копию: '+e.message+'. Проверь Client ID, разрешённый адрес сайта и доступ Google Drive.');}finally{if(button)button.disabled=false;}}
+async function uploadDriveBackup(force=false){
+  if(!driveAccessToken)return;
+  const last=Number(localStorage.getItem(DRIVE_LAST_KEY)||0);
+  if(!force&&last&&Date.now()-last<24*60*60*1000){
+    driveStatus('Google Drive подключён. Следующая ежедневная копия — после истечения 24 часов.',true);
+    return;
+  }
+  const button=$('driveBackupNow');
+  if(button)button.disabled=true;
+  try{
+    const payload={format:'moi-finansy-backup',version:1,exportedAt:new Date().toISOString(),storeKey:STORE,state:JSON.parse(JSON.stringify(state))};
+    const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+    let fileId=localStorage.getItem(DRIVE_FILE_KEY);
+    if(fileId){
+      try{
+        await driveApi('https://www.googleapis.com/drive/v3/files/'+encodeURIComponent(fileId)+'?fields=id,name');
+      }catch(e){
+        if(!String(e.message).includes('404'))throw e;
+        fileId=null;
+        localStorage.removeItem(DRIVE_FILE_KEY);
+      }
+    }
+    const form=new FormData();
+    form.append('metadata',new Blob([JSON.stringify({name:'moi-finansy-autobackup.json',mimeType:'application/json'})],{type:'application/json'}));
+    form.append('file',blob);
+    let result;
+    if(fileId){
+      result=await driveApi('https://www.googleapis.com/upload/drive/v3/files/'+encodeURIComponent(fileId)+'?uploadType=multipart&fields=id,name',{method:'PATCH',body:form});
+    }else{
+      result=await driveApi('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id,name',{method:'POST',body:form});
+      if(!result||!result.id)throw new Error('Google Drive не вернул идентификатор файла');
+      fileId=result.id;
+      localStorage.setItem(DRIVE_FILE_KEY,fileId);
+    }
+    const now=Date.now();
+    localStorage.setItem(DRIVE_LAST_KEY,String(now));
+    driveStatus('Резервная копия успешно сохранена в Google Drive: '+new Date(now).toLocaleString('ru-RU')+'.',true);
+    $('driveBackupInfo').textContent='Файл: moi-finansy-autobackup.json. Последняя успешная копия: '+new Date(now).toLocaleString('ru-RU')+'. Для безопасности периодически скачивай также отдельный JSON.';
+  }catch(e){
+    driveStatus('Не удалось сохранить копию: '+e.message+'. Проверь Client ID, разрешённый адрес сайта и доступ Google Drive.');
+  }finally{
+    if(button)button.disabled=false;
+  }
+}
 function scheduleDriveBackup(){if(driveBackupTimer)clearTimeout(driveBackupTimer);driveBackupTimer=setTimeout(()=>{if(driveAccessToken)uploadDriveBackup(false);},2500);}
 function exportJSON(){const payload={format:'moi-finansy-backup',version:1,exportedAt:new Date().toISOString(),storeKey:STORE,state};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='moi-finansy-backup-'+localToday()+'.json';a.click();URL.revokeObjectURL(url);}
 function importJSONFile(file){if(!file)return;const reader=new FileReader();reader.onload=()=>{try{const data=JSON.parse(String(reader.result||''));const incoming=data&&data.state?data.state:data;if(!incoming||typeof incoming!=='object'||!Array.isArray(incoming.records)||!incoming.balances||!Array.isArray(incoming.expenses))throw new Error('Файл не похож на резервную копию «Мои финансы».');if(!confirm('Импорт заменит текущие данные на данные из JSON. Перед импортом экспортируй текущую копию, если она нужна. Продолжить?'))return;const required=['paramsVersions','records','expenses','expenseCategories','expenseTags','customAccounts','debts','debtPayments','transfers','balances'];required.forEach(k=>{if(incoming[k]===undefined){if(k==='paramsVersions')incoming[k]=[{id:1,createdAt:new Date().toISOString(),label:'Импорт',params:{...DEFAULTS}}];else if(k==='balances')incoming[k]={};else if(k==='expenseCategories'||k==='expenseTags'||k==='customAccounts'||k==='records'||k==='expenses'||k==='debts'||k==='debtPayments'||k==='transfers')incoming[k]=[];}});state=incoming;persist();location.reload();}catch(e){alert('Импорт не выполнен: '+e.message);}};reader.onerror=()=>alert('Не удалось прочитать JSON-файл.');reader.readAsText(file);}
