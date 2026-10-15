@@ -35,7 +35,7 @@ button.primary{background:linear-gradient(100deg,#2f82ff,#70aaff);color:#07152b;
 .dash-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:14px 0 22px}
 .dash-action{border:1px solid #3c5b86;border-radius:13px;padding:14px 12px;text-align:center;color:#fff;font:inherit;font-weight:650;cursor:pointer;background:#246fe5}
 .dash-action span{display:none}
-.dash-action.expense{background:linear-gradient(135deg,#b92f45,#f05263);border-color:#ff6978;box-shadow:0 4px 14px #ed40502e}.dash-action.income{background:linear-gradient(135deg,#147d61,#22b98b);border-color:#36c79b}.dash-action.transfer{background:linear-gradient(135deg,#6844c7,#9975ff);border-color:#9c80f7}
+.dash-action.expense{background:#252a33;border-color:#454b56}.dash-action.income{background:linear-gradient(135deg,#147d61,#22b98b);border-color:#36c79b}.dash-action.transfer{background:linear-gradient(135deg,#6844c7,#9975ff);border-color:#9c80f7}
 .dash-section-title{font-size:18px;margin:20px 2px 10px}
 /* Счета: отдельные компактные карточки с мягкими цветными контурами */
 .dash-list{display:grid;grid-template-columns:1fr 1fr;gap:10px;border:0}
@@ -69,57 +69,49 @@ button.primary{background:linear-gradient(100deg,#2f82ff,#70aaff);color:#07152b;
 .health-kicker{display:block;color:#8fbaff;font-size:9px;font-weight:700;letter-spacing:1.8px;margin-bottom:4px}
 .health-heading h2{font-size:17px;letter-spacing:-.3px;margin:0;color:#f2f6ff}
 .health-pulse{width:7px;height:7px;flex-shrink:0;border-radius:50%;background:#60ddb0;box-shadow:0 0 0 4px #60ddb01c}
-.health-grid{
-  display:grid;
-  grid-template-columns:repeat(6,minmax(0,1fr));
-  gap:9px 8px;
-}
-.health-grid>.health-metric{
-  display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;
-  min-width:0;min-height:88px;padding:11px 10px 10px;
-  border:1px solid #ffffff12;border-radius:13px;
-  background:linear-gradient(145deg,rgba(105,145,205,.19) 0%,rgba(31,48,76,.24) 100%);
-  border-color:rgba(177,205,255,.17);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  box-shadow:0 5px 18px rgba(0,0,0,.14),inset 0 1px rgba(255,255,255,.07);text-align:left;
-}
-/* Верхний ряд: две крупные карточки */
-.health-grid>.health-buffer{grid-column:1 / span 3;grid-row:1}
-.health-grid>.health-total{grid-column:4 / span 3;grid-row:1}
-/* Нижний ряд: три равные карточки */
-.health-grid>.health-metric:nth-child(3){grid-column:1 / span 2;grid-row:2}
-.health-grid>.health-metric:nth-child(5){grid-column:3 / span 2;grid-row:2}
-.health-grid>.health-debt{grid-column:5 / span 2;grid-row:2}
-.health-grid>.health-metric>span{
-  color:#91a2bb;font-size:10px;font-weight:500;line-height:1.25;
-  min-height:25px;margin:0;text-align:left;
-}
-.health-grid>.health-metric>b{
-  display:block;width:100%;margin-top:8px;color:#fff;
-  font-size:clamp(17px,4.6vw,22px);font-weight:650;
-  letter-spacing:-.45px;line-height:1.08;overflow-wrap:anywhere;text-align:left;
-}
-/* Главные показатели сверху визуально важнее */
-.health-grid>.health-total>span,.health-grid>.health-buffer>span{
-  font-size:12px;font-weight:600;min-height:27px;
-}
-.health-grid>.health-total>b,.health-grid>.health-buffer>b{
-  font-size:clamp(22px,6vw,28px);font-weight:700;color:#fff;letter-spacing:-.6px;
-}
-.health-grid>.health-debt{background:linear-gradient(145deg,rgba(150,112,145,.18) 0%,rgba(39,35,56,.26) 100%);border-color:rgba(220,180,220,.17)}
-@media(max-width:380px){
- .health-grid{gap:7px 6px}
- .health-grid>.health-metric{min-height:84px;padding:9px 7px 9px;border-radius:11px}
- .health-grid>.health-metric>span{font-size:9px;min-height:24px}
- .health-grid>.health-total>span,.health-grid>.health-buffer>span{font-size:11px}
- .health-grid>.health-metric>b{font-size:clamp(14px,4vw,17px)}
- .health-grid>.health-total>b,.health-grid>.health-buffer>b{font-size:clamp(19px,5.5vw,24px)}
-}
+.health-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px 12px}
+.health-metric{display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;text-align:left;min-width:0;min-height:76px;padding:8px 2px 9px;border:0;border-bottom:1px solid #ffffff12;border-radius:0;background:none}
+.health-metric>span{display:block;color:#91a2bb;font-size:10px;font-weight:500;line-height:1.3;min-height:0;margin:0;text-align:left}
+.health-metric>b{display:block;width:100%;margin-top:9px;color:#ffffff;font-size:clamp(20px,5.2vw,23px);font-weight:800;letter-spacing:-.5px;line-height:1.1;overflow-wrap:anywhere;text-align:left}
+.health-metric>small{display:none}
+.health-total{grid-column:auto;min-height:76px;background:none;border:0;border-bottom:1px solid #ffffff12}
+.health-total>b{font-size:clamp(20px,5.2vw,23px);color:#ffffff}
+.health-buffer{border:0;border-bottom:1px solid #ffffff12;background:none}
+.health-buffer>b{color:#ffffff}
+.health-debt{border:0;border-bottom:1px solid #ffffff12;background:none}
+.health-debt>b{color:#ffffff}
+.health-grid>.health-metric:last-child{grid-column:1/-1}
+.dash-section-title{margin-top:0}
+@media(max-width:380px){.health-grid{gap:4px 10px}.health-metric,.health-total{min-height:72px;padding:7px 2px 8px}.health-metric>span{font-size:9px}.health-metric>b,.health-total>b{font-size:20px}.financial-health{margin-bottom:25px}}
+.dash-actions{gap:9px;margin:14px 0 23px}
+.dash-action{display:flex;align-items:center;justify-content:center;min-height:48px;padding:12px 6px;border-radius:13px;font-family:inherit!important;font-size:13px!important;font-weight:650!important;line-height:1!important;letter-spacing:0;white-space:nowrap}
+.dash-action.income{background:linear-gradient(135deg,#137d5d,#28b98b);border:1px solid #39c99b;color:#f3fff9;box-shadow:0 5px 15px #12a87920}
+.dash-action.expense{background:linear-gradient(135deg,#8f3045,#e05265);border:1px solid #f06b7b;color:#fff7f8;box-shadow:0 5px 15px #d6425a20}
+.dash-action.transfer{background:linear-gradient(135deg,#2459a5,#4389ed);border:1px solid #69a4fa;color:#f7fbff;box-shadow:0 5px 15px #337ee520}
+.dash-list{grid-template-columns:1fr;gap:8px}
+.dash-envelope{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto;align-items:center;gap:8px;min-height:62px;padding:12px 42px 12px 15px}
+.dash-envelope .label{padding-right:0;font-size:13px;line-height:1.35;overflow-wrap:anywhere}
+.dash-envelope b{font-size:16px;text-align:right;white-space:nowrap}
+.dash-envelope .dash-edit{top:50%;right:9px;transform:translateY(-50%)}
+.dash-envelope .dash-edit:active{transform:translateY(-50%) scale(.92)}
+@media(max-width:380px){.health-grid{gap:7px}.health-metric{padding:10px;min-height:78px}.health-metric>span{font-size:9px}.health-metric>b{font-size:14px}.health-total>b{font-size:23px}.dash-action{font-size:12px!important}.dash-envelope{padding-left:12px}}
+
+/* Главный экран: стопка счетов вместо длинного списка */
+.accounts-stack-section{margin:4px 0 22px}.accounts-stack-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}.accounts-stack-heading .dash-section-title{margin:0}.accounts-stack-hint{font-size:11px;color:#91a4c0;white-space:nowrap}
+.accounts-stack{position:relative;display:block;width:100%;height:145px;padding:0;border:0;background:transparent;box-shadow:none;text-align:left;isolation:isolate;overflow:visible;cursor:pointer;color:inherit}
+.stack-layer,.stack-front{position:absolute;left:10px;right:10px;height:104px;border:1px solid #344968;border-radius:20px;background:linear-gradient(145deg,#172b47ed,#0e1b30f5);box-shadow:0 8px 18px #0002;transition:transform .18s ease}
+.stack-layer-4{top:27px;transform:translateX(0);border-color:#a66d48;background:linear-gradient(135deg,#3b2a2b,#172238)}.stack-layer-3{top:18px;left:17px;right:17px;border-color:#7861a7;background:linear-gradient(135deg,#302749,#14223a)}.stack-layer-2{top:9px;left:6px;right:6px;border-color:#3679bd;background:linear-gradient(135deg,#173b63,#14243e)}
+.stack-front{top:0;left:0;right:0;height:105px;display:flex;align-items:center;gap:12px;padding:15px;border-color:#42628c;background:linear-gradient(120deg,#183352,#101d31 78%);box-shadow:inset 3px 0 0 #67a8ff,0 10px 22px #0003;z-index:2}
+.stack-symbol{width:43px;height:43px;display:grid;place-items:center;flex-shrink:0;border-radius:50%;background:#24476c;color:#a9d0ff;font-size:27px}.stack-copy{display:flex;flex:1;min-width:0;flex-direction:column;gap:5px}.stack-copy strong{font-size:15px;font-weight:550;letter-spacing:-.2px;color:#f0f5ff}.stack-copy small{font-size:11px;font-weight:400;color:#9eafc9}.stack-front>b{font-size:15px;font-weight:550;white-space:nowrap;color:#f4f7ff}.stack-chevron{font-size:27px;color:#a8bad4;font-weight:300;margin-left:1px}
+.accounts-stack:active .stack-front{transform:translateY(2px)}.accounts-stack:active .stack-layer-2{transform:translateY(2px)}.accounts-stack:active .stack-layer-3{transform:translateY(3px)}.accounts-stack:active .stack-layer-4{transform:translateY(4px)}
+.accounts-modal{z-index:1200;align-items:flex-end;padding:0}.accounts-sheet{width:100%;max-width:620px;max-height:min(84vh,780px);padding:19px 16px calc(18px + env(safe-area-inset-bottom));border-radius:25px 25px 0 0;border-bottom:0;overflow:auto}.accounts-modal-summary{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;margin-bottom:12px;border:1px solid #2c405c;border-radius:14px;background:#0b1728;color:#a9b9d0;font-size:12px}.accounts-modal-summary strong{font-size:20px;font-weight:550;color:#f4f7ff}.accounts-modal-list{display:grid;grid-template-columns:1fr;gap:7px}.accounts-modal-list .dash-envelope{min-height:58px;padding:11px 40px 11px 14px;border-radius:14px;box-shadow:inset 2px 0 0 var(--account-accent,#69a7ff);background:linear-gradient(110deg,var(--account-glow,#172b46),#111b2b 75%)}.accounts-modal-list .dash-envelope .label{font-size:13px}.accounts-modal-list .dash-envelope b{font-size:15px;font-weight:550}.accounts-modal-footnote{margin-top:12px;font-size:11px;line-height:1.45}
+@media(min-width:620px){.accounts-modal{align-items:center;padding:18px}.accounts-sheet{border:1px solid #344968;border-radius:24px;max-height:86vh}}
 </style></head><body>
 <header><div><div class="brand">PERSONAL FINANCE SYSTEM</div><h1>Мои финансы</h1><div class="subtitle" id="headerSubtitle">Счета и финансовые цели в одном месте.</div></div><div class="topmark">◈</div></header>
 <main><nav class="tabs" aria-label="Основная навигация"><button class="tab active" data-page="home"><span class="nav-icon">⌂</span><span>Главная</span></button><button class="tab" data-page="distribution"><span class="nav-icon">⑂</span><span>План</span></button><button class="tab" data-page="debts"><span class="nav-icon">↔</span><span>Долги</span></button><button class="tab" data-page="history"><span class="nav-icon">◷</span><span>История</span></button><button class="tab" data-page="parameters" aria-label="Настройки" title="Настройки"><span class="nav-icon">☷</span><span class="nav-label-settings">Настройки</span></button></nav>
 <section id="home" class="page active">
 <section class="financial-health" aria-label="Быстрая оценка финансового состояния">
-
+<div class="health-heading"><div><span class="health-kicker">СВОДКА</span><h2>Финансовое состояние</h2></div><span class="health-pulse" aria-hidden="true"></span></div>
 <div class="health-grid">
 <div class="health-metric health-total"><span>Общий баланс</span><b id="dashTotalBalance">0 ₽</b></div>
 <div class="health-metric health-buffer"><span>В буфере</span><b id="dashBuffer">0 ₽</b></div>
@@ -129,7 +121,7 @@ button.primary{background:linear-gradient(100deg,#2f82ff,#70aaff);color:#07152b;
 </div>
 </section>
 <div class="dash-actions"><button class="dash-action income" id="dashAddIncome" type="button">Доход</button><button class="dash-action expense" id="dashAddExpense" type="button">Расход</button><button class="dash-action transfer" id="dashAddTransfer" type="button">Перевод</button></div>
-<h2 class="dash-section-title">Счета</h2><div class="dash-list" id="dashEnvelopes"></div>
+<div class="accounts-stack-section"><div class="accounts-stack-heading"><h2 class="dash-section-title">Счета</h2><span class="accounts-stack-hint">Нажми, чтобы открыть</span></div><button class="accounts-stack" id="openAccountsModal" type="button" aria-haspopup="dialog" aria-controls="accountsModal"><span class="stack-layer stack-layer-4"></span><span class="stack-layer stack-layer-3"></span><span class="stack-layer stack-layer-2"></span><span class="stack-front"><span class="stack-symbol" aria-hidden="true">▱</span><span class="stack-copy"><strong>Счета и конверты</strong><small id="accountsStackCount">Все счета в одном месте</small></span><b id="accountsStackBalance">0 ₽</b><span class="stack-chevron" aria-hidden="true">›</span></span></button></div>
 <div class="dash-note">Буфер — реальные деньги на карте. Остальные счета — суммы, распределённые по целям. Отрицательный остаток учитывается со знаком минус в общем балансе: это деньги, взятые авансом из будущих доходов. «Долг резервам» — отдельное обязательство и в общий баланс счетов не включается. В расходе отметь «Вернуть деньги в резерв», если тратишь защищённые накопления. Если счёт уходит глубже в минус, прирост минуса автоматически увеличит долг резервам; не отмечай галочку для этого же случая, чтобы не задвоить долг.</div>
 <div class="card"><div class="sectionhead"><div class="step">↕</div><div><h2>Последние операции</h2><div class="hint">Пять последних доходов, расходов и движений между счетами.</div></div></div><div id="dashRecent" class="empty">Пока нет операций.</div><button class="secondary" id="dashAllHistory" type="button">Открыть историю</button></div>
 </section>
@@ -148,6 +140,7 @@ button.primary{background:linear-gradient(100deg,#2f82ff,#70aaff);color:#07152b;
 <div class="card"><details id="debtorsDetails"><summary class="debt-summary-title">Список должников</summary><div class="hint">Должники и кредиторы с текущим остатком.</div><div class="debt-filters"><button class="debt-filter active" data-debt-filter="all">Все</button><button class="debt-filter" data-debt-filter="owed">Я должен</button><button class="debt-filter" data-debt-filter="receivable">Мне должны</button></div><div id="debtContactList"></div><div class="note">Частичные платежи доступны в карточке каждого долга. Возврат тебе зачисляется прямо на выбранный счёт, без распределения.</div></details></div>
 <div class="card"><details id="debtHistoryDetails"><summary class="debt-summary-title">История платежей</summary><div class="hint">Погашения и поступления по всем записям.</div><div id="debtPaymentHistory"><div class="empty">Пока нет платежей.</div></div></details></div>
 </section>
+<div id="accountsModal" class="expense-modal accounts-modal" hidden><div class="expense-sheet accounts-sheet" role="dialog" aria-modal="true" aria-labelledby="accountsModalTitle"><div class="expense-head"><div><h2 id="accountsModalTitle">Счета и конверты</h2><div class="hint">Все остатки и настройки счетов</div></div><button class="expense-close" id="accountsModalClose" type="button" aria-label="Закрыть">×</button></div><div class="accounts-modal-summary"><span>Общий баланс</span><strong id="accountsModalBalance">0 ₽</strong></div><div class="dash-list accounts-modal-list" id="dashEnvelopes"></div><div class="hint accounts-modal-footnote">Перетаскивай счета, чтобы изменить порядок. Нажми карандаш, чтобы изменить остаток.</div></div></div>
 <div id="debtPaymentModal" class="expense-modal" hidden><div class="expense-sheet" role="dialog" aria-modal="true" aria-labelledby="debtPaymentTitle"><div class="expense-head"><div><h2 id="debtPaymentTitle">Записать платёж</h2><div class="hint" id="debtPaymentSubtitle"></div></div><button class="expense-close" id="debtPaymentClose" type="button" aria-label="Закрыть">×</button></div><div class="expense-form"><div class="field"><label for="debtPaymentAmount">Сумма, ₽</label><input id="debtPaymentAmount" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="0"></div><div class="field"><label for="debtPaymentAccount">Счёт операции</label><select id="debtPaymentAccount"></select></div><div class="field"><label for="debtPaymentDate">Дата</label><input id="debtPaymentDate" type="date"></div><div class="field"><label for="debtPaymentComment">Комментарий</label><input id="debtPaymentComment" type="text" placeholder="Необязательно"></div><div class="note" id="debtPaymentHint"></div><div class="actions"><button class="primary" id="debtPaymentSave" type="button">Сохранить платёж</button><button class="secondary" id="debtPaymentCancel" type="button">Отмена</button></div><div class="status" id="debtPaymentStatus"></div></div></div></div>
 
 <section id="parameters" class="page"><div class="card"><div class="sectionhead"><div class="step">☷</div><div><h2>Параметры системы</h2><div class="hint">Структура и смысл соответствуют листу «2026_10_Параметры». Изменения создают новую версию и действуют только на будущие распределения.</div></div></div><div class="version" id="currentVersion">Версия 1 · октябрьский образец</div><div id="paramForm">
@@ -260,7 +253,7 @@ const builtInTotal=Object.entries(b).reduce((sum,[key,value])=>sum+(key==='reser
 const customTotal=(state.customAccounts||[]).reduce((sum,acc)=>sum+(state.accountVisibility?.['custom:'+acc.id]===false?0:(Number(acc.balance)||0)),0);$('dashTotalBalance').textContent=fmt(builtInTotal+customTotal);$('dashRent').textContent=fmt(b.rent||0);$('dashReserveDebt').textContent=fmt(b.reserveDebt||0);$('dashCushion').textContent=fmt(b.cushion||0);
 const env=[['Буфер','buffer'],['Аренда','rent'],['Крупные хотелки','wantsLarge'],['Мелкие хотелки','wantsSmall'],['Алименты','alimony'],['Долги людям','people'],['Долги банкам','banks'],['Подушка','cushion'],['Инвестиции','investments'],['Благотворительность','charity']];const order=state.accountOrder||[];env.sort((a,b)=>{const ia=order.indexOf(a[1]),ib=order.indexOf(b[1]);return (ia<0?999:ia)-(ib<0?999:ib)});
 let html=env.map(([name,key])=>`<div class="dash-envelope ${state.accountVisibility?.[key]===false?'account-excluded':''}" draggable="true" data-account-key="${key}"><span class="label">${name}</span><b>${fmt(b[key]||0)}</b><button class="dash-edit" type="button" aria-label="Изменить остаток ${name}" onclick="editBalance('${key}','${name}')">✎</button></div>`).join('');
-const custom=[...(state.customAccounts||[])].sort((a,b)=>{const ia=order.indexOf('custom:'+a.id),ib=order.indexOf('custom:'+b.id);return (ia<0?999:ia)-(ib<0?999:ib)});custom.forEach(acc=>{const key='custom:'+acc.id;html+=`<div class="dash-envelope ${state.accountVisibility?.[key]===false?'account-excluded':''}" draggable="true" data-account-key="${key}"><span class="label">${escapeHtml(acc.name)}</span><b>${fmt(acc.balance||0)}</b><button class="dash-edit" type="button" aria-label="Изменить счёт ${escapeHtml(acc.name)}" onclick="editCustomAccount('${acc.id}')">✎</button></div>`});$('dashEnvelopes').innerHTML=html;renderUnifiedOperations();renderCustomAccountsSettings();wireDragSort('dashEnvelopes','[data-account-key]','accountOrder','data-account-key');
+const custom=[...(state.customAccounts||[])].sort((a,b)=>{const ia=order.indexOf('custom:'+a.id),ib=order.indexOf('custom:'+b.id);return (ia<0?999:ia)-(ib<0?999:ib)});custom.forEach(acc=>{const key='custom:'+acc.id;html+=`<div class="dash-envelope ${state.accountVisibility?.[key]===false?'account-excluded':''}" draggable="true" data-account-key="${key}"><span class="label">${escapeHtml(acc.name)}</span><b>${fmt(acc.balance||0)}</b><button class="dash-edit" type="button" aria-label="Изменить счёт ${escapeHtml(acc.name)}" onclick="editCustomAccount('${acc.id}')">✎</button></div>`});$('dashEnvelopes').innerHTML=html;const accountCount=env.length+custom.length;const stackCount=$('accountsStackCount');if(stackCount)stackCount.textContent=accountCount+' счетов и конвертов';const stackBalance=$('accountsStackBalance');if(stackBalance)stackBalance.textContent=fmt(builtInTotal+customTotal);const modalBalance=$('accountsModalBalance');if(modalBalance)modalBalance.textContent=fmt(builtInTotal+customTotal);renderUnifiedOperations();renderCustomAccountsSettings();wireDragSort('dashEnvelopes','[data-account-key]','accountOrder','data-account-key');
 }
 function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function setAccountVisibility(key,visible){if(!state.accountVisibility)state.accountVisibility={};state.accountVisibility[key]=!!visible;persist();renderDashboard();}
@@ -374,6 +367,7 @@ function syncDistributionSources(selected){const sel=$('source');if(!sel)return;
 function addIncomeSource(){const v=$('newIncomeSource').value.trim();if(!v)return alert('Введи название источника.');if(!state.incomeSources)state.incomeSources=[];if(state.incomeSources.some(x=>x.toLowerCase()===v.toLowerCase()))return alert('Такой источник уже есть.');state.incomeSources.push(v);persist();$('newIncomeSource').value='';renderIncomeSources();refreshIncomeSourceSelect(v);syncDistributionSources(v);showToast('Источник добавлен');}
 function removeIncomeSource(i){if(!confirm('Удалить источник из вариантов? Старые операции не изменятся.'))return;state.incomeSources.splice(i,1);persist();renderIncomeSources();refreshIncomeSourceSelect();}
 function initSettingsAccordions(){const root=$('parameters');if(!root||root.dataset.accordionsReady)return;root.dataset.accordionsReady='1';const cards=[...root.querySelectorAll(':scope > .card')];cards.forEach((card,i)=>{if(card.querySelector('details'))return;const heading=card.querySelector('h2');if(!heading)return;const title=heading.textContent.trim();const details=document.createElement('details');details.className='settings-accordion';details.open=false;const summary=document.createElement('summary');summary.textContent=title;summary.className='settings-summary';const content=document.createElement('div');content.className='settings-content';[...card.childNodes].forEach(node=>{if(node===heading||node.nodeType===1&&node.classList?.contains('sectionhead')&&node.querySelector('h2')===heading)return;content.appendChild(node)});details.append(summary,content);card.innerHTML='';card.appendChild(details);});}
+$('openAccountsModal').onclick=()=>{renderDashboard();$('accountsModal').hidden=false;document.body.style.overflow='hidden';};function closeAccountsModal(){$('accountsModal').hidden=true;document.body.style.overflow='';}$('accountsModalClose').onclick=closeAccountsModal;$('accountsModal').addEventListener('click',e=>{if(e.target===$('accountsModal'))closeAccountsModal();});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('accountsModal').hidden)closeAccountsModal();});
 $('openDebtForm').onclick=()=>{$('debtFormPanel').hidden=false;$('openDebtForm').hidden=true;};$('closeDebtForm').onclick=()=>{$('debtFormPanel').hidden=true;$('openDebtForm').hidden=false;};$('debtorsDetails')?.addEventListener('toggle',()=>{$('debtorsDetails').classList.toggle('debtors-open',$('debtorsDetails').open)});$('addIncomeSource').onclick=addIncomeSource;
 
 function showPage(id){document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.page===id));document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));$('headerSubtitle').textContent=id==='home'?'Счета и финансовые цели в одном месте.':id==='distribution'?'Рассчитай поступление и распредели его по своим правилам.':id==='debts'?'Реестр обязательств, возвратов и полученных долгов.':id==='history'?'Полный журнал доходов, расходов и переводов.':'Параметры системы и версии распределения.';if(id==='history')renderHistory();if(id==='parameters'){initSettingsAccordions();renderVersions();renderExpenseCategories();renderExpenseTags();renderIncomeSources();}if(id==='debts')renderDebts();if(id==='home')renderDashboard();window.scrollTo({top:0,behavior:'smooth'})}
