@@ -252,18 +252,6 @@ button.primary{background:linear-gradient(100deg,#2f82ff,#70aaff);color:#07152b;
 .accounts-full-list .dash-envelope.debt-alert .label{padding-left:0;padding-right:0;text-align:left}
 .accounts-full-list .dash-envelope.debt-alert .account-values{align-items:flex-end;text-align:right}
 .accounts-full-list .dash-envelope.debt-alert b,.accounts-full-list .dash-envelope.debt-alert .account-debt-total{text-align:right}
-
-.brand{display:flex;align-items:center;gap:10px;min-height:44px;margin-bottom:8px;color:#e8f2ff;font-size:13px;letter-spacing:3.2px;font-weight:500}
-.brand-logo{width:42px;height:42px;object-fit:contain;flex:0 0 auto}
-.brand-wordmark{display:flex;flex-direction:column;gap:4px;white-space:nowrap;line-height:1.1}
-.brand-wordmark>span{font-size:clamp(10px,2.5vw,13px);letter-spacing:clamp(1.4px,.45vw,3px)}
-.brand-wordmark small{display:flex;align-items:center;justify-content:center;gap:9px;color:#7da9e6;font-size:10px;letter-spacing:5px;padding-left:5px}
-.brand-wordmark small i{display:block;width:25px;height:1px;background:#365d91}
-.topmark{display:none}
-.nav-icon{display:grid;place-items:center;width:24px;height:24px;color:#a7c8f5}
-.nav-icon svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round}
-.tab.active .nav-icon{color:#d6e8ff;filter:drop-shadow(0 0 5px #4599ff99)}
-@media(max-width:620px){.brand{gap:8px;min-height:38px;margin-bottom:6px}.brand-logo{width:36px;height:36px}.brand-wordmark>span{letter-spacing:1.5px}.brand-wordmark small{font-size:9px;letter-spacing:4px}.brand-wordmark small i{width:18px}.nav-icon{width:24px;height:24px}.nav-icon svg{width:22px;height:22px}}
 </style>
 <style>/* Reserve debt allocation must sit above the distribution screen and any other modal. */
 #reserveDebtAllocationModal{z-index:10050!important;position:fixed!important;inset:0!important}
@@ -297,8 +285,8 @@ button.primary{background:linear-gradient(100deg,#2f82ff,#70aaff);color:#07152b;
 #reserveDebtAllocationModal .actions{margin-top:14px!important}
 </style>
 </head><body>
-<header><div><div class="brand"><img src="logo.svg" alt="" class="brand-logo"><span class="brand-wordmark"><span>PERSONAL FINANCE</span><small><i></i>SYSTEM<i></i></small></span></div><div class="title-line"><h1>Мои финансы</h1><span class="version-mark" aria-label="Версия приложения 20">v20</span><button class="refresh-app" type="button" id="refreshApp" aria-label="Обновить страницу" title="Обновить страницу">↻</button></div><div class="subtitle" id="headerSubtitle">Счета и финансовые цели в одном месте.</div></div><div class="topmark" aria-hidden="true"><img src="logo.svg" alt=""></div></header>
-<main><nav class="tabs" aria-label="Основная навигация"><button class="tab active" data-page="home"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V21h-6v-6H9v6H3z"/></svg></span><span>Главная</span></button><button class="tab" data-page="distribution"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9h-9z"/><path d="M15 3.5A9 9 0 0 1 20.5 9H15z"/></svg></span><span>План</span></button><button class="tab" data-page="debts"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8.5 12.5 2.1 2.1a2 2 0 0 0 2.8 0l4.1-4.1"/><path d="m2.5 10 5-5 4 1 2-1 4-1 4 5-3 3"/><path d="m2.5 10 5 5 2-2"/><path d="m18 11 3.5 3.5-5 5-4-3.5"/><path d="m7.5 15 2 2m1-3 2 2m1-3 2 2"/></svg></span><span>Долги</span></button><button class="tab" data-page="history"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h10l4 4v8"/><path d="M16 3v5h4"/><path d="M6 8h6M6 12h5M6 16h3"/><circle cx="16.5" cy="17" r="4.5"/><path d="M16.5 14.5V17l1.8 1"/></svg></span><span>История</span></button><button class="tab" data-page="parameters" aria-label="Настройки" title="Настройки"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1 1.4 1.1-1.5 2.6-1.7-.7a8 8 0 0 1-1.7 1l-.3 1.9h-3l-.3-1.9a8 8 0 0 1-1.7-1l-1.7.7-1.5-2.6 1.4-1.1A7 7 0 0 1 8.7 13l-1.8-.8v-3l1.8-.4a7 7 0 0 1 1-1.8L9 5.3l2.6-1.5 1.1 1.4a7 7 0 0 1 2 0l1.1-1.4 2.6 1.5-.7 1.7a7 7 0 0 1 1 1.8l1.8.4v3l-1.8.8a7 7 0 0 1-.3 2z"/></svg></span><span class="nav-label-settings">Настройки</span></button></nav>
+<header><div><div class="brand">PERSONAL FINANCE SYSTEM</div><div class="title-line"><h1>Мои финансы</h1><span class="version-mark" aria-label="Версия приложения 20">v20</span><button class="refresh-app" type="button" id="refreshApp" aria-label="Обновить страницу" title="Обновить страницу">↻</button></div><div class="subtitle" id="headerSubtitle">Счета и финансовые цели в одном месте.</div></div><div class="topmark">◈</div></header>
+<main><nav class="tabs" aria-label="Основная навигация"><button class="tab active" data-page="home"><span class="nav-icon">⌂</span><span>Главная</span></button><button class="tab" data-page="distribution"><span class="nav-icon">⑂</span><span>План</span></button><button class="tab" data-page="debts"><span class="nav-icon">↔</span><span>Долги</span></button><button class="tab" data-page="history"><span class="nav-icon">◷</span><span>История</span></button><button class="tab" data-page="parameters" aria-label="Настройки" title="Настройки"><span class="nav-icon">☷</span><span class="nav-label-settings">Настройки</span></button></nav>
 <section id="home" class="page active">
 <section class="financial-health" aria-label="Быстрая оценка финансового состояния">
 
@@ -324,7 +312,7 @@ button.primary{background:linear-gradient(100deg,#2f82ff,#70aaff);color:#07152b;
 </section>
 <section id="accounts" class="page accounts-page">
   <button type="button" class="accounts-back" id="accountsBack">‹ Главная</button>
-  <div class="accounts-page-heading"><div class="brand"><img src="logo.svg" alt="" class="brand-logo"><span class="brand-wordmark"><span>PERSONAL FINANCE</span><small><i></i>SYSTEM<i></i></small></span></div><h2>Все счета</h2><p>Актуальные остатки по каждому конверту.</p></div>
+  <div class="accounts-page-heading"><div class="brand">PERSONAL FINANCE SYSTEM</div><h2>Все счета</h2><p>Актуальные остатки по каждому конверту.</p></div>
   <div class="accounts-page-total"><span>Общий баланс</span><strong id="accountsPageTotal">0 ₽</strong></div>
   <div class="dash-list accounts-full-list" id="accountsEnvelopes"></div>
 </section>
