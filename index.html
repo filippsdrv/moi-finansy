@@ -237,6 +237,10 @@ button.primary{background:linear-gradient(100deg,#2f82ff,#70aaff);color:#07152b;
 /* Plan page: hide warning and export/print links without removing JS-bound elements. */
 #distribution #warning{display:none!important}
 #distribution .footer{display:none!important}
+
+/* Общий баланс: подпись и сумма выровнены по левому краю */
+.health-grid>.health-total{align-items:flex-start;text-align:left}
+.health-grid>.health-total>span,.health-grid>.health-total>b,#dashTotalBalance{text-align:left;margin-left:0;margin-right:0}
 </style>
 <style>/* Reserve debt allocation must sit above the distribution screen and any other modal. */
 #reserveDebtAllocationModal{z-index:10050!important;position:fixed!important;inset:0!important}
