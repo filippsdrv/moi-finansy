@@ -717,13 +717,13 @@ document.getElementById('refreshApp')?.addEventListener('click',()=>window.locat
   previewUrl.searchParams.set('phonePreview', '1');
   previewUrl.hash = '';
   document.body.innerHTML = `
-    <div style="min-height:100vh;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:22px 16px;background:radial-gradient(ellipse at 50% 0%,#202d45 0,transparent 48%),#0e1014;color:#929baa;font:500 12px Montserrat,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
-      <div style="letter-spacing:1.4px;text-transform:uppercase;">Предпросмотр · iPhone 13 Pro</div>
-      <div style="padding:10px;border:1px solid #343b49;border-radius:48px;background:linear-gradient(145deg,#424957,#111318 34%,#292e38);box-shadow:0 24px 70px rgba(0,0,0,.55),inset 0 0 0 1px rgba(255,255,255,.08);line-height:0;">
-        <iframe title="Предпросмотр приложения на iPhone 13 Pro" src="${previewUrl.href}" style="display:block;width:390px;height:844px;max-width:calc(100vw - 74px);border:0;border-radius:39px;background:#0e1014;overflow:hidden;" loading="eager"></iframe>
+    <div style="height:100vh;min-height:0;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:8px 16px;background:radial-gradient(ellipse at 50% 0%,#202d45 0,transparent 48%),#0e1014;color:#929baa;font:500 11px Montserrat,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;overflow:hidden;">
+      <div style="flex:0 0 auto;letter-spacing:1.4px;text-transform:uppercase;">Предпросмотр · iPhone 13 Pro</div>
+      <div style="flex:0 1 auto;min-height:0;padding:7px;border:1px solid #343b49;border-radius:38px;background:linear-gradient(145deg,#424957,#111318 34%,#292e38);box-shadow:0 16px 48px rgba(0,0,0,.45),inset 0 0 0 1px rgba(255,255,255,.08);line-height:0;">
+        <iframe title="Предпросмотр приложения на iPhone 13 Pro" src="${previewUrl.href}" style="display:block;width:min(390px, calc((100vh - 74px) * 0.462));height:min(844px, calc(100vh - 74px));border:0;border-radius:31px;background:#0e1014;overflow:hidden;" loading="eager"></iframe>
       </div>
-      <div style="color:#6f7888;font-size:11px;text-align:center;">390 × 844 · мобильный интерфейс</div>
+      <div style="flex:0 0 auto;color:#6f7888;font-size:10px;text-align:center;">390 × 844 · мобильный интерфейс</div>
     </div>`;
-  document.body.style.cssText = 'margin:0;padding:0;min-height:100vh;overflow:auto;background:#0e1014;';
-})();
+  document.body.style.cssText = 'margin:0;padding:0;height:100vh;min-height:0;overflow:hidden;background:#0e1014;';
+})();;
 </script></body></html>
