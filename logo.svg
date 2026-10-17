@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Personal Finance System">
+<defs>
+ <linearGradient id="back" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#91eaff"/><stop offset=".48" stop-color="#398de8"/><stop offset="1" stop-color="#203f83"/></linearGradient>
+ <linearGradient id="mid" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#a5f2ff"/><stop offset=".5" stop-color="#4aa9f0"/><stop offset="1" stop-color="#2857b2"/></linearGradient>
+ <linearGradient id="front" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#24466e"/><stop offset="1" stop-color="#0c1a31"/></linearGradient>
+ <linearGradient id="edge" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#c7f6ff"/><stop offset=".5" stop-color="#6bbaff"/><stop offset="1" stop-color="#4169bb"/></linearGradient>
+</defs>
+<g stroke-linejoin="round">
+ <path d="M35 7 73 14Q78 15 78 21V59Q78 65 72 64L34 56Q29 55 29 49V14Q29 8 35 7Z" fill="url(#back)" stroke="#4f83d2" stroke-width="1.2"/>
+ <path d="M24 18 65 26Q71 27 71 33V69Q71 75 65 73L23 64Q18 63 18 57V25Q18 17 24 18Z" fill="url(#mid)" stroke="#8feaff" stroke-width="1.3"/>
+ <path d="M18 31 58 39Q64 40 64 46V79Q64 86 58 85L17 76Q11 75 11 69V38Q11 30 18 31Z" fill="url(#front)" stroke="url(#edge)" stroke-width="1.7"/>
+ <path d="M35 47v25m0-25h9q8 0 8 7t-8 7H29m6-7h13m-19 7h23" fill="none" stroke="#e9f5ff" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
+</g></svg>
