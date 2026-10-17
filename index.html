@@ -417,6 +417,115 @@ const DEFAULTS={rentTarget:25000,bufferTarget:5000,bufferAfterRent:30,wants:40,o
 const PARAM_IDS=Object.keys(DEFAULTS);let state=loadState(),rentAccumulated=false,lastPlan=null,pendingReserveAllocation=null,reserveAllocationExpected=0; if(!state.migrations)state.migrations={};if(!state.migrations.zeroedLegacyNegativeCategories){['people','wantsSmall'].forEach(key=>{if(Number(state.balances?.[key])<0)state.balances[key]=0;});state.migrations.zeroedLegacyNegativeCategories=true;persist();} if(!state.reserveDebtComposition)state.reserveDebtComposition={cushion:0,wantsSmall:0,people:0,other:0};else if(state.reserveDebtComposition.other==null)state.reserveDebtComposition.other=0;
 function migrateUnassignedReserveDebt(){const total=Math.round((Math.max(0,Number(state.balances?.reserveDebt)||0))*100)/100;const map=state.reserveDebtByAccount||{};let gap=Math.round((total-reserveDebtMapTotal(map))*100)/100;if(gap<=0.01)return;const ops=[...(state.expenses||[]).filter(x=>!x.debtAccountRecorded&&Number(x.debtIncrease)>0).map(x=>({kind:'expense',x,key:x.debtAccountKey||x.accountKey,amount:Math.round(Number(x.debtIncrease)*100)/100,at:x.createdAt||''})),...(state.transfers||[]).filter(x=>!x.debtAccountRecorded&&Number(x.reserveDebtDelta)>0).map(x=>({kind:'transfer',x,key:x.debtAccountKey||x.fromKey,amount:Math.round(Number(x.reserveDebtDelta)*100)/100,at:x.createdAt||''}))].sort((a,b)=>String(b.at).localeCompare(String(a.at)));let changed=false;for(const op of ops){if(gap<=0.01)break;if(op.amount>gap+0.01)continue;map[op.key]=Math.round(((Number(map[op.key])||0)+op.amount)*100)/100;gap=Math.round((gap-op.amount)*100)/100;op.x.debtAccountKey=op.key;op.x.debtAccountRecorded=true;changed=true;}if(changed&&gap<=0.01){state.reserveDebtByAccount=map;persist();}}
 migrateUnassignedReserveDebt();
+migrateDebtModelV1();
+function normalizeDebtContactName(value){return String(value||'').trim().replace(/\\s+/g,' ').toLocaleLowerCase('ru-RU');}
+function migrateDebtModelV1(){
+ const VERSION=1;
+ if(!state.migrations)state.migrations={};
+ if(Number(state.migrations.debtModelVersion||0)>=VERSION)return;
+ const legacyDebts=Array.isArray(state.debts)?state.debts:[];
+ const legacyPayments=Array.isArray(state.debtPayments)?state.debtPayments:[];
+ const legacyTransfers=Array.isArray(state.transfers)?state.transfers:[];
+ const contacts=[],loans=[],operations=[],nameGroups={};
+ const usedContactIds=new Set();
+ const contactIdFor=(d)=>{
+  const id='contact_legacy_'+String(d.id);
+  if(!usedContactIds.has(id)){
+   usedContactIds.add(id);
+   const normalizedName=normalizeDebtContactName(d.name);
+   const groupKey=String(d.type||'other')+'|'+normalizedName;
+   const contact={id,name:String(d.name||'Без названия'),type:d.type||'other',legacyDebtIds:[String(d.id)],suggestedGroupKey:groupKey,needsContactReview:false,source:'migration-v1'};
+   contacts.push(contact);
+   if(!nameGroups[groupKey])nameGroups[groupKey]=[];
+   nameGroups[groupKey].push(contact);
+  }
+  return id;
+ };
+ legacyDebts.forEach(d=>{
+  const legacyId=String(d.id);
+  const contactId=contactIdFor(d);
+  const original=Math.max(0,Math.round((Number(d.original)||Number(d.remaining)||0)*100)/100);
+  const remaining=Math.max(0,Math.round((Number(d.remaining)||0)*100)/100);
+  loans.push({
+   id:'loan_legacy_'+legacyId,
+   legacyDebtId:legacyId,
+   contactId,
+   direction:d.direction==='receivable'?'receivable':'owed',
+   type:d.type||'other',
+   original,
+   openingRemaining:remaining,
+   remaining,
+   due:d.due||'',
+   note:d.note||'',
+   createdAt:d.createdAt||null,
+   status:remaining<=0?'closed':'active',
+   balanceMode:'legacy-opening-balance',
+   source:'migration-v1'
+  });
+ });
+ Object.values(nameGroups).forEach(group=>{
+  if(group.length>1)group.forEach(c=>c.needsContactReview=true);
+ });
+ const transferIdsByDebt={};
+ legacyTransfers.forEach(t=>{
+  if(!t||t.reversedAt||!t.debtId)return;
+  const id=String(t.debtId);
+  if(!transferIdsByDebt[id])transferIdsByDebt[id]=[];
+  transferIdsByDebt[id].push(t);
+ });
+ const seenTransferIds=new Set();
+ legacyPayments.forEach(p=>{
+  if(!p||!p.id)return;
+  const linked=(transferIdsByDebt[String(p.debtId)]||[]).find(t=>{
+   if(seenTransferIds.has(String(t.id)))return false;
+   const sameAmount=Math.abs((Number(t.amount)||0)-(Number(p.amount)||0))<0.011;
+   const compatible=(p.direction==='borrowing'&&t.type==='borrowing')||(p.direction==='owed'&&t.type==='debtPayment')||(p.direction==='receivable'&&t.type==='debtPayment');
+   return sameAmount&&compatible;
+  });
+  if(linked)seenTransferIds.add(String(linked.id));
+  const legacyDebt=legacyDebts.find(d=>String(d.id)===String(p.debtId));
+  operations.push({
+   id:'op_legacy_'+String(p.id),
+   legacyPaymentId:String(p.id),
+   legacyTransferId:linked?String(linked.id):null,
+   legacyDebtId:p.debtId==null?null:String(p.debtId),
+   loanId:p.debtId==null?null:'loan_legacy_'+String(p.debtId),
+   contactId:legacyDebt?'contact_legacy_'+String(legacyDebt.id):null,
+   type:p.direction==='borrowing'?'borrow':p.direction==='receivable'?'receive':'repay',
+   direction:p.direction||null,
+   amount:Math.max(0,Math.round((Number(p.amount)||0)*100)/100),
+   accountKey:p.accountKey||null,
+   date:p.date||'',
+   comment:p.comment||'',
+   createdAt:p.createdAt||null,
+   cancelled:false,
+   balanceApplied:!!p.accountKey,
+   source:'migration-v1',
+   reconciliationRequired:!legacyDebt||!p.accountKey
+  });
+ });
+ const unmatchedTransfers=legacyTransfers.filter(t=>t&&(t.type==='borrowing'||t.type==='debtPayment')&&!seenTransferIds.has(String(t.id))).map(t=>({
+  id:String(t.id),debtId:t.debtId==null?null:String(t.debtId),type:t.type,amount:Number(t.amount)||0,
+  accountKey:t.toKey||t.fromKey||null,reversed:!!t.reversedAt,
+  reason:!legacyDebts.some(d=>String(d.id)===String(t.debtId))?'missing-debt':'no-matching-payment'
+ }));
+ state.debtModelV1={
+  version:VERSION,
+  migratedAt:new Date().toISOString(),
+  contacts,
+  loans,
+  operations,
+  unmatchedTransfers,
+  migrationNotes:[
+   'Legacy balances and account balances were not changed.',
+   'Each legacy debt initially has its own contact; suggestedGroupKey only proposes possible duplicates.',
+   'Existing remaining balances are preserved as openingRemaining; historical payment totals are not used to overwrite them.',
+   'Transfers without a matching payment remain in unmatchedTransfers for manual reconciliation.'
+  ]
+ };
+ state.migrations.debtModelVersion=VERSION;
+ persist();
+}
 function loadState(){try{const s=JSON.parse(localStorage.getItem(STORE)||'{}');if(!s.paramsVersions||!s.paramsVersions.length)s.paramsVersions=[{id:1,createdAt:new Date().toISOString(),label:'Октябрьский образец',params:{...DEFAULTS}}];s.paramsVersions.forEach(v=>{if(v.params&&v.params.bufferAfterRent===undefined)v.params.bufferAfterRent=30;if(v.params&&v.params.charity===undefined)v.params.charity=1});if(!s.records)s.records=[];if(!s.expenses)s.expenses=[];if(!s.expenseCategories)s.expenseCategories=[{id:'food',name:'Питание',active:true},{id:'transport',name:'Транспорт',active:true},{id:'home',name:'Дом и быт',active:true},{id:'health',name:'Здоровье',active:true},{id:'leisure',name:'Досуг',active:true},{id:'gifts',name:'Подарки',active:true},{id:'other',name:'Другое',active:true}];if(!s.expenseTags)s.expenseTags=['работа','обед','подписки','сын','разовое'];if(!s.customAccounts)s.customAccounts=[];if(!s.debts)s.debts=[];if(!s.debtPayments)s.debtPayments=[];if(!s.transfers)s.transfers=[];if(!s.incomes)s.incomes=[];if(!s.accountVisibility)s.accountVisibility={};if(!s.incomeSources)s.incomeSources=['Подработка','Зарплата','Оплата за услуги','Возврат долга','Премия','Другое поступление'];if(!s.accountOrder)s.accountOrder=[];if(!s.debtOrder)s.debtOrder=[];if(!s.balances)s.balances={rent:0,buffer:0,reserveDebt:0,cushion:0,investments:0,charity:0,wantsLarge:0,wantsSmall:0,alimony:0,people:0,banks:0};if(!s.reserveDebtByAccount||typeof s.reserveDebtByAccount!=='object'){const debt=Math.round((Number(s.balances.reserveDebt)||0)*100)/100;s.reserveDebtByAccount=debt===18500?{cushion:6500,wantsSmall:10562,people:1438}:{};}s.currentVersionId=s.currentVersionId||s.paramsVersions[s.paramsVersions.length-1].id;const cv=s.paramsVersions.find(v=>String(v.id)===String(s.currentVersionId));if(cv&&(!s.records||s.records.length===0)&&Number(cv.params.obligations)===40)cv.params.obligations=39;return s}catch(e){return{paramsVersions:[{id:1,createdAt:new Date().toISOString(),label:'Октябрьский образец',params:{...DEFAULTS}}],currentVersionId:1,records:[],expenses:[],incomes:[],accountVisibility:{},customAccounts:[],debts:[],debtPayments:[],balances:{rent:0,buffer:0,reserveDebt:0,cushion:0,investments:0,charity:0,wantsLarge:0,wantsSmall:0,alimony:0,people:0,banks:0}}}}
 function showToast(message='Запись сохранена'){const t=$('successToast');if(!t)return;t.textContent=message;t.classList.add('show');clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>t.classList.remove('show'),2400)}
 function persist(){try{localStorage.setItem(STORE,JSON.stringify(state));if(typeof scheduleDriveBackup==='function')scheduleDriveBackup()}catch(e){alert('Не удалось сохранить в браузере. Экспортируй историю CSV и освободи место в Safari.')}}
