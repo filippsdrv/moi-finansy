@@ -265,7 +265,7 @@ button.primary{background:linear-gradient(100deg,#2f82ff,#70aaff);color:#07152b;
 #reserveDebtAllocationModal .actions{margin-top:14px!important}
 </style>
 </head><body>
-<header><div><div class="brand">PERSONAL FINANCE SYSTEM</div><div class="title-line"><h1>Мои финансы</h1><span class="version-mark" aria-label="Версия приложения 24">v24</span><button class="refresh-app" type="button" id="refreshApp" aria-label="Обновить страницу" title="Обновить страницу">↻</button></div><div class="subtitle" id="headerSubtitle">Счета и финансовые цели в одном месте.</div></div><div class="topmark">◈</div></header>
+<header><div><div class="brand">PERSONAL FINANCE SYSTEM</div><div class="title-line"><h1>Мои финансы</h1><span class="version-mark" aria-label="Версия приложения 21">v21</span><button class="refresh-app" type="button" id="refreshApp" aria-label="Обновить страницу" title="Обновить страницу">↻</button></div><div class="subtitle" id="headerSubtitle">Счета и финансовые цели в одном месте.</div></div><div class="topmark">◈</div></header>
 <main><nav class="tabs" aria-label="Основная навигация"><button class="tab active" data-page="home"><span class="nav-icon">⌂</span><span>Главная</span></button><button class="tab" data-page="distribution"><span class="nav-icon">⑂</span><span>План</span></button><button class="tab" data-page="debts"><span class="nav-icon">↔</span><span>Долги</span></button><button class="tab" data-page="history"><span class="nav-icon">◷</span><span>История</span></button><button class="tab" data-page="parameters" aria-label="Настройки" title="Настройки"><span class="nav-icon">☷</span><span class="nav-label-settings">Настройки</span></button></nav>
 <section id="home" class="page active">
 <section class="financial-health" aria-label="Быстрая оценка финансового состояния">
@@ -300,6 +300,7 @@ button.primary{background:linear-gradient(100deg,#2f82ff,#70aaff);color:#07152b;
 <div class="card"><div class="sectionhead"><div class="step">1</div><div><h2>Исходные данные</h2></div></div>
 <div class="grid"><div class="field"><label for="amount">Сумма дохода, ₽</label><input class="money" id="amount" type="number" min="0" step="0.01" value="" placeholder="12345" inputmode="decimal"></div><div class="field"><label for="date">Дата</label><input id="date" type="date"></div><div class="field"><label for="source">Источник дохода</label><select id="source"><option>Подработка</option><option>Зарплата</option><option>Оплата за услуги</option><option>Возврат долга</option><option>Премия</option><option>Другое поступление</option></select></div><div class="field"><label for="comment">Комментарии</label><textarea id="comment" rows="1" placeholder="Например: смена на Ладожском вокзале"></textarea></div><div class="field full"><div class="plan-mode" id="planMode">Фундамент</div></div></div></div>
 <div class="card"><div class="sectionhead"><div class="step">2</div><div><h2>Результат распределения</h2></div></div><div class="summary"><small>Сумма поступления</small><div class="big" id="total">25 000 ₽</div><div class="chips"><div class="chip"><span>Буфер</span><b id="bufferResult">—</b></div><div class="chip"><span>Возврат в резервы</span><b id="reserveResult">—</b></div><div class="chip"><span>Аренда</span><b id="rentResult">—</b></div><div class="chip"><span>Хотелки</span><b id="wantsResult">—</b></div><div class="chip"><span>Обязательства</span><b id="obligationsResult">—</b></div><div class="chip"><span>Инвестиции</span><b id="investmentsResult">—</b></div><div class="chip"><span>Подушка</span><b id="cushionResult">—</b></div></div></div><div class="sectionhead" style="margin:14px 2px 10px"><div><h2>Детализация</h2></div></div><div class="alloc-list" id="allocations"></div><div id="warning" class="warning"></div><div id="reconcile" class="reconcile" role="status"><span id="reconcileLamp" class="lamp"></span><div><b id="reconcileTitle">Проверка расчёта</b><div id="reconcileText" class="hint">Проверяем сумму распределения.</div></div></div><div class="actions"><button class="primary" id="confirmBtn">Подтвердить и сохранить</button><button class="secondary" id="resetBtn">Сбросить</button></div><div class="status" id="status"></div></div>
+<div class="footer"><button id="exportBtn">Экспорт всей истории CSV</button><button onclick="window.print()">Печать / PDF</button></div>
 </section>
 
 <section id="debts" class="page">
@@ -755,10 +756,9 @@ initDriveBackup();$('date').value=new Date().toLocaleDateString('en-CA');if($('d
 document.getElementById('refreshApp')?.addEventListener('click',()=>window.location.reload());
 (function desktopPhonePreview(){
   const params = new URLSearchParams(window.location.search);
-  if (params.has('phonePreviewFrame') || !window.matchMedia('(min-width: 621px)').matches) return;
+  if (params.has('phonePreview') || !window.matchMedia('(min-width: 700px)').matches) return;
   const previewUrl = new URL(window.location.href);
-  previewUrl.searchParams.delete('phonePreview');
-  previewUrl.searchParams.set('phonePreviewFrame', '1');
+  previewUrl.searchParams.set('phonePreview', '1');
   previewUrl.hash = '';
   document.body.innerHTML = `
     <div style="height:100vh;min-height:0;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:8px 16px;background:radial-gradient(ellipse at 50% 0%,#202d45 0,transparent 48%),#0e1014;color:#929baa;font:500 11px Montserrat,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;overflow:hidden;">
