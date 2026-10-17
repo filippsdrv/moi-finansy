@@ -241,6 +241,17 @@ button.primary{background:linear-gradient(100deg,#2f82ff,#70aaff);color:#07152b;
 /* Общий баланс: подпись и сумма выровнены по левому краю */
 .health-grid>.health-total{align-items:flex-start;text-align:left}
 .health-grid>.health-total>span,.health-grid>.health-total>b,#dashTotalBalance{text-align:left;margin-left:0;margin-right:0}
+
+/* Accounts list: align labels and balances to the row edges; debt gradient spans the full row */
+.accounts-full-list{border:0;border-radius:0;padding:0;background:transparent;column-gap:16px}
+.accounts-full-list .dash-envelope{padding:10px 0;gap:8px}
+.accounts-full-list .dash-envelope .label{padding-left:0;padding-right:0;text-align:left}
+.accounts-full-list .dash-envelope .account-values{margin-left:auto;align-items:flex-end;text-align:right}
+.accounts-full-list .dash-envelope b{text-align:right}
+.accounts-full-list .dash-envelope.debt-alert{padding:10px 0;border:0;border-radius:0;background:linear-gradient(to left,#48212a 0%,#2b1720 68%,transparent 100%);box-shadow:none}
+.accounts-full-list .dash-envelope.debt-alert .label{padding-left:0;padding-right:0;text-align:left}
+.accounts-full-list .dash-envelope.debt-alert .account-values{align-items:flex-end;text-align:right}
+.accounts-full-list .dash-envelope.debt-alert b,.accounts-full-list .dash-envelope.debt-alert .account-debt-total{text-align:right}
 </style>
 <style>/* Reserve debt allocation must sit above the distribution screen and any other modal. */
 #reserveDebtAllocationModal{z-index:10050!important;position:fixed!important;inset:0!important}
