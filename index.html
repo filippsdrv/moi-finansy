@@ -666,7 +666,7 @@ function undoMoneyMovement(id){
   if(x.fromKey==='buffer'&&accountBalance(x.fromKey)+amount<0){alert('Отмена привела бы к отрицательному буферу.');return;}
   setAccountBalance(x.fromKey,accountBalance(x.fromKey)+amount);d.remaining=Math.round((Number(d.remaining||0)+amount)*100)/100;const pay=(state.debtPayments||[]).find(p=>p.id===x.paymentId);if(pay)state.debtPayments=state.debtPayments.filter(p=>p.id!==pay.id);
  }
- x.reversedAt=new Date().toISOString();persist();renderDebts();renderDashboard();refreshOpeningForm();renderHistory();
+ x.reversedAt=new Date().toISOString();persist();renderDebts();renderDashboard();refreshOpeningForm();renderHistory();renderReserveDebtBreakdown();
 }
 function renderDebts(){
  fillDebtAccountOptions();const debts=state.debts||[];const owed=debts.filter(d=>d.direction==='owed').reduce((a,d)=>a+Math.max(0,Number(d.remaining)||0),0);const rec=debts.filter(d=>d.direction==='receivable').reduce((a,d)=>a+Math.max(0,Number(d.remaining)||0),0);
