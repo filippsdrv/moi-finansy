@@ -341,7 +341,6 @@ button.primary{background:linear-gradient(100deg,#2f82ff,#70aaff);color:#07152b;
 <div class="card"><button class="primary" id="openDebtForm" type="button">＋ Добавить долг</button><div id="debtFormPanel" hidden><div class="sectionhead" style="margin-top:18px"><div class="step">＋</div><div><h2 id="debtFormTitle">Добавить долг</h2><div class="hint">Старый долг — без движения денег. Если долг возник сейчас, укажи счёт зачисления или списания.</div></div></div>
 <div class="debt-form"><div class="field"><label for="debtEntryMode">Тип записи</label><select id="debtEntryMode"><option value="legacy">Старый долг — только учёт, без изменения счетов</option><option value="borrowed">Я взял деньги — зачислить на счёт</option><option value="paid">Я отдал деньги — списать со счёта</option></select></div><div class="field" id="debtAccountField"><label for="debtAccount">Счёт операции</label><select id="debtAccount"></select></div><div class="field"><label for="debtName">Кому / от кого</label><input id="debtName" type="text" placeholder="Например, Иван или банк"></div><div class="grid"><div class="field"><label for="debtDirection">Направление</label><select id="debtDirection"><option value="owed">Я должен</option><option value="receivable">Мне должны</option></select></div><div class="field"><label for="debtType">Категория</label><select id="debtType"><option value="person">Человек</option><option value="bank">Банк</option><option value="organization">Организация</option><option value="other">Другое</option></select></div></div><div class="grid"><div class="field"><label for="debtAmount">Сумма долга, ₽</label><input id="debtAmount" type="number" min="0.01" step="0.01" placeholder="0" inputmode="decimal"></div><div class="field"><label for="debtDue">Срок возврата</label><input id="debtDue" type="date"></div></div><div class="field"><label for="debtOperationDate">Дата операции (если берёшь или отдаёшь)</label><input id="debtOperationDate" type="date"></div><div class="field"><label for="debtNote">Примечание</label><input id="debtNote" type="text" placeholder="Договорённость, номер договора и т. п."></div><button class="primary" id="debtAddBtn" type="button">Добавить долг</button><div class="status" id="debtFormStatus"></div><button class="secondary" id="closeDebtForm" type="button">Закрыть</button></div></div></div>
 <div class="card"><details id="debtorsDetails"><summary class="debt-summary-title">Список должников</summary><div class="hint">Должники и кредиторы с текущим остатком.</div><div class="debt-filters"><button class="debt-filter active" data-debt-filter="all">Все</button><button class="debt-filter" data-debt-filter="owed">Я должен</button><button class="debt-filter" data-debt-filter="receivable">Мне должны</button></div><div id="debtContactList"></div><div class="note">Частичные платежи доступны в карточке каждого долга. Возврат тебе зачисляется прямо на выбранный счёт, без распределения.</div></details></div>
-<div class="card" id="debtMigrationAuditCard"><details id="debtMigrationAuditDetails"><summary class="debt-summary-title">Проверка переноса данных</summary><div class="hint" id="debtMigrationAuditSummary">Проверяем сохранность старых записей…</div><div id="debtMigrationAuditResults" class="debt-migration-audit"></div></details></div>
 <div class="card"><details id="debtHistoryDetails"><summary class="debt-summary-title">История платежей</summary><div class="hint">Погашения и поступления по всем записям.</div><div id="debtPaymentHistory"><div class="empty">Пока нет платежей.</div></div></details></div>
 </section>
 <div id="debtPaymentModal" class="expense-modal" hidden><div class="expense-sheet" role="dialog" aria-modal="true" aria-labelledby="debtPaymentTitle"><div class="expense-head"><div><h2 id="debtPaymentTitle">Записать платёж</h2><div class="hint" id="debtPaymentSubtitle"></div></div><button class="expense-close" id="debtPaymentClose" type="button" aria-label="Закрыть">×</button></div><div class="expense-form"><div class="field"><label for="debtPaymentAmount">Сумма, ₽</label><input id="debtPaymentAmount" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="0"></div><div class="field"><label for="debtPaymentAccount">Счёт операции</label><select id="debtPaymentAccount"></select></div><div class="field"><label for="debtPaymentDate">Дата</label><input id="debtPaymentDate" type="date"></div><div class="field"><label for="debtPaymentComment">Комментарий</label><input id="debtPaymentComment" type="text" placeholder="Необязательно"></div><div class="note" id="debtPaymentHint"></div><div class="actions"><button class="primary" id="debtPaymentSave" type="button">Сохранить платёж</button><button class="secondary" id="debtPaymentCancel" type="button">Отмена</button></div><div class="status" id="debtPaymentStatus"></div></div></div></div>
@@ -396,8 +395,6 @@ body:has(#home.active) #home{overflow:hidden;max-height:100%;}
 @media(min-width:621px){body:has(#home.active){overflow:auto;height:auto}body:has(#home.active) main{height:auto;overflow:visible;padding-bottom:28px}}
 
 
-#debtMigrationAuditCard{margin-top:12px}.debt-migration-audit{margin-top:12px}.debt-audit-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}.debt-audit-grid>div{padding:10px 8px;border:1px solid var(--border);border-radius:10px;min-width:0}.debt-audit-grid small{display:block;font-size:11px;color:var(--muted)}.debt-audit-grid b{display:block;margin-top:4px;font-size:18px}.debt-audit-group{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:12px}.debt-audit-group ul{margin:6px 0 0;padding-left:18px}.debt-audit-group li{margin:4px 0}.debt-audit-group.success{background:#17291f;color:#b5f0cd}.debt-audit-group.error{background:#301e21;color:#ffc3c8}.debt-audit-group.warning{background:#2d281b;color:#f3dfa1}@media(max-width:420px){.debt-audit-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-
 /* Compact, consistent status strips and matching indicators */
 .reconcile{padding:8px 11px;gap:8px;border-radius:10px;min-height:34px;font-size:12px;line-height:1.25}
 .lamp{width:9px;height:9px;flex:0 0 9px;box-shadow:0 0 0 3px #42d17a20,0 0 8px #42d17a70}
@@ -420,115 +417,6 @@ const DEFAULTS={rentTarget:25000,bufferTarget:5000,bufferAfterRent:30,wants:40,o
 const PARAM_IDS=Object.keys(DEFAULTS);let state=loadState(),rentAccumulated=false,lastPlan=null,pendingReserveAllocation=null,reserveAllocationExpected=0; if(!state.migrations)state.migrations={};if(!state.migrations.zeroedLegacyNegativeCategories){['people','wantsSmall'].forEach(key=>{if(Number(state.balances?.[key])<0)state.balances[key]=0;});state.migrations.zeroedLegacyNegativeCategories=true;persist();} if(!state.reserveDebtComposition)state.reserveDebtComposition={cushion:0,wantsSmall:0,people:0,other:0};else if(state.reserveDebtComposition.other==null)state.reserveDebtComposition.other=0;
 function migrateUnassignedReserveDebt(){const total=Math.round((Math.max(0,Number(state.balances?.reserveDebt)||0))*100)/100;const map=state.reserveDebtByAccount||{};let gap=Math.round((total-reserveDebtMapTotal(map))*100)/100;if(gap<=0.01)return;const ops=[...(state.expenses||[]).filter(x=>!x.debtAccountRecorded&&Number(x.debtIncrease)>0).map(x=>({kind:'expense',x,key:x.debtAccountKey||x.accountKey,amount:Math.round(Number(x.debtIncrease)*100)/100,at:x.createdAt||''})),...(state.transfers||[]).filter(x=>!x.debtAccountRecorded&&Number(x.reserveDebtDelta)>0).map(x=>({kind:'transfer',x,key:x.debtAccountKey||x.fromKey,amount:Math.round(Number(x.reserveDebtDelta)*100)/100,at:x.createdAt||''}))].sort((a,b)=>String(b.at).localeCompare(String(a.at)));let changed=false;for(const op of ops){if(gap<=0.01)break;if(op.amount>gap+0.01)continue;map[op.key]=Math.round(((Number(map[op.key])||0)+op.amount)*100)/100;gap=Math.round((gap-op.amount)*100)/100;op.x.debtAccountKey=op.key;op.x.debtAccountRecorded=true;changed=true;}if(changed&&gap<=0.01){state.reserveDebtByAccount=map;persist();}}
 migrateUnassignedReserveDebt();
-migrateDebtModelV1();
-function normalizeDebtContactName(value){return String(value||'').trim().replace(/\s+/g,' ').toLocaleLowerCase('ru-RU');}
-function migrateDebtModelV1(){
- const VERSION=1;
- if(!state.migrations)state.migrations={};
- if(Number(state.migrations.debtModelVersion||0)>=VERSION)return;
- const legacyDebts=Array.isArray(state.debts)?state.debts:[];
- const legacyPayments=Array.isArray(state.debtPayments)?state.debtPayments:[];
- const legacyTransfers=Array.isArray(state.transfers)?state.transfers:[];
- const contacts=[],loans=[],operations=[],nameGroups={};
- const usedContactIds=new Set();
- const contactIdFor=(d)=>{
-  const id='contact_legacy_'+String(d.id);
-  if(!usedContactIds.has(id)){
-   usedContactIds.add(id);
-   const normalizedName=normalizeDebtContactName(d.name);
-   const groupKey=String(d.type||'other')+'|'+normalizedName;
-   const contact={id,name:String(d.name||'Без названия'),type:d.type||'other',legacyDebtIds:[String(d.id)],suggestedGroupKey:groupKey,needsContactReview:false,source:'migration-v1'};
-   contacts.push(contact);
-   if(!nameGroups[groupKey])nameGroups[groupKey]=[];
-   nameGroups[groupKey].push(contact);
-  }
-  return id;
- };
- legacyDebts.forEach(d=>{
-  const legacyId=String(d.id);
-  const contactId=contactIdFor(d);
-  const original=Math.max(0,Math.round((Number(d.original)||Number(d.remaining)||0)*100)/100);
-  const remaining=Math.max(0,Math.round((Number(d.remaining)||0)*100)/100);
-  loans.push({
-   id:'loan_legacy_'+legacyId,
-   legacyDebtId:legacyId,
-   contactId,
-   direction:d.direction==='receivable'?'receivable':'owed',
-   type:d.type||'other',
-   original,
-   openingRemaining:remaining,
-   remaining,
-   due:d.due||'',
-   note:d.note||'',
-   createdAt:d.createdAt||null,
-   status:remaining<=0?'closed':'active',
-   balanceMode:'legacy-opening-balance',
-   source:'migration-v1'
-  });
- });
- Object.values(nameGroups).forEach(group=>{
-  if(group.length>1)group.forEach(c=>c.needsContactReview=true);
- });
- const transferIdsByDebt={};
- legacyTransfers.forEach(t=>{
-  if(!t||t.reversedAt||!t.debtId)return;
-  const id=String(t.debtId);
-  if(!transferIdsByDebt[id])transferIdsByDebt[id]=[];
-  transferIdsByDebt[id].push(t);
- });
- const seenTransferIds=new Set();
- legacyPayments.forEach(p=>{
-  if(!p||!p.id)return;
-  const linked=(transferIdsByDebt[String(p.debtId)]||[]).find(t=>{
-   if(seenTransferIds.has(String(t.id)))return false;
-   const sameAmount=Math.abs((Number(t.amount)||0)-(Number(p.amount)||0))<0.011;
-   const compatible=(p.direction==='borrowing'&&t.type==='borrowing')||(p.direction==='owed'&&t.type==='debtPayment')||(p.direction==='receivable'&&t.type==='debtPayment');
-   return sameAmount&&compatible;
-  });
-  if(linked)seenTransferIds.add(String(linked.id));
-  const legacyDebt=legacyDebts.find(d=>String(d.id)===String(p.debtId));
-  operations.push({
-   id:'op_legacy_'+String(p.id),
-   legacyPaymentId:String(p.id),
-   legacyTransferId:linked?String(linked.id):null,
-   legacyDebtId:p.debtId==null?null:String(p.debtId),
-   loanId:p.debtId==null?null:'loan_legacy_'+String(p.debtId),
-   contactId:legacyDebt?'contact_legacy_'+String(legacyDebt.id):null,
-   type:p.direction==='borrowing'?'borrow':p.direction==='receivable'?'receive':'repay',
-   direction:p.direction||null,
-   amount:Math.max(0,Math.round((Number(p.amount)||0)*100)/100),
-   accountKey:p.accountKey||null,
-   date:p.date||'',
-   comment:p.comment||'',
-   createdAt:p.createdAt||null,
-   cancelled:false,
-   balanceApplied:!!p.accountKey,
-   source:'migration-v1',
-   reconciliationRequired:!legacyDebt||!p.accountKey
-  });
- });
- const unmatchedTransfers=legacyTransfers.filter(t=>t&&(t.type==='borrowing'||t.type==='debtPayment')&&!seenTransferIds.has(String(t.id))).map(t=>({
-  id:String(t.id),debtId:t.debtId==null?null:String(t.debtId),type:t.type,amount:Number(t.amount)||0,
-  accountKey:t.toKey||t.fromKey||null,reversed:!!t.reversedAt,
-  reason:!legacyDebts.some(d=>String(d.id)===String(t.debtId))?'missing-debt':'no-matching-payment'
- }));
- state.debtModelV1={
-  version:VERSION,
-  migratedAt:new Date().toISOString(),
-  contacts,
-  loans,
-  operations,
-  unmatchedTransfers,
-  migrationNotes:[
-   'Legacy balances and account balances were not changed.',
-   'Each legacy debt initially has its own contact; suggestedGroupKey only proposes possible duplicates.',
-   'Existing remaining balances are preserved as openingRemaining; historical payment totals are not used to overwrite them.',
-   'Transfers without a matching payment remain in unmatchedTransfers for manual reconciliation.'
-  ]
- };
- state.migrations.debtModelVersion=VERSION;
- persist();
-}
 function loadState(){try{const s=JSON.parse(localStorage.getItem(STORE)||'{}');if(!s.paramsVersions||!s.paramsVersions.length)s.paramsVersions=[{id:1,createdAt:new Date().toISOString(),label:'Октябрьский образец',params:{...DEFAULTS}}];s.paramsVersions.forEach(v=>{if(v.params&&v.params.bufferAfterRent===undefined)v.params.bufferAfterRent=30;if(v.params&&v.params.charity===undefined)v.params.charity=1});if(!s.records)s.records=[];if(!s.expenses)s.expenses=[];if(!s.expenseCategories)s.expenseCategories=[{id:'food',name:'Питание',active:true},{id:'transport',name:'Транспорт',active:true},{id:'home',name:'Дом и быт',active:true},{id:'health',name:'Здоровье',active:true},{id:'leisure',name:'Досуг',active:true},{id:'gifts',name:'Подарки',active:true},{id:'other',name:'Другое',active:true}];if(!s.expenseTags)s.expenseTags=['работа','обед','подписки','сын','разовое'];if(!s.customAccounts)s.customAccounts=[];if(!s.debts)s.debts=[];if(!s.debtPayments)s.debtPayments=[];if(!s.transfers)s.transfers=[];if(!s.incomes)s.incomes=[];if(!s.accountVisibility)s.accountVisibility={};if(!s.incomeSources)s.incomeSources=['Подработка','Зарплата','Оплата за услуги','Возврат долга','Премия','Другое поступление'];if(!s.accountOrder)s.accountOrder=[];if(!s.debtOrder)s.debtOrder=[];if(!s.balances)s.balances={rent:0,buffer:0,reserveDebt:0,cushion:0,investments:0,charity:0,wantsLarge:0,wantsSmall:0,alimony:0,people:0,banks:0};if(!s.reserveDebtByAccount||typeof s.reserveDebtByAccount!=='object'){const debt=Math.round((Number(s.balances.reserveDebt)||0)*100)/100;s.reserveDebtByAccount=debt===18500?{cushion:6500,wantsSmall:10562,people:1438}:{};}s.currentVersionId=s.currentVersionId||s.paramsVersions[s.paramsVersions.length-1].id;const cv=s.paramsVersions.find(v=>String(v.id)===String(s.currentVersionId));if(cv&&(!s.records||s.records.length===0)&&Number(cv.params.obligations)===40)cv.params.obligations=39;return s}catch(e){return{paramsVersions:[{id:1,createdAt:new Date().toISOString(),label:'Октябрьский образец',params:{...DEFAULTS}}],currentVersionId:1,records:[],expenses:[],incomes:[],accountVisibility:{},customAccounts:[],debts:[],debtPayments:[],balances:{rent:0,buffer:0,reserveDebt:0,cushion:0,investments:0,charity:0,wantsLarge:0,wantsSmall:0,alimony:0,people:0,banks:0}}}}
 function showToast(message='Запись сохранена'){const t=$('successToast');if(!t)return;t.textContent=message;t.classList.add('show');clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>t.classList.remove('show'),2400)}
 function persist(){try{localStorage.setItem(STORE,JSON.stringify(state));if(typeof scheduleDriveBackup==='function')scheduleDriveBackup()}catch(e){alert('Не удалось сохранить в браузере. Экспортируй историю CSV и освободи место в Safari.')}}
@@ -857,56 +745,11 @@ function undoMoneyMovement(id){
  }
  x.reversedAt=new Date().toISOString();persist();renderDebts();renderDashboard();refreshOpeningForm();renderHistory();renderReserveDebtBreakdown();
 }
-function auditDebtModelV1(){
- const model=state.debtModelV1;
- if(!model)return {ok:false,errors:['Миграция ещё не выполнена.'],warnings:[],stats:{}};
- const errors=[],warnings=[];
- const legacyDebts=Array.isArray(state.debts)?state.debts:[];
- const legacyPayments=Array.isArray(state.debtPayments)?state.debtPayments:[];
- const legacyTransfers=Array.isArray(state.transfers)?state.transfers:[];
- const ids=new Set();
- model.contacts.forEach(c=>{if(ids.has(c.id))errors.push('Повторяется ID контакта: '+c.id);ids.add(c.id);});
- ids.clear();
- model.loans.forEach(l=>{if(ids.has(l.id))errors.push('Повторяется ID займа: '+l.id);ids.add(l.id);if(!model.contacts.some(c=>c.id===l.contactId))errors.push('У займа '+l.id+' отсутствует контакт.');if(!Number.isFinite(l.remaining)||l.remaining<0)errors.push('Некорректный остаток у '+l.id+'.');});
- const mappedDebtIds=new Set(model.loans.map(l=>String(l.legacyDebtId)));
- const mappedPaymentIds=new Set(model.operations.map(o=>String(o.legacyPaymentId)));
- const mappedTransferIds=new Set(model.operations.map(o=>String(o.legacyTransferId)).filter(x=>x!=='null'));
- legacyDebts.forEach(d=>{if(!mappedDebtIds.has(String(d.id)))errors.push('Старый долг не перенесён: '+d.id);});
- legacyPayments.forEach(p=>{if(!mappedPaymentIds.has(String(p.id)))errors.push('Платёж не перенесён: '+p.id);});
- const missingLinks=model.operations.filter(o=>!o.loanId||!model.loans.some(l=>l.id===o.loanId));
- if(missingLinks.length)warnings.push('Операций без найденного займа: '+missingLinks.length+'.');
- const noAccount=model.operations.filter(o=>!o.accountKey);
- if(noAccount.length)warnings.push('Операций без указанного счёта: '+noAccount.length+'.');
- const unmatched=model.unmatchedTransfers||[];
- if(unmatched.length)warnings.push('Несопоставленных переводов: '+unmatched.length+'.');
- if(model.loans.length!==legacyDebts.length)errors.push('Количество займов не совпадает с количеством старых записей долгов.');
- if(model.operations.length!==legacyPayments.length)errors.push('Количество операций не совпадает с количеством старых платежей.');
- const round=n=>Math.round((Number(n)||0)*100)/100;
- const legacyOwed=round(legacyDebts.filter(d=>d.direction==='owed').reduce((a,d)=>a+(Number(d.remaining)||0),0));
- const migratedOwed=round(model.loans.filter(d=>d.direction==='owed').reduce((a,d)=>a+d.remaining,0));
- const legacyReceivable=round(legacyDebts.filter(d=>d.direction==='receivable').reduce((a,d)=>a+(Number(d.remaining)||0),0));
- const migratedReceivable=round(model.loans.filter(d=>d.direction==='receivable').reduce((a,d)=>a+d.remaining,0));
- if(legacyOwed!==migratedOwed)errors.push('Не совпадает сумма «Я должен»: до '+fmt(legacyOwed)+', после '+fmt(migratedOwed)+'.');
- if(legacyReceivable!==migratedReceivable)errors.push('Не совпадает сумма «Мне должны»: до '+fmt(legacyReceivable)+', после '+fmt(migratedReceivable)+'.');
- if(legacyTransfers.length&&mappedTransferIds.size<legacyTransfers.filter(t=>t&&!t.reversedAt&&(t.type==='borrowing'||t.type==='debtPayment')).length)warnings.push('Часть старых переводов не сопоставлена автоматически; они не менялись.');
- return {ok:errors.length===0,errors,warnings,stats:{contacts:model.contacts.length,loans:model.loans.length,operations:model.operations.length,legacyDebts:legacyDebts.length,legacyPayments:legacyPayments.length,unmatched:unmatched.length,owedBefore:legacyOwed,owedAfter:migratedOwed,receivableBefore:legacyReceivable,receivableAfter:migratedReceivable}};
-}
-function renderDebtMigrationAudit(){
- const summary=$('debtMigrationAuditSummary'),results=$('debtMigrationAuditResults');
- if(!summary||!results)return;
- const audit=auditDebtModelV1(),s=audit.stats;
- summary.textContent=audit.ok?'Перенос проверен: количество записей и суммы остатков совпадают.':'Есть ошибки проверки переноса. Старые записи сохранены; новая модель пока не используется для расчётов.';
- results.innerHTML=(s.contacts!==undefined?'<div class="debt-audit-grid"><div><small>Контакты</small><b>'+s.contacts+'</b></div><div><small>Займы</small><b>'+s.loans+'</b></div><div><small>Операции</small><b>'+s.operations+'</b></div><div><small>Не сопоставлено</small><b>'+s.unmatched+'</b></div></div>':'')+
- (audit.errors.length?'<div class="debt-audit-group error"><b>Ошибки</b><ul>'+audit.errors.map(x=>'<li>'+escapeHtml(x)+'</li>').join('')+'</ul></div>':'<div class="debt-audit-group success">Критических расхождений не найдено.</div>')+
- (audit.warnings.length?'<div class="debt-audit-group warning"><b>Нужно проверить вручную</b><ul>'+audit.warnings.map(x=>'<li>'+escapeHtml(x)+'</li>').join('')+'</ul></div>':'')+
- '<div class="note">Проверка только читает данные. Она не изменяет счета, остатки, старые долги или историю.</div>';
-}
 function renderDebts(){
  fillDebtAccountOptions();const debts=state.debts||[];const owed=debts.filter(d=>d.direction==='owed').reduce((a,d)=>a+Math.max(0,Number(d.remaining)||0),0);const rec=debts.filter(d=>d.direction==='receivable').reduce((a,d)=>a+Math.max(0,Number(d.remaining)||0),0);
  $('debtsOwedTotal').textContent=fmt(owed);$('debtsReceivableTotal').textContent=fmt(rec);
  const visible=debts.filter(d=>debtFilter==='all'||d.direction===debtFilter).sort((a,b)=>{const order=state.debtOrder||[],ia=order.indexOf(a.id),ib=order.indexOf(b.id);if(ia>=0||ib>=0)return (ia<0?999:ia)-(ib<0?999:ib);if((a.remaining<=0)!==(b.remaining<=0))return a.remaining<=0?1:-1;return (a.due||'9999').localeCompare(b.due||'9999')});
  $('debtContactList').innerHTML=visible.length?visible.map(d=>`<div class="debt-contact ${d.direction==='receivable'?'receivable':'owed-contact'}" draggable="true" data-debt-id="${d.id}"><div class="debt-contact-top"><div><div class="debt-contact-name">${escapeHtml(d.name)}</div><div class="debt-contact-meta">${d.direction==='owed'?'Ты должен':'Должны тебе'} · ${{person:'Человек',bank:'Банк',organization:'Организация',other:'Другое'}[d.type]||'Другое'}${d.due?' · срок '+escapeHtml(d.due):''}${d.note?'<br>'+escapeHtml(d.note):''}</div></div><div class="debt-contact-amount ${d.direction==='receivable'?'debt-positive':'debt-negative'}">${fmt(d.remaining||0)}<div class="debt-contact-meta">из ${fmt(d.original||0)}</div></div></div><div class="debt-contact-actions">${d.remaining>0?`<button class="primary" type="button" onclick="openDebtPayment('${d.id}')">${d.direction==='owed'?'Вернуть':'Получить'}</button>`:''}<button class="secondary" type="button" onclick="editDebt('${d.id}')">Изменить</button><button class="secondary debt-delete" type="button" onclick="deleteDebt('${d.id}')">Удалить</button></div></div>`).join(''):'<div class="empty">В этом списке пока нет записей. Добавь первый долг ниже.</div>';
- renderDebtMigrationAudit();
  document.querySelectorAll('[data-debt-filter]').forEach(b=>b.classList.toggle('active',b.dataset.debtFilter===debtFilter));wireDragSort('debtContactList','[data-debt-id]','debtOrder','data-debt-id');if($('debtorsDetails'))$('debtorsDetails').classList.toggle('debtors-open',$('debtorsDetails').open);
  const pays=[...(state.debtPayments||[])].reverse().slice(0,30);$('debtPaymentHistory').innerHTML=pays.length?pays.map(p=>{const d=debts.find(x=>x.id===p.debtId);return `<div class="debt-history-row"><div><b>${escapeHtml(d?d.name:'Удалённая запись')}</b><small>${escapeHtml(p.date||'')} · ${p.direction==='owed'?'Погашение долга':p.direction==='receivable'?'Получение долга':p.direction==='borrowing'?'Получение займа':'Платёж'}${p.comment?' · '+escapeHtml(p.comment):''}</small><div class="operation-buttons"><button class="secondary" type="button" onclick="editDebtPayment('${p.id}')">Изменить</button><button class="secondary" type="button" onclick="deleteDebtPayment('${p.id}')">Удалить</button></div></div><strong class="${p.direction==='receivable'?'debt-positive':'debt-negative'}">${p.direction==='receivable'?'+':'−'}${fmt(p.amount)}</strong></div>`}).join(''):'<div class="empty">Пока нет платежей.</div>';
 
