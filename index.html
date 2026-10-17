@@ -233,7 +233,7 @@ button.primary{background:linear-gradient(100deg,#2f82ff,#70aaff);color:#07152b;
 #reserveDebtAllocationModal .actions{margin-top:14px!important}
 </style>
 </head><body>
-<header><div><div class="brand">PERSONAL FINANCE SYSTEM</div><div class="title-line"><h1>Мои финансы</h1><span class="version-mark" aria-label="Версия приложения 17">v17</span><button class="refresh-app" type="button" id="refreshApp" aria-label="Обновить страницу" title="Обновить страницу">↻</button></div><div class="subtitle" id="headerSubtitle">Счета и финансовые цели в одном месте.</div></div><div class="topmark">◈</div></header>
+<header><div><div class="brand">PERSONAL FINANCE SYSTEM</div><div class="title-line"><h1>Мои финансы</h1><span class="version-mark" aria-label="Версия приложения 18">v18</span><button class="refresh-app" type="button" id="refreshApp" aria-label="Обновить страницу" title="Обновить страницу">↻</button></div><div class="subtitle" id="headerSubtitle">Счета и финансовые цели в одном месте.</div></div><div class="topmark">◈</div></header>
 <main><nav class="tabs" aria-label="Основная навигация"><button class="tab active" data-page="home"><span class="nav-icon">⌂</span><span>Главная</span></button><button class="tab" data-page="distribution"><span class="nav-icon">⑂</span><span>План</span></button><button class="tab" data-page="debts"><span class="nav-icon">↔</span><span>Долги</span></button><button class="tab" data-page="history"><span class="nav-icon">◷</span><span>История</span></button><button class="tab" data-page="parameters" aria-label="Настройки" title="Настройки"><span class="nav-icon">☷</span><span class="nav-label-settings">Настройки</span></button></nav>
 <section id="home" class="page active">
 <section class="financial-health" aria-label="Быстрая оценка финансового состояния">
@@ -708,5 +708,22 @@ document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>show
 $('incomeModalSource').addEventListener('change',()=>{if($('incomeModalSource').value==='__custom'){const v=prompt('Название источника дохода');if(v&&v.trim()){if(!state.incomeSources.includes(v.trim()))state.incomeSources.push(v.trim());persist();renderIncomeSources();refreshIncomeSourceSelect(v.trim())}else refreshIncomeSourceSelect();}});$('incomeClose').onclick=closeIncomeModal;$('incomeCancel').onclick=closeIncomeModal;$('incomeModalAdd').onclick=saveIncomeModal;$('incomeModalDistribute').onclick=distributeIncomeModal;$('incomeModal').addEventListener('click',e=>{if(e.target===$('incomeModal'))closeIncomeModal()});$('transferClose').onclick=closeTransferModal;$('transferCancel').onclick=closeTransferModal;$('transferSave').onclick=saveTransferModal;$('transferFrom').addEventListener('change',updateTransferHint);$('transferTo').addEventListener('change',updateTransferHint);$('transferModal').addEventListener('click',e=>{if(e.target===$('transferModal'))closeTransferModal()});if($('jsonExport'))$('jsonExport').onclick=exportJSON;if($('jsonExportSettings'))$('jsonExportSettings').onclick=exportJSON;if($('csvExportSettings'))$('csvExportSettings').onclick=exportPlan;$('jsonImportTrigger').onclick=()=>$('jsonImportFile').click();$('jsonImportFile').addEventListener('change',e=>{importJSONFile(e.target.files&&e.target.files[0]);e.target.value=''});
 $('cancelReserveDebtAllocation').onclick=cancelReserveAllocation;$('cancelReserveDebtAllocation2').onclick=cancelReserveAllocation;$('confirmReserveDebtAllocation').onclick=confirmReserveAllocation;['allocationCushion','allocationWantsSmall','allocationPeople','allocationOther'].forEach(id=>$(id).addEventListener('input',updateReserveAllocationTotal));$('reserveDebtAllocationModal').addEventListener('click',e=>{if(e.target===$('reserveDebtAllocationModal'))cancelReserveAllocation()});
 initDriveBackup();$('date').value=new Date().toLocaleDateString('en-CA');if($('debtOperationDate'))$('debtOperationDate').value=localToday();setParamsForm(currentVersion().params);refreshOpeningForm();renderReserveDebtSettings();renderReserveDebtBreakdown();renderVersions();renderHistory();renderDebts();renderExpenseCategories();renderIncomeSources();refreshIncomeSourceSelect();renderExpenseTags();calculate();renderDashboard();
+
 document.getElementById('refreshApp')?.addEventListener('click',()=>window.location.reload());
+(function desktopPhonePreview(){
+  const params = new URLSearchParams(window.location.search);
+  if (params.has('phonePreview') || !window.matchMedia('(min-width: 700px)').matches) return;
+  const previewUrl = new URL(window.location.href);
+  previewUrl.searchParams.set('phonePreview', '1');
+  previewUrl.hash = '';
+  document.body.innerHTML = `
+    <div style="min-height:100vh;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:22px 16px;background:radial-gradient(ellipse at 50% 0%,#202d45 0,transparent 48%),#0e1014;color:#929baa;font:500 12px Montserrat,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+      <div style="letter-spacing:1.4px;text-transform:uppercase;">Предпросмотр · iPhone 13 Pro</div>
+      <div style="padding:10px;border:1px solid #343b49;border-radius:48px;background:linear-gradient(145deg,#424957,#111318 34%,#292e38);box-shadow:0 24px 70px rgba(0,0,0,.55),inset 0 0 0 1px rgba(255,255,255,.08);line-height:0;">
+        <iframe title="Предпросмотр приложения на iPhone 13 Pro" src="${previewUrl.href}" style="display:block;width:390px;height:844px;max-width:calc(100vw - 74px);border:0;border-radius:39px;background:#0e1014;overflow:hidden;" loading="eager"></iframe>
+      </div>
+      <div style="color:#6f7888;font-size:11px;text-align:center;">390 × 844 · мобильный интерфейс</div>
+    </div>`;
+  document.body.style.cssText = 'margin:0;padding:0;min-height:100vh;overflow:auto;background:#0e1014;';
+})();
 </script></body></html>
