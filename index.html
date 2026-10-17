@@ -500,7 +500,8 @@ const b=state.balances||{};
 $('dashBuffer').textContent=fmt(b.buffer||0);
 const builtInTotal=Object.entries(b).reduce((sum,[key,value])=>sum+(key==='reserveDebt'||state.accountVisibility?.[key]===false?0:(Number(value)||0)),0);
 const customTotal=(state.customAccounts||[]).reduce((sum,acc)=>sum+(state.accountVisibility?.['custom:'+acc.id]===false?0:(Number(acc.balance)||0)),0);
-const total=builtInTotal+customTotal;
+const visibleReserveDebt=Object.entries(state.reserveDebtByAccount||{}).reduce((sum,[key,value])=>sum+(state.accountVisibility?.[key]===false?0:Math.max(0,Number(value)||0)),0);
+const total=builtInTotal+customTotal-visibleReserveDebt;
 $('dashTotalBalance').textContent=fmt(total);
 $('dashRent').textContent=fmt(b.rent||0);
 $('dashReserveDebt').textContent=fmt(b.reserveDebt||0);
@@ -518,7 +519,7 @@ env.sort((a,b)=>{const ia=order.indexOf(a[1]),ib=order.indexOf(b[1]);return (ia<
 let accounts=env.map(([name,key])=>({name,key,balance:Number(b[key])||0,excluded:state.accountVisibility?.[key]===false}));
 const custom=[...(state.customAccounts||[])].sort((a,b)=>{const ia=order.indexOf('custom:'+a.id),ib=order.indexOf('custom:'+b.id);return (ia<0?999:ia)-(ib<0?999:ib)});
 custom.forEach(acc=>accounts.push({name:acc.name,key:'custom:'+acc.id,balance:Number(acc.balance)||0,excluded:state.accountVisibility?.['custom:'+acc.id]===false}));
-const visibleTotal=accounts.reduce((sum,a)=>sum+(a.excluded?0:a.balance),0);
+const visibleTotal=accounts.reduce((sum,a)=>sum+(a.excluded?0:a.balance),0)-accounts.reduce((sum,a)=>sum+(a.excluded?0:Math.max(0,Number(state.reserveDebtByAccount?.[a.key])||0)),0);
 $('dashAccountCount').textContent=accounts.length+' '+(accounts.length===1?'счёт':accounts.length<5?'счёта':'счетов');
 $('dashAccountsTotal').textContent=fmt(visibleTotal);
 $('accountsPageTotal').textContent=fmt(visibleTotal);
