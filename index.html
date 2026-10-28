@@ -427,6 +427,7 @@ button.primary{background:linear-gradient(100deg,#2f82ff,#70aaff);color:#07152b;
   <div class="intro-copy"><span class="intro-kicker">Персональная финансовая система</span><h1>Мои <span>финансы</span></h1><p>Полный контроль сегодня<br>для больших целей завтра</p></div>
 
   <svg class="intro-chart" viewBox="0 0 720 170" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="introLine" x1="0" x2="1"><stop offset="0" stop-color="#ff5577"/><stop offset=".44" stop-color="#ff5577"/><stop offset=".53" stop-color="#18e5a5"/><stop offset="1" stop-color="#18e5a5"/></linearGradient><linearGradient id="introTrail" x1="0" x2="1"><stop offset="0" stop-color="#ff426b" stop-opacity="0"/><stop offset="1" stop-color="#ff426b" stop-opacity=".22"/></linearGradient></defs><path class="intro-trail" d="M0 100 C90 90 145 124 220 112 S280 118 324 139" fill="none" stroke="url(#introTrail)" stroke-width="2"/><path class="intro-main-line" d="M0 101 C90 100 145 122 220 111 C270 104 302 145 355 135 C420 124 455 91 515 87 C590 80 625 26 720 14" fill="none" stroke="url(#introLine)" stroke-width="3.5" vector-effect="non-scaling-stroke"/><g class="intro-drops"><path d="M220 111V170M355 135V170M515 87V170M650 39V170M695 18V170"/><circle cx="220" cy="111" r="4"/><circle cx="355" cy="135" r="6"/><circle cx="515" cy="87" r="5"/><circle cx="650" cy="39" r="5"/><circle cx="695" cy="18" r="7"/></g></svg>
+  <div class="home-financial-mode" id="homeFinancialModeStatus" aria-live="polite"></div>
 </section>
 <section class="financial-health" aria-label="Быстрая оценка финансового состояния">
 
@@ -466,7 +467,7 @@ button.primary{background:linear-gradient(100deg,#2f82ff,#70aaff);color:#07152b;
 <section id="debts" class="page">
   <div id="debtsLanding">
     <div class="card debt-overview-card">
-      <div class="sectionhead"><div class="step" aria-hidden="true">🤝</div><div><h2>Долги и обязательства</h2></div></div>
+      <div class="sectionhead"><div class="step debt-heading-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m9.2 14.8 5.6-5.6"/><path d="M7.2 16.8H6a4.2 4.2 0 0 1 0-8.4h4"/><path d="M16.8 7.2H18a4.2 4.2 0 0 1 0 8.4h-4"/></svg></div><div><h2>Долги и обязательства</h2></div></div>
       <div class="debt-summary">
         <div class="debt-total"><small>Я должен</small><b id="debtsOwedTotal">0 ₽</b></div>
         <div class="debt-total receivable"><small>Мне должны</small><b id="debtsReceivableTotal">0 ₽</b></div>
@@ -2015,9 +2016,10 @@ state.monthlyExpenses=Math.max(1,Math.round(Number(state.monthlyExpenses)||30000
 state.financialModes=Object.fromEntries([1,2,3,4].map(i=>{const b=FM_DEFAULTS[i],s=saved[i]||{},savedLife=s.life||{},before=Array.isArray(savedLife.before)?savedLife.before:(Array.isArray(savedLife)?savedLife:b.life.before);return[i,{...JSON.parse(JSON.stringify(b)),...s,lowMonths:b.lowMonths,highMonths:b.highMonths,stages:{...b.stages,...(s.stages||{})},life:{before:[...before]}}]}));
 const modes=()=>state.financialModes;
 function fmCurrent(){const c=Math.max(0,Number(state.balances.cushion)||0),expenses=state.monthlyExpenses;return [1,2,3,4].find(i=>c>=modes()[i].lowMonths*expenses&&(modes()[i].highMonths==null||c<modes()[i].highMonths*expenses))||4}
+window.getHomeFinancialModeData=()=>{const current=fmCurrent(),all=modes();return{current,mode:all[current],next:current<4?all[current+1]:null,cushion:Math.max(0,Number(state.balances.cushion)||0),expenses:Math.max(1,Number(state.monthlyExpenses)||1)}};
 function fmSplit(total,weights){total=Math.max(0,Math.round(Number(total)||0));const sum=weights.reduce((a,b)=>a+(Number(b)||0),0);if(!sum)return weights.map(()=>0);const exact=weights.map(w=>total*Math.max(0,Number(w)||0)/sum),out=exact.map(Math.floor);let left=total-out.reduce((a,b)=>a+b,0);exact.map((x,i)=>[i,x-out[i]]).sort((a,b)=>b[1]-a[1]).slice(0,left).forEach(([i])=>out[i]++);return out}
 function fmModeText(i){return 'Финансовый режим «'+modes()[i].name+'»'}
-function fmUpdateLabels(){const i=fmCurrent(),text=fmModeText(i),resultText=lastPlan&&lastPlan.modeLabel?'Финансовый режим «'+lastPlan.modeLabel+'»':text;if($('planMode'))$('planMode').textContent=text;if($('financialModeResult'))$('financialModeResult').textContent=resultText}
+function fmUpdateLabels(){const i=fmCurrent(),text=fmModeText(i),resultText=lastPlan&&lastPlan.modeLabel?'Финансовый режим «'+lastPlan.modeLabel+'»':text;if($('planMode'))$('planMode').textContent=text;if($('financialModeResult'))$('financialModeResult').textContent=resultText;if(window.renderHomeFinancialModeStatus)window.renderHomeFinancialModeStatus()}
 function fmTotalsValid(m){const sets=[...Object.values(m.stages),m.life.before,m.sub.slice(0,3),m.sub.slice(3)];return sets.every(a=>a.every(x=>Number.isFinite(Number(x))&&Number(x)>=0&&Number(x)<=100)&&Math.abs(a.reduce((s,x)=>s+Number(x),0)-100)<0.001)&&m.buffer>=0&&m.rent>=0}
 function fmSettings(){const form=$('paramForm');if(!form)return;
   form.innerHTML=`<section class="fm-settings"><div class="fm-expense-setting"><label for="fmMonthlyExpenses">Ежемесячные расходы, ₽</label><div class="fm-expense-controls"><input id="fmMonthlyExpenses" type="number" min="1" step="1" value="${state.monthlyExpenses}"><button type="button" class="secondary" id="fmSaveMonthlyExpenses">Сохранить</button></div><small>Введите сумму расходов в рублях. Она задаёт границы режимов по размеру подушки.</small><div id="fmExpenseSaved" class="status"></div></div><div class="fm-mode-tabs" role="tablist" aria-label="Финансовый режим">${[1,2,3,4].map(i=>`<button type="button" role="tab" data-fm-tab="${i}" aria-selected="false"><span class="fm-tab-name">${escapeHtml(modes()[i].name)}</span></button>`).join('')}</div><div id="fmModePage"></div></section>`;
@@ -2065,5 +2067,95 @@ fmInstallMarkup();fmSettings();fmUpdateLabels();calculate();
 </style><style id="restored-background-centered-screens">body{background:radial-gradient(ellipse at 12% 8%,rgba(31,65,119,.52) 0,transparent 40%),radial-gradient(ellipse at 94% 34%,rgba(22,51,93,.38) 0,transparent 38%),radial-gradient(ellipse at 48% 100%,rgba(22,39,62,.28) 0,transparent 44%),linear-gradient(150deg,#111923 0%,#0a0e14 54%,#101720 100%)!important;background-attachment:fixed!important}@media(max-width:620px){html:has(#distribution.active),html:has(#debts.active){height:100%;overflow:hidden}body:has(#distribution.active),body:has(#debts.active){height:100dvh!important;overflow:hidden!important;padding-bottom:0!important}body:has(#distribution.active) main,body:has(#debts.active) main{height:100dvh!important;overflow-x:hidden!important;overflow-y:auto!important;overscroll-behavior-y:contain;padding:0 15px calc(82px + env(safe-area-inset-bottom))!important}#distribution.active{display:flex!important;flex-direction:column;justify-content:center;height:auto!important;min-height:calc(100dvh - 90px);overflow:visible!important}#distribution .plan-screen:not([hidden]){display:flex;flex-direction:column;justify-content:center;height:auto!important;min-height:calc(100dvh - 165px);overflow:visible!important}#distribution .plan-result-card{height:auto!important;max-height:none!important}#debts.active{display:flex!important;flex-direction:column;justify-content:center;height:auto!important;min-height:calc(100dvh - 90px);overflow:visible!important}#debts #debtsLanding:not([hidden]){display:flex;flex-direction:column;justify-content:center;width:100%;min-height:calc(100dvh - 165px)}#debts .debt-subpage:not([hidden]){height:auto!important;min-height:calc(100dvh - 165px);max-height:none!important;overflow:visible!important}}
 </style><style id="home-no-scroll-layout">@media(max-width:620px){body:has(#home.active) main{height:100dvh!important;overflow:hidden!important;padding-bottom:calc(68px + env(safe-area-inset-bottom))!important}body:has(#home.active) #home{height:auto!important;max-height:calc(100dvh - 68px - env(safe-area-inset-bottom))!important;overflow:hidden!important}}
 </style><style id="dashboard-hero-shorter">@media(max-width:620px){#home .dashboard-intro{height:158px!important;min-height:158px!important;padding:13px 14px 42px!important;margin-top:12px!important;margin-bottom:9px!important}#home .intro-copy{max-width:100%}#home .intro-kicker{font-size:8px;line-height:1.3;letter-spacing:.7px}#home .dashboard-intro h1{font-size:29px;margin:12px 0 5px}#home .dashboard-intro p{font-size:12px;line-height:1.3}#home .intro-chart{height:104px!important}html:has(#home.active),body:has(#home.active),body:has(#home.active) main{overflow:hidden!important}body:has(#home.active) main{height:100dvh!important}}
-</style></body></html>
-
+</style><style id="montserrat-alternates-font">@font-face{font-family:"Montserrat Alternates";src:url("fonts/MontserratAlternates-Thin.ttf") format("truetype");font-style:normal;font-weight:100;font-display:swap}
+@font-face{font-family:"Montserrat Alternates";src:url("fonts/MontserratAlternates-ThinItalic.ttf") format("truetype");font-style:italic;font-weight:100;font-display:swap}
+@font-face{font-family:"Montserrat Alternates";src:url("fonts/MontserratAlternates-ExtraLight.ttf") format("truetype");font-style:normal;font-weight:200;font-display:swap}
+@font-face{font-family:"Montserrat Alternates";src:url("fonts/MontserratAlternates-ExtraLightItalic.ttf") format("truetype");font-style:italic;font-weight:200;font-display:swap}
+@font-face{font-family:"Montserrat Alternates";src:url("fonts/MontserratAlternates-Light.ttf") format("truetype");font-style:normal;font-weight:300;font-display:swap}
+@font-face{font-family:"Montserrat Alternates";src:url("fonts/MontserratAlternates-LightItalic.ttf") format("truetype");font-style:italic;font-weight:300;font-display:swap}
+@font-face{font-family:"Montserrat Alternates";src:url("fonts/MontserratAlternates-Regular.ttf") format("truetype");font-style:normal;font-weight:400;font-display:swap}
+@font-face{font-family:"Montserrat Alternates";src:url("fonts/MontserratAlternates-Italic.ttf") format("truetype");font-style:italic;font-weight:400;font-display:swap}
+@font-face{font-family:"Montserrat Alternates";src:url("fonts/MontserratAlternates-Medium.ttf") format("truetype");font-style:normal;font-weight:500;font-display:swap}
+@font-face{font-family:"Montserrat Alternates";src:url("fonts/MontserratAlternates-MediumItalic.ttf") format("truetype");font-style:italic;font-weight:500;font-display:swap}
+@font-face{font-family:"Montserrat Alternates";src:url("fonts/MontserratAlternates-SemiBold.ttf") format("truetype");font-style:normal;font-weight:600;font-display:swap}
+@font-face{font-family:"Montserrat Alternates";src:url("fonts/MontserratAlternates-SemiBoldItalic.ttf") format("truetype");font-style:italic;font-weight:600;font-display:swap}
+@font-face{font-family:"Montserrat Alternates";src:url("fonts/MontserratAlternates-Bold.ttf") format("truetype");font-style:normal;font-weight:700;font-display:swap}
+@font-face{font-family:"Montserrat Alternates";src:url("fonts/MontserratAlternates-BoldItalic.ttf") format("truetype");font-style:italic;font-weight:700;font-display:swap}
+@font-face{font-family:"Montserrat Alternates";src:url("fonts/MontserratAlternates-ExtraBold.ttf") format("truetype");font-style:normal;font-weight:800;font-display:swap}
+@font-face{font-family:"Montserrat Alternates";src:url("fonts/MontserratAlternates-ExtraBoldItalic.ttf") format("truetype");font-style:italic;font-weight:800;font-display:swap}
+@font-face{font-family:"Montserrat Alternates";src:url("fonts/MontserratAlternates-Black.ttf") format("truetype");font-style:normal;font-weight:900;font-display:swap}
+@font-face{font-family:"Montserrat Alternates";src:url("fonts/MontserratAlternates-BlackItalic.ttf") format("truetype");font-style:italic;font-weight:900;font-display:swap}
+*{font-family:"Montserrat Alternates",Arial,sans-serif!important}
+#home .dashboard-intro,#home .dashboard-intro *{font-family:"Montserrat Alternates",Arial,sans-serif!important}
+#home .dashboard-intro h1{font-family:"Montserrat Alternates",Arial,sans-serif!important}
+html{min-height:100%;background-color:#080f1d!important}body{position:relative;isolation:isolate;background-color:#080f1d!important;background-image:linear-gradient(180deg,#101a30 0,#0e172a 70px,rgba(8,15,29,.72) 110px,transparent 150px),url("moi-finansy-neon-background.png")!important;background-size:100% 150px,100% auto!important;background-position:center top,center 155px!important;background-repeat:no-repeat,no-repeat!important;background-attachment:fixed,fixed!important}body::before{display:none!important}
+#home .dashboard-intro{height:auto!important;min-height:0!important;overflow:visible!important;margin:8px 0 15px!important;padding:7px 2px 10px!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
+#home .dashboard-intro:before{display:none!important}
+#home .intro-chart,#home .intro-gain{display:none!important}
+#home .intro-copy{max-width:100%!important}
+#home .intro-kicker{display:block;font-size:9px;line-height:1.5;letter-spacing:1.4px;color:#a7c4e8;text-shadow:0 1px 8px #080f1dcc}
+#home .dashboard-intro h1{margin:12px 0 6px!important;font-size:clamp(27px,7vw,36px)!important;line-height:1.15;text-shadow:0 2px 14px #080f1dcc}
+#home .dashboard-intro p{font-size:13px!important;line-height:1.4;text-shadow:0 1px 10px #080f1dcc}
+@media(max-width:620px){#home .dashboard-intro{margin-top:8px!important;margin-bottom:13px!important;padding:5px 2px 9px!important}body{background-size:100% 150px,100% auto!important;background-position:center top,center 155px!important}}</style><style id="home-dashboard-lower-to-navigation">
+@media(max-width:620px){body:has(#home.active) main{height:100dvh!important;overflow:hidden!important;padding-bottom:calc(68px + env(safe-area-inset-bottom))!important}body:has(#home.active) #home{display:flex!important;flex-direction:column!important;height:calc(100dvh - 68px - env(safe-area-inset-bottom))!important;max-height:none!important;min-height:0!important;overflow:hidden!important}body:has(#home.active) #home>.financial-health{margin-top:auto!important}}
+</style><style id="background-raised-and-blended">
+body{background-image:linear-gradient(180deg,#101a30 0%,#0e172a 18%,rgba(8,15,29,.35) 30%,rgba(8,15,29,.12) 48%,transparent 62%,transparent 72%,rgba(8,15,29,.5) 88%,#080f1d 100%),url("moi-finansy-neon-background.png")!important;background-size:100% calc(44.8vw + 75px),100% auto!important;background-position:center top,center 75px!important;background-repeat:no-repeat,no-repeat!important;background-attachment:fixed,fixed!important}
+</style><style id="header-art-replaces-top-copy">
+@media(max-width:620px){#home .dashboard-intro{height:clamp(150px,50vw,240px)!important;min-height:150px!important;max-height:240px!important;margin:0 0 10px!important;padding:0!important;overflow:hidden!important;border:0!important;border-radius:0!important;background:transparent url("moi-finansy-header-art.png") center 20%/cover no-repeat!important;box-shadow:none!important}#home .intro-copy,#home .intro-chart,#home .intro-gain{display:none!important}body:has(#home.active){background-image:linear-gradient(180deg,#101a30 0%,#0e172a 90px,#080f1d 260px)!important;background-size:100% 260px!important;background-position:center top!important;background-repeat:no-repeat!important;background-attachment:fixed!important}}
+@media(min-width:621px){#home .dashboard-intro{height:clamp(190px,28vw,260px)!important;min-height:0!important;margin:0 0 12px!important;padding:0!important;overflow:hidden!important;border:0!important;border-radius:0!important;background:transparent url("moi-finansy-header-art.png") center 20%/cover no-repeat!important;box-shadow:none!important}#home .intro-copy,#home .intro-chart,#home .intro-gain{display:none!important}body:has(#home.active){background-image:linear-gradient(180deg,#101a30 0%,#0e172a 110px,#080f1d 300px)!important;background-size:100% 300px!important;background-position:center top!important;background-repeat:no-repeat!important;background-attachment:fixed!important}}
+</style><style id="shared-art-background-all-pages">
+body,body:has(#home.active){background-color:#080f1d!important;background-image:linear-gradient(180deg,rgba(8,15,29,.12) 0%,transparent 16%,transparent 68%,rgba(8,15,29,.35) 87%,#080f1d 100%),url("moi-finansy-header-art.png")!important;background-size:100% 50vw,100% auto!important;background-position:center top,center top!important;background-repeat:no-repeat,no-repeat!important;background-attachment:fixed,fixed!important}
+#home .dashboard-intro{background:transparent!important}
+</style><style id="debts-page-compact-center">
+#debts{width:min(100%,430px)!important;margin-left:auto!important;margin-right:auto!important}
+#debts #debtsLanding:not([hidden]){width:100%;max-width:410px;margin:0 auto;gap:0}
+#debts .debt-overview-card{margin:0 0 8px!important;padding:12px 13px!important}
+#debts .debt-overview-card .sectionhead{margin-bottom:7px!important}
+#debts .debt-overview-card .sectionhead h2{font-size:17px!important}
+#debts .debt-summary{gap:8px!important;margin:7px 0 0!important}
+#debts .debt-total{padding:10px 11px!important;border-radius:13px!important}
+#debts .debt-total small{margin-bottom:5px!important}
+#debts .debt-total b{font-size:18px!important}
+#debts .debt-quick-operations{margin:6px 0 3px!important}
+#debts .debt-quick-operations h3{margin:0 0 6px 2px!important;font-size:12px!important}
+#debts .debt-action-grid{gap:6px!important}
+#debts .debt-action{min-height:42px!important;padding:6px 7px!important;border-radius:10px!important}
+#debts .debt-legacy-action{min-height:30px!important;margin:3px 0 0!important;padding:4px 8px!important}
+#debts .debt-list-link{min-height:68px;margin:3px 0 0!important;padding:10px 12px!important;border-radius:15px!important}
+#debts .debt-list-link-icon{font-size:20px!important}
+#debts .debt-list-link small{margin-top:2px!important}
+@media(max-width:620px){#debts #debtsLanding:not([hidden]){max-width:390px}#debts .debt-overview-card{margin-bottom:6px!important}#debts .debt-list-link{min-height:64px}}
+</style><style id="debt-heading-icon-style">#debts .debt-heading-icon svg{display:block;width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}</style><style id="home-financial-mode-status-style">
+.home-financial-mode{position:absolute;z-index:3;left:14px;right:14px;bottom:10px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center;padding:8px 10px 7px;border:1px solid rgba(133,177,226,.24);border-radius:13px;background:linear-gradient(100deg,rgba(8,18,34,.88),rgba(10,27,44,.78));backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px);box-shadow:0 5px 18px rgba(0,0,0,.2);color:#dceaff;font-family:inherit}
+.home-financial-mode-label{font-size:9px;font-weight:700;letter-spacing:1.15px;text-transform:uppercase;color:#99b9de}
+.home-financial-mode-name{font-size:12px;font-weight:700;color:#f4f8ff;white-space:nowrap}
+.home-financial-mode-detail{grid-column:1/-1;display:flex;justify-content:space-between;gap:8px;color:#a9bdd7;font-size:9px;line-height:1.25}
+.home-financial-mode-detail span{white-space:nowrap}
+.home-financial-mode-track{grid-column:1/-1;height:3px;overflow:hidden;border-radius:99px;background:rgba(126,157,194,.2)}
+.home-financial-mode-progress{height:100%;width:0;border-radius:inherit;background:linear-gradient(90deg,#ff5876 0%,#b97ef3 48%,#24e2ad 100%);box-shadow:0 0 8px rgba(36,226,173,.48);transition:width .35s ease}
+@media(max-width:380px){.home-financial-mode{left:10px;right:10px;padding:7px 8px}.home-financial-mode-detail{font-size:8px;gap:5px}}
+</style><script id="home-financial-mode-status-script">
+(function(){
+  function renderHomeFinancialModeStatus(){
+    const root=document.getElementById('homeFinancialModeStatus');
+    if(!root||typeof window.getHomeFinancialModeData!=='function')return;
+    const data=window.getHomeFinancialModeData();
+    const months=data.cushion/data.expenses;
+    const nextMonths=data.next?Math.max(0,Number(data.next.lowMonths)||0):null;
+    const remaining=data.next?Math.max(0,nextMonths-months):0;
+    const progress=data.next&&nextMonths>0?Math.max(0,Math.min(100,months/nextMonths*100)):100;
+    const fmtMonths=n=>Number(n).toLocaleString('ru-RU',{minimumFractionDigits:0,maximumFractionDigits:1});
+    const modeName=String(data.mode&&data.mode.name||'Безопасность');
+    const detail=data.next
+      ? `<span>Подушка: ${fmtMonths(months)} мес. расходов</span><span>Следующий: ${escapeHtml(String(data.next.name||''))} · ${fmtMonths(remaining)} мес.</span>`
+      : `<span>Подушка: ${fmtMonths(months)} мес. расходов</span><span>Максимальный режим</span>`;
+    root.innerHTML=`<span class="home-financial-mode-label">Финансовый режим</span><strong class="home-financial-mode-name">${escapeHtml(modeName)}</strong><div class="home-financial-mode-detail">${detail}</div><div class="home-financial-mode-track" role="progressbar" aria-label="Прогресс до следующего финансового режима" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(progress)}"><div class="home-financial-mode-progress" style="width:${progress}%"></div></div>`;
+  }
+  window.renderHomeFinancialModeStatus=renderHomeFinancialModeStatus;
+  if(typeof window.renderDashboard==='function'){
+    const previousDashboard=window.renderDashboard;
+    window.renderDashboard=function(){const result=previousDashboard.apply(this,arguments);renderHomeFinancialModeStatus();return result};
+  }
+  renderHomeFinancialModeStatus();
+})();
+</script></body></html>
