@@ -401,6 +401,7 @@ button.primary{background:linear-gradient(100deg,#2f82ff,#70aaff);color:#07152b;
   #debts .debt-people-content,#debts .debt-history-content{flex:1}
 }
 @media(min-width:621px){#debts .debt-subpage{max-height:calc(100vh - 250px);overflow-y:auto;overscroll-behavior:contain}}
+@media(max-width:620px){#debts .debt-subpage:not([hidden]){justify-content:flex-start!important;padding-top:clamp(150px,50vw,240px)!important}}
 @media(max-width:360px){#debts .debt-overview-card{padding:14px}#debts .debt-action{gap:5px;min-height:45px;padding:7px 5px;font-size:11px}}
 </style><style>
 .plan-result-card #reconcile{margin-bottom:16px!important}
@@ -1458,7 +1459,7 @@ try {
  if(!state.migrations)state.migrations={};if(!state.migrations.zeroedLegacyNegativeCategories){['people','wantsSmall'].forEach(key=>{if(Number(state.balances?.[key])<0)state.balances[key]=0;});state.migrations.zeroedLegacyNegativeCategories=true;persist();} if(!state.reserveDebtComposition)state.reserveDebtComposition={cushion:0,wantsSmall:0,people:0,other:0};else if(state.reserveDebtComposition.other==null)state.reserveDebtComposition.other=0;
 function migrateUnassignedReserveDebt(){const total=Math.round((Math.max(0,Number(state.balances?.reserveDebt)||0)))/1;const map=state.reserveDebtByAccount||{};let gap=Math.round((total-reserveDebtMapTotal(map)))/1;if(gap<=0.01)return;const ops=[...(state.expenses||[]).filter(x=>!x.debtAccountRecorded&&Number(x.debtIncrease)>0).map(x=>({kind:'expense',x,key:x.debtAccountKey||x.accountKey,amount:Math.round(Number(x.debtIncrease))/1,at:x.createdAt||''})),...(state.transfers||[]).filter(x=>!x.debtAccountRecorded&&Number(x.reserveDebtDelta)>0).map(x=>({kind:'transfer',x,key:x.debtAccountKey||x.fromKey,amount:Math.round(Number(x.reserveDebtDelta))/1,at:x.createdAt||''}))].sort((a,b)=>String(b.at).localeCompare(String(a.at)));let changed=false;for(const op of ops){if(gap<=0.01)break;if(op.amount>gap+0.01)continue;map[op.key]=Math.round(((Number(map[op.key])||0)+op.amount))/1;gap=Math.round((gap-op.amount))/1;op.x.debtAccountKey=op.key;op.x.debtAccountRecorded=true;changed=true;}if(changed&&gap<=0.01){state.reserveDebtByAccount=map;persist();}}
 migrateUnassignedReserveDebt();
-function loadState(){try{const s=JSON.parse(localStorage.getItem(STORE)||'{}');if(!s.paramsVersions||!s.paramsVersions.length)s.paramsVersions=[{id:1,createdAt:new Date().toISOString(),label:'Октябрьский образец',params:{...DEFAULTS}}];s.paramsVersions.forEach(v=>{if(v.params&&v.params.bufferAfterRent===undefined)v.params.bufferAfterRent=30;if(v.params&&v.params.charity===undefined)v.params.charity=1});if(!s.records)s.records=[];if(!s.expenses)s.expenses=[];if(!s.expenseCategories)s.expenseCategories=[{id:'food',name:'Питание',active:true},{id:'transport',name:'Транспорт',active:true},{id:'home',name:'Дом и быт',active:true},{id:'health',name:'Здоровье',active:true},{id:'leisure',name:'Досуг',active:true},{id:'gifts',name:'Подарки',active:true},{id:'other',name:'Другое',active:true}];if(!s.expenseTags)s.expenseTags=['работа','обед','подписки','сын','разовое'];if(!s.incomeTags)s.incomeTags=[];if(!s.customAccounts)s.customAccounts=[];if(!s.debts)s.debts=[];if(!s.debtPayments)s.debtPayments=[];if(!s.transfers)s.transfers=[];if(!s.incomes)s.incomes=[];if(!s.accountVisibility)s.accountVisibility={};if(!s.incomeSources)s.incomeSources=['Подработка','Зарплата','Оплата за услуги','Возврат долга','Премия','Другое поступление'];if(!s.accountOrder)s.accountOrder=[];if(!s.debtOrder)s.debtOrder=[];if(!s.balances)s.balances={rent:0,buffer:0,reserveDebt:0,cushion:0,investments:0,charity:0,wantsLarge:0,wantsSmall:0,alimony:0,people:0,banks:0};if(!s.reserveDebtByAccount||typeof s.reserveDebtByAccount!=='object'){const debt=Math.round((Number(s.balances.reserveDebt)||0))/1;s.reserveDebtByAccount=debt===18500?{cushion:6500,wantsSmall:10562,people:1438}:{};}s.currentVersionId=s.currentVersionId||s.paramsVersions[s.paramsVersions.length-1].id;const cv=s.paramsVersions.find(v=>String(v.id)===String(s.currentVersionId));if(cv&&(!s.records||s.records.length===0)&&Number(cv.params.obligations)===40)cv.params.obligations=39;return s}catch(e){return{paramsVersions:[{id:1,createdAt:new Date().toISOString(),label:'Октябрьский образец',params:{...DEFAULTS}}],currentVersionId:1,records:[],expenses:[],incomes:[],accountVisibility:{},customAccounts:[],debts:[],debtPayments:[],balances:{rent:0,buffer:0,reserveDebt:0,cushion:0,investments:0,charity:0,wantsLarge:0,wantsSmall:0,alimony:0,people:0,banks:0}}}}
+function loadState(){try{const s=JSON.parse(localStorage.getItem(STORE)||'{}');if(!s.paramsVersions||!s.paramsVersions.length)s.paramsVersions=[{id:1,createdAt:new Date().toISOString(),label:'Октябрьский образец',params:{...DEFAULTS}}];s.paramsVersions.forEach(v=>{if(v.params&&v.params.bufferAfterRent===undefined)v.params.bufferAfterRent=30;if(v.params&&v.params.charity===undefined)v.params.charity=1});if(!s.records)s.records=[];if(!s.expenses)s.expenses=[];if(!s.expenseCategories)s.expenseCategories=[{id:'food',name:'Питание',active:true},{id:'transport',name:'Транспорт',active:true},{id:'home',name:'Дом и быт',active:true},{id:'health',name:'Здоровье',active:true},{id:'leisure',name:'Досуг',active:true},{id:'gifts',name:'Подарки',active:true},{id:'other',name:'Другое',active:true}];if(!s.expenseTags)s.expenseTags=['работа','обед','подписки','сын','разовое'];if(!s.incomeTags)s.incomeTags=[];if(!s.customAccounts)s.customAccounts=[];if(!s.debts)s.debts=[];if(!s.voluntaryDebts)s.voluntaryDebts=[];if(!s.voluntaryDebtHistory)s.voluntaryDebtHistory=[];if(!s.debtPayments)s.debtPayments=[];if(!s.transfers)s.transfers=[];if(!s.incomes)s.incomes=[];if(!s.accountVisibility)s.accountVisibility={};if(!s.incomeSources)s.incomeSources=['Подработка','Зарплата','Оплата за услуги','Возврат долга','Премия','Другое поступление'];if(!s.accountOrder)s.accountOrder=[];if(!s.debtOrder)s.debtOrder=[];if(!s.balances)s.balances={rent:0,buffer:0,reserveDebt:0,cushion:0,investments:0,charity:0,wantsLarge:0,wantsSmall:0,alimony:0,people:0,banks:0};if(!s.reserveDebtByAccount||typeof s.reserveDebtByAccount!=='object'){const debt=Math.round((Number(s.balances.reserveDebt)||0))/1;s.reserveDebtByAccount=debt===18500?{cushion:6500,wantsSmall:10562,people:1438}:{};}s.currentVersionId=s.currentVersionId||s.paramsVersions[s.paramsVersions.length-1].id;const cv=s.paramsVersions.find(v=>String(v.id)===String(s.currentVersionId));if(cv&&(!s.records||s.records.length===0)&&Number(cv.params.obligations)===40)cv.params.obligations=39;return s}catch(e){return{paramsVersions:[{id:1,createdAt:new Date().toISOString(),label:'Октябрьский образец',params:{...DEFAULTS}}],currentVersionId:1,records:[],expenses:[],incomes:[],accountVisibility:{},customAccounts:[],debts:[],voluntaryDebts:[],voluntaryDebtHistory:[],debtPayments:[],balances:{rent:0,buffer:0,reserveDebt:0,cushion:0,investments:0,charity:0,wantsLarge:0,wantsSmall:0,alimony:0,people:0,banks:0}}}}
 function showToast(message='Запись сохранена'){const t=$('successToast');if(!t)return;t.textContent=message;t.classList.add('show');clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>t.classList.remove('show'),2400)}
 function persist(){try{localStorage.setItem(STORE,JSON.stringify(state));if(typeof scheduleDriveBackup==='function')scheduleDriveBackup()}catch(e){alert('Не удалось сохранить в браузере. Экспортируй историю CSV и освободи место в Safari.')}}
 function currentVersion(){return state.paramsVersions.find(v=>v.id===state.currentVersionId)||state.paramsVersions[state.paramsVersions.length-1]}
@@ -2330,6 +2331,86 @@ body:has(#history.active) main{position:fixed!important;top:var(--art-h);left:0;
  $('expenseDelete').onclick=()=>{if(editingExpenseId)deleteExpense(editingExpenseId)};
  $('transferDelete').onclick=()=>{if(editingTransferId)deleteUnifiedOperation('transfer',editingTransferId)};
  $('incomeDelete').onclick=()=>{const simple=!!editingIncomeId&&!editingDistributionId,id=simple?editingIncomeId:editingDistributionId;if(!id)return;deleteUnifiedOperation('income',id,simple?'simple':'');const still=simple?(state.incomes||[]).some(i=>String(i.id)===String(id)):(state.records||[]).some(r=>String(r.id)===String(id));if(!still)closeIncomeModal()};
+})();
+</script>
+<script id="voluntary-debt-feature">
+(function(){
+  const grid=document.querySelector('#debts .debt-action-grid');
+  const listPage=$('debtListPage');
+  if(!grid||!listPage)return;
+  const legacy=$('openDebtForm');
+  legacy.classList.add('debt-action','debt-action-legacy');
+  legacy.innerHTML='<span aria-hidden="true">＋</span>Внести старый долг';
+  grid.appendChild(legacy);
+  const voluntaryButton=document.createElement('button');
+  voluntaryButton.type='button';voluntaryButton.id='openVoluntaryDebtForm';
+  voluntaryButton.className='debt-action debt-action-voluntary';
+  voluntaryButton.innerHTML='<span aria-hidden="true">↩</span>Добровольный возврат долга';
+  grid.appendChild(voluntaryButton);
+  const style=document.createElement('style');
+  style.textContent='#debts .debt-action-legacy,#debts .debt-action-voluntary{grid-column:1/-1;width:100%;min-height:42px!important;margin:0!important;padding:8px 9px!important;border-radius:10px;font:inherit;font-size:12px!important;font-weight:500}#debts .debt-action-legacy{border:1px solid #3b5275!important;background:linear-gradient(135deg,#243650,#1b2635)!important;color:#eef4ff!important}#debts .debt-action-voluntary{border:1px solid #8b7139;background:linear-gradient(135deg,#4a3b20,#2b281e);color:#ffe0a0}#debts .debt-action-legacy span,#debts .debt-action-voluntary span{font-size:15px}.voluntary-debt-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding:11px 2px;border-top:1px solid #5a4a2b}.voluntary-debt-row:first-child{border-top:0}.voluntary-debt-row strong{display:block;font-size:12px;font-weight:600}.voluntary-debt-row small{display:block;margin-top:4px;color:#c6b68f;font-size:10px;line-height:1.4}.voluntary-debt-row b{color:#ffda8d;font-size:13px;white-space:nowrap}.voluntary-debt-row button{grid-column:1/-1;min-height:34px;padding:7px 10px!important;border-color:#80682f;background:#322a1c;color:#ffe0a0;font-size:11px}.voluntary-debt-empty{padding:10px 0;color:var(--muted);font-size:11px;line-height:1.45}.voluntary-note{margin:0 0 10px;color:#c8b988;font-size:11px;line-height:1.45}';
+  document.head.appendChild(style);
+  const historyStyle=document.createElement('style');historyStyle.textContent='.voluntary-debt-row .voluntary-delete{border-color:#70414b;background:#302027;color:#ffc3c8}.voluntary-history-row{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:9px 2px;border-top:1px solid #293240}.voluntary-history-row:first-child{border-top:0}.voluntary-history-row strong{font-size:11px;font-weight:500}.voluntary-history-row small{display:block;color:#9ba8bc;font-size:10px;margin-top:3px}.voluntary-history-row b{font-size:12px;color:#ff9ba5;white-space:nowrap}';document.head.appendChild(historyStyle);
+  const voluntaryMenu=document.createElement('button');
+  voluntaryMenu.type='button';voluntaryMenu.className='card debt-subpage-link';
+  voluntaryMenu.id='openVoluntaryDebtList';
+  voluntaryMenu.innerHTML='<span><b>Добровольный возврат</b><small>Прощённые долги, которые ты решил вернуть</small></span><span aria-hidden="true">›</span>';
+  $('openDebtHistoryPage').after(voluntaryMenu);
+  const page=document.createElement('div');page.id='voluntaryDebtPage';page.className='debt-subpage';page.hidden=true;
+  page.innerHTML='<div class="card debt-subpage-heading"><button class="secondary debt-back-button" id="backFromVoluntaryDebt" type="button">← К списку долгов</button><h2>Добровольный возврат</h2></div><div class="card"><p class="voluntary-note">Эти суммы отделены от обычных долгов и не входят в общий итог. Добавляй возвраты по своему желанию.</p><div id="voluntaryDebtList"></div></div><div class="card"><h3 style="margin:0 0 8px;font-size:14px">История возвратов</h3><div id="voluntaryDebtHistory"></div></div>';
+  listPage.after(page);
+  const modal=document.createElement('div');modal.id='voluntaryDebtModal';modal.className='expense-modal';modal.hidden=true;
+  modal.innerHTML='<div class="expense-sheet" role="dialog" aria-modal="true" aria-labelledby="voluntaryDebtTitle"><div class="expense-head"><div><h2 id="voluntaryDebtTitle">Добровольный возврат долга</h2><div class="hint">Учёт прощённого долга, который ты решил вернуть.</div></div><button class="expense-close" id="voluntaryDebtClose" type="button" aria-label="Закрыть">×</button></div><div class="debt-form"><div class="field"><label for="voluntaryDebtName">Кому вернуть</label><input id="voluntaryDebtName" type="text" placeholder="Имя человека" autocomplete="name"></div><div class="field"><label for="voluntaryDebtAmount">Сумма, ₽</label><input id="voluntaryDebtAmount" type="number" min="0.01" step="1" placeholder="0" inputmode="numeric"></div><div class="field"><label for="voluntaryDebtNote">Примечание</label><input id="voluntaryDebtNote" type="text" placeholder="Необязательно"></div><button class="primary" id="voluntaryDebtSave" type="button">Добавить в список</button><div class="status" id="voluntaryDebtStatus"></div><button class="secondary" id="voluntaryDebtCancel" type="button">Отмена</button></div></div>';
+  document.body.appendChild(modal);
+  const payModal=document.createElement('div');payModal.id='voluntaryPayModal';payModal.className='expense-modal';payModal.hidden=true;
+  payModal.innerHTML='<div class="expense-sheet" role="dialog" aria-modal="true" aria-labelledby="voluntaryPayTitle"><div class="expense-head"><div><h2 id="voluntaryPayTitle">Внести возврат</h2><div class="hint" id="voluntaryPayHint"></div></div><button class="expense-close" id="voluntaryPayClose" type="button" aria-label="Закрыть">×</button></div><div class="debt-form"><div class="field"><label for="voluntaryPayAmount">Сумма, ₽</label><input id="voluntaryPayAmount" type="number" min="0.01" step="1" placeholder="0" inputmode="numeric"></div><div class="field"><label for="voluntaryPayAccount">Счёт списания</label><select id="voluntaryPayAccount"></select></div><button class="primary" id="voluntaryPaySave" type="button">Записать возврат</button><div class="status" id="voluntaryPayStatus"></div><button class="secondary" id="voluntaryPayCancel" type="button">Отмена</button></div></div>';
+  document.body.appendChild(payModal);
+  const render=()=>{
+    state.voluntaryDebts=Array.isArray(state.voluntaryDebts)?state.voluntaryDebts:[];
+    const root=$('voluntaryDebtList');
+    root.innerHTML=state.voluntaryDebts.length?state.voluntaryDebts.map(d=>`<div class="voluntary-debt-row"><div><strong>${escapeHtml(d.name)}</strong><small>${escapeHtml(d.note||'Добровольный возврат')}${d.date?' · с '+escapeHtml(debtDateLabel(d.date)):''}</small></div><b>${fmt(d.remaining||0)}</b>${Number(d.remaining)>0?`<button class="secondary" type="button" data-voluntary-pay="${escapeHtml(d.id)}">Внести возврат</button>`:'<small>Возвращён полностью</small>'}<button class="secondary voluntary-delete" type="button" data-voluntary-delete="${escapeHtml(d.id)}">Удалить должника</button></div>`).join(''):'<div class="voluntary-debt-empty">Пока нет записей. Добавь долг кнопкой «Добровольный возврат долга».</div>';
+    const history=Array.isArray(state.voluntaryDebtHistory)?state.voluntaryDebtHistory:[];
+    $('voluntaryDebtHistory').innerHTML=history.length?[...history].reverse().map(h=>{const account=(accountOptions().find(a=>String(a[1])===String(h.accountKey))||[])[0]||'Счёт';return `<div class="voluntary-history-row"><div><strong>${escapeHtml(h.name)}</strong><small>${escapeHtml(h.date||'')} · ${escapeHtml(account)}</small></div><b>−${fmt(h.amount)}</b></div>`}).join(''):'<div class="voluntary-debt-empty">Платежей пока нет.</div>';
+  };
+  const previousRenderDebts=window.renderDebts;
+  if(typeof previousRenderDebts==='function')window.renderDebts=function(){previousRenderDebts.apply(this,arguments);render()};
+  window.renderVoluntaryDebts=render;
+  const close=()=>{modal.hidden=true;$('voluntaryDebtStatus').classList.remove('show')};
+  voluntaryButton.onclick=()=>{ $('voluntaryDebtName').value='';$('voluntaryDebtAmount').value='';$('voluntaryDebtNote').value='';$('voluntaryDebtStatus').classList.remove('show');modal.hidden=false;$('voluntaryDebtName').focus(); };
+  $('voluntaryDebtClose').onclick=close;$('voluntaryDebtCancel').onclick=close;
+  modal.addEventListener('click',e=>{if(e.target===modal)close()});
+  const closePay=()=>{payModal.hidden=true;$('voluntaryPayStatus').classList.remove('show')};
+  $('voluntaryPayClose').onclick=closePay;$('voluntaryPayCancel').onclick=closePay;payModal.addEventListener('click',e=>{if(e.target===payModal)closePay()});
+  $('voluntaryDebtSave').onclick=()=>{
+    const name=$('voluntaryDebtName').value.trim(),amount=Number($('voluntaryDebtAmount').value),note=$('voluntaryDebtNote').value.trim();
+    if(!name||!Number.isFinite(amount)||amount<=0){$('voluntaryDebtStatus').textContent='Укажи имя и сумму больше нуля.';$('voluntaryDebtStatus').classList.add('show');return}
+    state.voluntaryDebts=Array.isArray(state.voluntaryDebts)?state.voluntaryDebts:[];
+    state.voluntaryDebts.push({id:'voluntary_'+Date.now(),name,original:amount,remaining:amount,note,date:localToday(),payments:[]});
+    persist();close();render();showToast('Добавлено в добровольные возвраты');
+  };
+  voluntaryMenu.onclick=()=>{listPage.hidden=true;$('debtPeoplePage').hidden=true;$('debtHistoryPage').hidden=true;page.hidden=false;render()};
+  $('openDebtorsPage').addEventListener('click',()=>{page.hidden=true});
+  $('backFromVoluntaryDebt').onclick=()=>{page.hidden=true;listPage.hidden=false};
+  $('voluntaryDebtList').addEventListener('click',e=>{
+    const remove=e.target.closest('[data-voluntary-delete]');
+    if(remove){const debt=(state.voluntaryDebts||[]).find(x=>String(x.id)===String(remove.dataset.voluntaryDelete));if(!debt)return;if(!confirm('Удалить '+debt.name+' из активного списка? История возвратов сохранится, остаток будет удалён.'))return;state.voluntaryDebts=state.voluntaryDebts.filter(x=>String(x.id)!==String(debt.id));persist();render();showToast('Должник удалён из списка');return}
+    const button=e.target.closest('[data-voluntary-pay]');if(!button)return;
+    const debt=(state.voluntaryDebts||[]).find(x=>String(x.id)===String(button.dataset.voluntaryPay));if(!debt)return;
+    $('voluntaryPayHint').textContent=debt.name+' · остаток '+fmt(debt.remaining);
+    $('voluntaryPayAmount').value='';$('voluntaryPayAccount').innerHTML=accountOptions().map(([name,key])=>`<option value="${escapeHtml(key)}">${escapeHtml(name)} · ${fmt(accountBalance(key))}</option>`).join('');
+    payModal.dataset.debtId=debt.id;$('voluntaryPayStatus').classList.remove('show');payModal.hidden=false;
+  });
+  $('voluntaryPaySave').onclick=()=>{
+    const debt=(state.voluntaryDebts||[]).find(x=>String(x.id)===String(payModal.dataset.debtId));if(!debt)return;
+    const amount=Number($('voluntaryPayAmount').value),key=$('voluntaryPayAccount').value;
+    if(!Number.isFinite(amount)||amount<=0){$('voluntaryPayStatus').textContent='Введи сумму больше нуля.';$('voluntaryPayStatus').classList.add('show');return}
+    if(amount>Number(debt.remaining)){$('voluntaryPayStatus').textContent='Сумма больше оставшегося долга.';$('voluntaryPayStatus').classList.add('show');return}
+    if(accountBalance(key)<amount){$('voluntaryPayStatus').textContent='На выбранном счёте недостаточно денег.';$('voluntaryPayStatus').classList.add('show');return}
+    setAccountBalance(key,accountBalance(key)-amount);debt.remaining=Math.max(0,Number(debt.remaining)-amount);
+    debt.payments=Array.isArray(debt.payments)?debt.payments:[];const payment={id:'voluntary_pay_'+Date.now(),name:debt.name,debtId:debt.id,amount,date:localToday(),accountKey:key};debt.payments.push(payment);state.voluntaryDebtHistory=Array.isArray(state.voluntaryDebtHistory)?state.voluntaryDebtHistory:[];state.voluntaryDebtHistory.push(payment);
+    persist();closePay();render();renderDashboard();showToast('Добровольный возврат записан');
+  };
+  render();
 })();
 </script>
 <script>
