@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#101216"><link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png"><meta name="apple-mobile-web-app-title" content="Мои финансы"><title>Мои финансы — распределение дохода</title><script src="https://accounts.google.com/gsi/client" async defer></script>
+<html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#101216"><title>Мои финансы — распределение дохода</title><script src="https://accounts.google.com/gsi/client" async defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{color-scheme:dark;--bg:#0e1014;--panel:#171a20;--panel2:#1d2129;--line:#2b303a;--text:#f4f5f8;--muted:#929baa;--blue:#a8c5ff;--green:#9ce4bd;--gold:#f3d49b;--pink:#f2b1c5}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 85% -10%,#202d45 0,transparent 38%),var(--bg);color:var(--text);font:15px "Montserrat",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding:0 0 calc(100px + env(safe-area-inset-bottom))}header,main{max-width:780px;margin:auto}header{padding:26px 18px 14px;display:flex;justify-content:space-between;align-items:center;gap:12px}.brand{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}h1{font-size:28px;letter-spacing:-.8px;margin:8px 0 5px}.title-line{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.title-line h1{margin:8px 0 5px}.version-mark{display:inline-flex;align-items:center;justify-content:center;padding:4px 7px;border:1px solid #40506a;border-radius:7px;background:#1a2432;color:#a9c7ff;font-size:11px;font-weight:700;letter-spacing:.4px;line-height:1;white-space:nowrap;transform:translateY(1px)}.refresh-app{display:inline-grid;place-items:center;width:23px;height:23px;padding:0;border:1px solid #303744;border-radius:50%;background:transparent;color:#778397;font:16px/1 system-ui,sans-serif;cursor:pointer;opacity:.62;transform:translateY(1px)}.refresh-app:active{opacity:1;background:#1a2432;color:#a9c7ff}.refresh-app:focus-visible{outline:2px solid #a9c7ff;outline-offset:2px}.subtitle{font-size:13px;line-height:1.5;color:var(--muted);max-width:510px}.topmark{width:42px;height:42px;flex-shrink:0;border:1px solid #3b4558;background:linear-gradient(145deg,#27344a,#171d28);border-radius:15px;display:grid;place-items:center;color:var(--blue);font-size:20px}main{padding:0 15px 28px}.tabs{display:flex;gap:8px;margin:8px 0 16px;padding:5px;background:#11151b;border:1px solid var(--line);border-radius:15px}.tab{flex:1;border:0;border-radius:11px;padding:12px 8px;background:transparent;color:var(--muted);font:600 13px inherit}.tab.active{background:linear-gradient(135deg,#304563,#26354b);color:#e3edff;box-shadow:inset 0 0 0 1px #506b92}.page{display:none}.page.active{display:block}.card{background:linear-gradient(145deg,rgba(29,33,41,.96),rgba(21,24,30,.98));border:1px solid var(--line);border-radius:22px;padding:18px;margin:14px 0;box-shadow:0 12px 36px #00000014}.sectionhead{display:flex;align-items:flex-start;gap:11px;margin-bottom:17px}.step{width:29px;height:29px;border-radius:10px;display:grid;place-items:center;background:#26354c;color:var(--blue);font-weight:700;flex-shrink:0}.sectionhead h2{font-size:17px;margin:2px 0 5px}.hint{font-size:12px;color:var(--muted);line-height:1.5}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{min-width:0}.field.full{grid-column:1/-1}.field label{display:block;font-size:12px;color:#b2bac8;margin:0 0 7px}.field input,.field select,.field textarea{display:block;width:100%;min-width:0;max-width:100%;min-height:45px;border:1px solid #343b48;border-radius:12px;background:#101318;color:var(--text);padding:11px;font:inherit}.field textarea{resize:vertical;min-height:68px;border:1px solid #343b48;border-radius:12px;background:#101318;color:var(--text);padding:11px;font:inherit;width:100%;min-width:0;max-width:100%}.field input[type=date]{appearance:none;-webkit-appearance:none;width:100%;min-width:0;max-width:100%;padding:10px 6px;font-size:13px;letter-spacing:-.4px}.field input:focus,.field select:focus{outline:none;border-color:#7fa5ed;box-shadow:0 0 0 3px #759de51b}.money{font-size:20px!important;font-weight:650}.toggle{display:grid;grid-template-columns:1fr 1fr;gap:5px;padding:5px;background:#101318;border:1px solid #303640;border-radius:13px}.toggle button{border:0;border-radius:9px;padding:11px 6px;background:transparent;color:var(--muted);font-size:12px}.toggle button.active{background:linear-gradient(135deg,#304563,#26354b);color:#e3edff}.note{margin-top:11px;border-radius:12px;background:#11151b;padding:11px;color:var(--muted);font-size:12px;line-height:1.5}.summary{padding:18px;border-radius:18px;background:radial-gradient(ellipse at 100% 0,#2a3d5a 0,transparent 60%),linear-gradient(140deg,#222832,#171a20);border:1px solid #364050;margin-bottom:14px}.summary small{color:#aeb9ca}.summary .big{font-size:34px;font-weight:720;letter-spacing:-1px;margin:7px 0 15px}.chips{display:grid;grid-template-columns:1fr 1fr;gap:8px}.chip{background:#11151bbd;border:1px solid #333a46;border-radius:12px;padding:11px}.chip span{display:block;font-size:11px;color:var(--muted);margin-bottom:5px}.chip b{font-size:15px}.alloc-list{display:flex;flex-direction:column;gap:9px}.alloc{border:1px solid #2d333d;background:#15181e;border-radius:14px;padding:12px}.alloc-top{display:flex;align-items:center;gap:9px}.emoji{width:34px;height:34px;flex-shrink:0;border-radius:11px;background:#242b36;display:grid;place-items:center;font-size:16px}.alloc-name{flex:1;font-size:13px}.alloc-amount{font-weight:700;font-size:14px;text-align:right;white-space:nowrap}.alloc-percent{font-size:11px;color:var(--muted);margin-top:4px}.bar{height:4px;background:#2a3039;border-radius:9px;margin-top:10px;overflow:hidden}.bar div{height:100%;background:linear-gradient(90deg,#6e91d4,#b2cbff);border-radius:9px}.suballoc{margin:10px 0 0 43px;padding-top:8px;border-top:1px solid #292e37;display:flex;justify-content:space-between;gap:8px;font-size:12px}.suballoc span{color:var(--muted)}.charity{margin-top:11px;border:1px dashed #635340;background:#29241c;border-radius:12px;padding:11px;display:flex;gap:10px;font-size:12px;line-height:1.45}.charity b{color:var(--gold)}.warning{display:none;margin-top:11px;border:1px solid #6a4d34;background:#2a2119;color:#f1cc9c;padding:11px;border-radius:12px;font-size:12px;line-height:1.5}.warning.show{display:block}.actions{display:flex;gap:9px;margin-top:15px}.primary,.secondary{border-radius:12px;padding:13px 11px;font-size:13px;font-weight:650;cursor:pointer}.primary{flex:1;border:0;background:linear-gradient(135deg,#dbe7ff,#a9c6ff);color:#111927}.secondary{border:1px solid #343b47;background:#171b22;color:#dce4f3}.status{display:none;padding:12px;border:1px solid #355d49;background:#18271f;color:#b5f0cd;border-radius:11px;margin-top:12px;font-size:12px;line-height:1.5}.status.show{display:block}.reconcile{display:flex;align-items:center;gap:10px;padding:12px;border:1px solid #355d49;background:#18271f;color:#b5f0cd;border-radius:12px;margin-top:12px;font-size:12px;line-height:1.5}.lamp{width:12px;height:12px;flex-shrink:0;border-radius:50%;background:#42d17a;box-shadow:0 0 0 4px #42d17a20,0 0 12px #42d17a80}.reconcile.bad{border-color:#74454a;background:#2a1c20;color:#ffc3c8}.reconcile.bad .lamp{background:#ff626e;box-shadow:0 0 0 4px #ff626e20,0 0 12px #ff626e80}.small{font-size:11px;color:var(--muted);line-height:1.5;margin:15px 3px}.footer{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}.footer button{background:none;border:0;color:var(--muted);text-decoration:underline;font-size:12px;padding:8px 0}.param-section{margin:14px 0 8px;color:#dbe5f7;font-size:13px;font-weight:700}.param-label{font-size:12px;color:#b2bac8;display:block;margin:0 0 6px}.param-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}.param-field{min-width:0}.param-field input{width:100%;min-width:0;border:1px solid #343b48;border-radius:11px;background:#101318;color:var(--text);padding:11px;font:inherit}.param-field small{display:block;color:var(--muted);font-size:10px;margin-top:5px;line-height:1.4}.version{display:inline-block;border:1px solid #39465b;color:#c6d7f6;background:#1b2533;border-radius:20px;padding:5px 9px;font-size:11px;margin:0 0 10px}.history-controls{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
@@ -401,7 +401,6 @@ button.primary{background:linear-gradient(100deg,#2f82ff,#70aaff);color:#07152b;
   #debts .debt-people-content,#debts .debt-history-content{flex:1}
 }
 @media(min-width:621px){#debts .debt-subpage{max-height:calc(100vh - 250px);overflow-y:auto;overscroll-behavior:contain}}
-@media(max-width:620px){#debts .debt-subpage:not([hidden]){justify-content:flex-start!important;padding-top:clamp(150px,50vw,240px)!important}}
 @media(max-width:360px){#debts .debt-overview-card{padding:14px}#debts .debt-action{gap:5px;min-height:45px;padding:7px 5px;font-size:11px}}
 </style><style>
 .plan-result-card #reconcile{margin-bottom:16px!important}
@@ -474,6 +473,7 @@ button.primary{background:linear-gradient(100deg,#2f82ff,#70aaff);color:#07152b;
         <div class="debt-total receivable"><small>Мне должны</small><b id="debtsReceivableTotal">0 ₽</b></div>
       </div>
     </div>
+    <button class="vd-landing-note" id="vdLandingNote" type="button" hidden><span>Добровольные возвраты</span><b id="vdLandingTotal"></b><small>не входят в сумму долгов</small></button>
     <section class="debt-quick-operations" aria-label="Быстрые операции">
       <h3>Быстрые операции</h3>
       <div class="debt-action-grid">
@@ -481,8 +481,9 @@ button.primary{background:linear-gradient(100deg,#2f82ff,#70aaff);color:#07152b;
         <button class="debt-action debt-action-repay" id="quickRepayDebt" type="button"><span aria-hidden="true">↗</span>Отдать долг</button>
         <button class="debt-action debt-action-lend" id="openLendDebtForm" type="button"><span aria-hidden="true">↗</span>Дать в долг</button>
         <button class="debt-action debt-action-receive" id="quickReceiveDebt" type="button"><span aria-hidden="true">↓</span>Получить возврат</button>
+        <button class="debt-action debt-action-legacy" id="openDebtForm" type="button"><span aria-hidden="true">＋</span>Внести старый долг</button>
+        <button class="debt-action debt-action-voluntary" id="openVoluntaryDebt" type="button"><span aria-hidden="true">♥</span>Добровольный возврат</button>
       </div>
-      <button class="secondary debt-legacy-action" id="openDebtForm" type="button">Внести старый долг</button>
     </section>
     <button class="card debt-list-link" id="openDebtorsPage" type="button">
       <span class="debt-list-link-icon" aria-hidden="true">☷</span><span><b>Список долгов</b><small>Люди, остатки и история операций</small></span><span class="debt-list-chevron" aria-hidden="true">›</span>
@@ -493,6 +494,7 @@ button.primary{background:linear-gradient(100deg,#2f82ff,#70aaff);color:#07152b;
     <div class="card debt-subpage-heading"><button class="secondary debt-back-button" id="backFromDebtList" type="button">← Назад</button><h2>Список долгов</h2></div>
     <button class="card debt-subpage-link" id="openDebtPeoplePage" type="button"><span><b>Люди и остатки</b><small>Список людей и текущие суммы</small></span><span aria-hidden="true">›</span></button>
     <button class="card debt-subpage-link" id="openDebtHistoryPage" type="button"><span><b>История платежей</b><small>Все погашения и возвраты</small></span><span aria-hidden="true">›</span></button>
+    <button class="card debt-subpage-link vd-link" id="openVoluntaryPage" type="button"><span><b>Добровольные возвраты</b><small>Простили, но хочу вернуть · не входят в сумму долгов</small></span><span aria-hidden="true">›</span></button>
   </div>
 
   <div id="debtPeoplePage" class="debt-subpage debt-detail-page" hidden>
@@ -503,9 +505,17 @@ button.primary{background:linear-gradient(100deg,#2f82ff,#70aaff);color:#07152b;
         <button class="debt-filter" data-debt-filter="owed" type="button">Я должен</button>
         <button class="debt-filter" data-debt-filter="receivable" type="button">Мне должны</button>
       </div>
-      <div id="debtContactList"></div>
+      <div id="debtContactList"></div><div id="vdPeopleBlock"></div>
       <div class="note">Частичные платежи доступны в карточке долга. Возврат тебе зачисляется на выбранный счёт без распределения.</div>
     </div>
+  </div>
+
+  <div id="debtVoluntaryPage" class="debt-subpage debt-detail-page vd-page" hidden>
+    <div class="card debt-subpage-heading"><button class="secondary debt-back-button" id="vdBack" type="button">← Назад</button><h2>Добровольные возвраты</h2></div>
+    <div class="card vd-summary"><small>Осталось вернуть по желанию</small><b id="vdSummaryTotal">0 ₽</b><span>Не входит в общую сумму долгов</span></div>
+    <button class="primary vd-add" id="vdAddBtn" type="button">＋ Добавить добровольный долг</button>
+    <div id="vdPageList"></div>
+    <div class="note">Это долги, которые тебе простили, но ты хочешь вернуть их по возможности. Они не влияют на суммы «Я должен» и «Мне должны». Возврат списывается с выбранного счёта.</div>
   </div>
 
   <div id="debtHistoryPage" class="debt-subpage debt-detail-page" hidden>
@@ -631,7 +641,7 @@ body:has(#home.active) #home{overflow:hidden;max-height:100%;}
 @media(max-width:620px){#distribution #reserveDebtAllocationModal{height:100%}#reserveDebtAllocationModal .plan-allocation-card{max-height:calc(100% - 20px);height:calc(100% - 20px)}#reserveDebtAllocationModal .debt-allocation-grid{gap:7px!important}#reserveDebtAllocationModal .debt-allocation-input{padding:7px!important}}
 </style>
 
-<div id="operationActionModal" class="expense-modal" hidden><div class="expense-sheet" role="dialog" aria-modal="true" aria-labelledby="opActionTitle"><div class="expense-head"><div><h2 id="opActionTitle"></h2><div class="hint" id="opActionDetail"></div></div><button class="expense-close" id="opActionClose" type="button" aria-label="Закрыть">×</button></div><div class="expense-form"><div class="note" id="opActionAmount"></div><div class="actions"><button type="button" class="primary" id="opActionEdit">Изменить</button><button type="button" class="secondary danger-btn" id="opActionDelete">Отменить операцию</button></div></div></div></div><div id="successToast" class="toast-message" role="status" aria-live="polite">Сохранено</div>
+<div id="operationActionModal" class="expense-modal" hidden><div class="expense-sheet" role="dialog" aria-modal="true" aria-labelledby="opActionTitle"><div class="expense-head"><div><h2 id="opActionTitle"></h2><div class="hint" id="opActionDetail"></div></div><button class="expense-close" id="opActionClose" type="button" aria-label="Закрыть">×</button></div><div class="expense-form"><div class="note" id="opActionAmount"></div><div class="actions"><button type="button" class="primary" id="opActionEdit">Изменить</button><button type="button" class="secondary danger-btn" id="opActionDelete">Отменить операцию</button></div></div></div></div><div id="vdFormModal" class="expense-modal" hidden><div class="expense-sheet" role="dialog" aria-modal="true" aria-labelledby="vdFormTitle"><div class="expense-head"><div><h2 id="vdFormTitle">Добровольный возврат</h2><div class="hint">Долг, который тебе простили. Не входит в общую сумму долгов, счета не меняются.</div></div><button class="expense-close" id="vdFormClose" type="button" aria-label="Закрыть">×</button></div><div class="expense-form"><div class="field"><label for="vdName">Кому должен</label><input id="vdName" type="text" list="vdNames" autocomplete="off" placeholder="Имя или название"><datalist id="vdNames"></datalist></div><div class="field"><label for="vdAmount">Сумма, ₽</label><input id="vdAmount" type="number" min="0.01" step="1" inputmode="numeric" placeholder="0"></div><div class="field"><label for="vdDate">Дата</label><input id="vdDate" type="date"></div><div class="field"><label for="vdNote">Комментарий</label><input id="vdNote" type="text" placeholder="Необязательно"></div><div class="actions"><button class="primary" id="vdFormSave" type="button">Добавить</button><button class="secondary" id="vdFormCancel" type="button">Отмена</button><button class="secondary danger-btn" id="vdFormDelete" type="button" hidden>Удалить</button></div><div class="status" id="vdFormStatus"></div></div></div></div><div id="vdDetailModal" class="expense-modal" hidden><div class="expense-sheet vd-sheet" role="dialog" aria-modal="true" aria-labelledby="vdDetailName"><div class="expense-head"><div><h2 id="vdDetailName"></h2><div class="hint" id="vdDetailSub"></div></div><button class="expense-close" id="vdDetailClose" type="button" aria-label="Закрыть">×</button></div><div class="vd-detail-total"><small>Осталось вернуть</small><b id="vdDetailRemaining"></b></div><div id="vdDetailRows"></div><div class="actions"><button class="primary vd-pay-btn" id="vdDetailPay" type="button">Вернуть</button><button class="secondary" id="vdDetailEdit" type="button">Изменить</button></div></div></div><div id="vdPayModal" class="expense-modal" hidden><div class="expense-sheet" role="dialog" aria-modal="true" aria-labelledby="vdPayTitle"><div class="expense-head"><div><h2 id="vdPayTitle">Вернуть добровольно</h2><div class="hint" id="vdPaySub"></div></div><button class="expense-close" id="vdPayClose" type="button" aria-label="Закрыть">×</button></div><div class="expense-form"><div class="field"><label for="vdPayAmount">Сумма, ₽</label><input id="vdPayAmount" type="number" min="0.01" step="1" inputmode="numeric" placeholder="0"></div><div class="field"><label for="vdPayAccount">Списать со счёта</label><select id="vdPayAccount"></select></div><div class="field"><label for="vdPayDate">Дата</label><input id="vdPayDate" type="date"></div><div class="field"><label for="vdPayComment">Комментарий</label><input id="vdPayComment" type="text" placeholder="Необязательно"></div><div class="actions"><button class="primary" id="vdPaySave" type="button">Записать возврат</button><button class="secondary" id="vdPayCancel" type="button">Отмена</button></div><div class="status" id="vdPayStatus"></div></div></div></div><div id="successToast" class="toast-message" role="status" aria-live="polite">Сохранено</div>
 <div id="planSuccessModal" class="plan-success-modal" hidden aria-hidden="true"><section class="plan-success-sheet" role="dialog" aria-modal="true" aria-labelledby="planSuccessTitle"><div class="plan-success-icon" aria-hidden="true">✓</div><h2 id="planSuccessTitle">Доход распределён</h2><p id="planSuccessCopy" class="plan-success-copy"></p><div class="plan-success-total"><span>Поступление</span><strong id="planSuccessAmount"></strong></div><ul id="planSuccessAccounts" class="plan-success-list"></ul><button id="planSuccessClose" class="primary plan-success-close" type="button">На главный экран</button></section></div><div id="operationConfirmModal" class="operation-confirm-modal" hidden aria-hidden="true"><div class="operation-confirm-sheet" role="dialog" aria-modal="true" aria-labelledby="operationConfirmTitle"><h2 id="operationConfirmTitle">Подтверди действие</h2><p id="operationConfirmMessage"></p><div class="operation-confirm-actions"><button id="operationConfirmCancel" class="secondary" type="button">Отмена</button><button id="operationConfirmAccept" class="primary" type="button">Удалить</button></div></div></div><div id="reserveDebtAllocationModal" class="plan-screen" hidden><div class="card plan-result-card plan-allocation-card"><div class="sectionhead"><div class="step">3</div><div><h2 id="reserveDebtAllocationTitle">Погашение долга резервам</h2></div></div><button type="button" class="secondary plan-back" id="cancelReserveDebtAllocation" aria-label="Назад к результату">← Результат</button><div class="summary debt-allocation-summary"><small>К погашению</small><div class="big" id="reservePayNeeded">0 ₽</div></div><div id="reserveDebtAllocationRows" class="grid debt-allocation-grid"></div><div id="reserveAllocationTotal" class="reconcile debt-allocation-total"><span>Распределено</span><strong id="reserveAllocationSum">0 ₽</strong></div><div class="debt-allocation-note">Подушка погашается первой. «На счёте» — текущий баланс, «долг резервам» — остаток долга по счёту. Суммы указаны в целых рублях.</div><div id="reserveAllocationStatus" class="status"></div><div class="actions"><button type="button" class="primary" id="confirmReserveDebtAllocation">Сохранить</button><button type="button" class="secondary" id="cancelReserveDebtAllocation2">← Результат</button></div></div></div>
 
 <script>
@@ -1459,7 +1469,7 @@ try {
  if(!state.migrations)state.migrations={};if(!state.migrations.zeroedLegacyNegativeCategories){['people','wantsSmall'].forEach(key=>{if(Number(state.balances?.[key])<0)state.balances[key]=0;});state.migrations.zeroedLegacyNegativeCategories=true;persist();} if(!state.reserveDebtComposition)state.reserveDebtComposition={cushion:0,wantsSmall:0,people:0,other:0};else if(state.reserveDebtComposition.other==null)state.reserveDebtComposition.other=0;
 function migrateUnassignedReserveDebt(){const total=Math.round((Math.max(0,Number(state.balances?.reserveDebt)||0)))/1;const map=state.reserveDebtByAccount||{};let gap=Math.round((total-reserveDebtMapTotal(map)))/1;if(gap<=0.01)return;const ops=[...(state.expenses||[]).filter(x=>!x.debtAccountRecorded&&Number(x.debtIncrease)>0).map(x=>({kind:'expense',x,key:x.debtAccountKey||x.accountKey,amount:Math.round(Number(x.debtIncrease))/1,at:x.createdAt||''})),...(state.transfers||[]).filter(x=>!x.debtAccountRecorded&&Number(x.reserveDebtDelta)>0).map(x=>({kind:'transfer',x,key:x.debtAccountKey||x.fromKey,amount:Math.round(Number(x.reserveDebtDelta))/1,at:x.createdAt||''}))].sort((a,b)=>String(b.at).localeCompare(String(a.at)));let changed=false;for(const op of ops){if(gap<=0.01)break;if(op.amount>gap+0.01)continue;map[op.key]=Math.round(((Number(map[op.key])||0)+op.amount))/1;gap=Math.round((gap-op.amount))/1;op.x.debtAccountKey=op.key;op.x.debtAccountRecorded=true;changed=true;}if(changed&&gap<=0.01){state.reserveDebtByAccount=map;persist();}}
 migrateUnassignedReserveDebt();
-function loadState(){try{const s=JSON.parse(localStorage.getItem(STORE)||'{}');if(!s.paramsVersions||!s.paramsVersions.length)s.paramsVersions=[{id:1,createdAt:new Date().toISOString(),label:'Октябрьский образец',params:{...DEFAULTS}}];s.paramsVersions.forEach(v=>{if(v.params&&v.params.bufferAfterRent===undefined)v.params.bufferAfterRent=30;if(v.params&&v.params.charity===undefined)v.params.charity=1});if(!s.records)s.records=[];if(!s.expenses)s.expenses=[];if(!s.expenseCategories)s.expenseCategories=[{id:'food',name:'Питание',active:true},{id:'transport',name:'Транспорт',active:true},{id:'home',name:'Дом и быт',active:true},{id:'health',name:'Здоровье',active:true},{id:'leisure',name:'Досуг',active:true},{id:'gifts',name:'Подарки',active:true},{id:'other',name:'Другое',active:true}];if(!s.expenseTags)s.expenseTags=['работа','обед','подписки','сын','разовое'];if(!s.incomeTags)s.incomeTags=[];if(!s.customAccounts)s.customAccounts=[];if(!s.debts)s.debts=[];if(!s.voluntaryDebts)s.voluntaryDebts=[];if(!s.voluntaryDebtHistory)s.voluntaryDebtHistory=[];if(!s.debtPayments)s.debtPayments=[];if(!s.transfers)s.transfers=[];if(!s.incomes)s.incomes=[];if(!s.accountVisibility)s.accountVisibility={};if(!s.incomeSources)s.incomeSources=['Подработка','Зарплата','Оплата за услуги','Возврат долга','Премия','Другое поступление'];if(!s.accountOrder)s.accountOrder=[];if(!s.debtOrder)s.debtOrder=[];if(!s.balances)s.balances={rent:0,buffer:0,reserveDebt:0,cushion:0,investments:0,charity:0,wantsLarge:0,wantsSmall:0,alimony:0,people:0,banks:0};if(!s.reserveDebtByAccount||typeof s.reserveDebtByAccount!=='object'){const debt=Math.round((Number(s.balances.reserveDebt)||0))/1;s.reserveDebtByAccount=debt===18500?{cushion:6500,wantsSmall:10562,people:1438}:{};}s.currentVersionId=s.currentVersionId||s.paramsVersions[s.paramsVersions.length-1].id;const cv=s.paramsVersions.find(v=>String(v.id)===String(s.currentVersionId));if(cv&&(!s.records||s.records.length===0)&&Number(cv.params.obligations)===40)cv.params.obligations=39;return s}catch(e){return{paramsVersions:[{id:1,createdAt:new Date().toISOString(),label:'Октябрьский образец',params:{...DEFAULTS}}],currentVersionId:1,records:[],expenses:[],incomes:[],accountVisibility:{},customAccounts:[],debts:[],voluntaryDebts:[],voluntaryDebtHistory:[],debtPayments:[],balances:{rent:0,buffer:0,reserveDebt:0,cushion:0,investments:0,charity:0,wantsLarge:0,wantsSmall:0,alimony:0,people:0,banks:0}}}}
+function loadState(){try{const s=JSON.parse(localStorage.getItem(STORE)||'{}');if(!s.paramsVersions||!s.paramsVersions.length)s.paramsVersions=[{id:1,createdAt:new Date().toISOString(),label:'Октябрьский образец',params:{...DEFAULTS}}];s.paramsVersions.forEach(v=>{if(v.params&&v.params.bufferAfterRent===undefined)v.params.bufferAfterRent=30;if(v.params&&v.params.charity===undefined)v.params.charity=1});if(!s.records)s.records=[];if(!s.expenses)s.expenses=[];if(!s.expenseCategories)s.expenseCategories=[{id:'food',name:'Питание',active:true},{id:'transport',name:'Транспорт',active:true},{id:'home',name:'Дом и быт',active:true},{id:'health',name:'Здоровье',active:true},{id:'leisure',name:'Досуг',active:true},{id:'gifts',name:'Подарки',active:true},{id:'other',name:'Другое',active:true}];if(!s.expenseTags)s.expenseTags=['работа','обед','подписки','сын','разовое'];if(!s.incomeTags)s.incomeTags=[];if(!s.customAccounts)s.customAccounts=[];if(!s.debts)s.debts=[];if(!s.debtPayments)s.debtPayments=[];if(!s.transfers)s.transfers=[];if(!s.incomes)s.incomes=[];if(!s.accountVisibility)s.accountVisibility={};if(!s.incomeSources)s.incomeSources=['Подработка','Зарплата','Оплата за услуги','Возврат долга','Премия','Другое поступление'];if(!s.accountOrder)s.accountOrder=[];if(!s.debtOrder)s.debtOrder=[];if(!s.balances)s.balances={rent:0,buffer:0,reserveDebt:0,cushion:0,investments:0,charity:0,wantsLarge:0,wantsSmall:0,alimony:0,people:0,banks:0};if(!s.reserveDebtByAccount||typeof s.reserveDebtByAccount!=='object'){const debt=Math.round((Number(s.balances.reserveDebt)||0))/1;s.reserveDebtByAccount=debt===18500?{cushion:6500,wantsSmall:10562,people:1438}:{};}s.currentVersionId=s.currentVersionId||s.paramsVersions[s.paramsVersions.length-1].id;const cv=s.paramsVersions.find(v=>String(v.id)===String(s.currentVersionId));if(cv&&(!s.records||s.records.length===0)&&Number(cv.params.obligations)===40)cv.params.obligations=39;return s}catch(e){return{paramsVersions:[{id:1,createdAt:new Date().toISOString(),label:'Октябрьский образец',params:{...DEFAULTS}}],currentVersionId:1,records:[],expenses:[],incomes:[],accountVisibility:{},customAccounts:[],debts:[],debtPayments:[],balances:{rent:0,buffer:0,reserveDebt:0,cushion:0,investments:0,charity:0,wantsLarge:0,wantsSmall:0,alimony:0,people:0,banks:0}}}}
 function showToast(message='Запись сохранена'){const t=$('successToast');if(!t)return;t.textContent=message;t.classList.add('show');clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>t.classList.remove('show'),2400)}
 function persist(){try{localStorage.setItem(STORE,JSON.stringify(state));if(typeof scheduleDriveBackup==='function')scheduleDriveBackup()}catch(e){alert('Не удалось сохранить в браузере. Экспортируй историю CSV и освободи место в Safari.')}}
 function currentVersion(){return state.paramsVersions.find(v=>v.id===state.currentVersionId)||state.paramsVersions[state.paramsVersions.length-1]}
@@ -1863,7 +1873,7 @@ function syncDebtContactOptions(preferred){const select=$('debtContactSelect');i
 function syncDebtEntryMode(){const mode=$('debtEntryMode').value;const locked=mode!=='legacy';if(mode==='borrowed'||mode==='paid')$('debtDirection').value='owed';if(mode==='lent')$('debtDirection').value='receivable';$('debtDirection').disabled=locked;$('debtFormTitle').textContent=mode==='borrowed'?'Взять в долг':mode==='lent'?'Дать в долг':mode==='paid'?'Внести погашенный долг':'Внести старый долг';$('debtFormHint').textContent=mode==='legacy'?'Запись не изменит остатки на счетах.':mode==='paid'?'Историческое погашение будет записано без повторного списания денег.':mode==='borrowed'?'Сумма будет зачислена на выбранный счёт и добавлена к долгу.':'Сумма будет списана с выбранного счёта и добавлена к сумме, которую тебе должны.';$('debtAddBtn').textContent=mode==='legacy'?'Внести долг':mode==='borrowed'?'Записать получение':mode==='lent'?'Записать выдачу':'Записать погашение';fillDebtAccountOptions();syncDebtContactOptions();}function openDebtEntry(mode,contactId){$('debtEntryMode').value=mode;$('debtType').value='person';$('debtDirection').value=mode==='lent'?'receivable':'owed';$('debtName').value='';$('debtAmount').value='';$('debtDue').value='';$('debtNote').value='';$('debtOperationDate').value=localToday();$('debtContactSelect').value='';$('debtFormStatus').classList.remove('show');$('debtFormPanel').hidden=false;syncDebtEntryMode();if(contactId)syncDebtContactOptions(contactId);setTimeout(()=>$('debtName').focus(),0);}
 $('openBorrowDebtForm').onclick=()=>openDebtEntry('borrowed');$('openLendDebtForm').onclick=()=>openDebtEntry('lent');$('openDebtForm').onclick=()=>openDebtEntry('legacy');$('closeDebtForm').onclick=closeDebtEntry;$('cancelDebtForm').onclick=closeDebtEntry;$('debtFormPanel').addEventListener('click',e=>{if(e.target===$('debtFormPanel'))closeDebtEntry()});function closeDebtEntry(){$('debtFormPanel').hidden=true;$('debtFormStatus').textContent='';$('debtFormStatus').classList.remove('show');}
 function showDebtSubpage(id){$('debtsLanding').hidden=true;$('debtListPage').hidden=id!=='debtListPage';$('debtPeoplePage').hidden=id!=='debtPeoplePage';$('debtHistoryPage').hidden=id!=='debtHistoryPage';if(id==='debtPeoplePage')renderDebts();}
-$('openDebtorsPage').onclick=()=>showDebtSubpage('debtListPage');$('backFromDebtList').onclick=()=>{$('debtListPage').hidden=true;$('debtsLanding').hidden=false;};
+$('openDebtorsPage').onclick=()=>showDebtSubpage('debtListPage');$('backFromDebtList').onclick=()=>{$('debtListPage').hidden=true;$('debtsLanding').hidden=false;const m=document.querySelector('main');if(m)m.scrollTop=0;};
 $('openDebtPeoplePage').onclick=()=>{debtFilter='all';showDebtSubpage('debtPeoplePage');};$('openDebtHistoryPage').onclick=()=>showDebtSubpage('debtHistoryPage');
 $('backFromDebtPeople').onclick=()=>showDebtSubpage('debtListPage');$('backFromDebtHistory').onclick=()=>showDebtSubpage('debtListPage');
 $('quickRepayDebt').onclick=()=>{debtFilter='owed';showDebtSubpage('debtPeoplePage');};$('quickReceiveDebt').onclick=()=>{debtFilter='receivable';showDebtSubpage('debtPeoplePage');};
@@ -2333,84 +2343,148 @@ body:has(#history.active) main{position:fixed!important;top:var(--art-h);left:0;
  $('incomeDelete').onclick=()=>{const simple=!!editingIncomeId&&!editingDistributionId,id=simple?editingIncomeId:editingDistributionId;if(!id)return;deleteUnifiedOperation('income',id,simple?'simple':'');const still=simple?(state.incomes||[]).some(i=>String(i.id)===String(id)):(state.records||[]).some(r=>String(r.id)===String(id));if(!still)closeIncomeModal()};
 })();
 </script>
-<script id="voluntary-debt-feature">
+<style id="voluntary-debts-style">
+@media(max-width:620px){
+html:has(#debts.active){height:100%;overflow:hidden}
+body:has(#debts.active){height:100dvh!important;overflow:hidden!important;padding-bottom:0!important}
+body:has(#debts.active) main{position:fixed!important;top:var(--art-h);left:0;right:0;bottom:0;height:auto!important;max-width:780px;margin:0 auto!important;background:#080f1d;overflow-x:hidden!important;overflow-y:auto!important;overscroll-behavior-y:contain;padding:10px 15px calc(88px + env(safe-area-inset-bottom))!important}
+#debts.active{display:block!important;height:auto!important;min-height:0!important;overflow:visible!important;justify-content:flex-start!important}
+#debts #debtsLanding:not([hidden]){min-height:0!important;justify-content:flex-start!important}
+#debts .debt-subpage:not([hidden]){min-height:0!important;max-height:none!important;height:auto!important;overflow:visible!important}
+#debts .debt-subpage-heading{margin-top:0!important}
+}
+@media(min-width:621px){#debts{padding-top:var(--art-h)}}
+#debts .debt-action-legacy{border-color:#3b4658;background:linear-gradient(135deg,#212a38,#171c25)}
+#debts .debt-action-voluntary,.vd-open{border-color:#7a6224!important;background:linear-gradient(135deg,#3a3012,#231f12)!important;color:#ffe29a!important}
+#debts .debt-action-voluntary span{color:#ffd24d}
+.vd-landing-note{display:grid;grid-template-columns:1fr auto;gap:1px 10px;align-items:center;width:100%;margin:0 0 8px;padding:9px 12px;border:1px solid #6e5a22;border-radius:13px;background:linear-gradient(135deg,#2f2810,#1c1a12);color:#ffe29a;font:inherit;font-size:12px;text-align:left;cursor:pointer;box-sizing:border-box}
+.vd-landing-note[hidden]{display:none!important}
+.vd-landing-note b{font-size:15px;color:#ffd24d}
+.vd-landing-note small{grid-column:1/-1;color:#b9a56a;font-size:10px}
+#debts .vd-link{border-color:#6e5a22;background:linear-gradient(135deg,#2c250f,#18171a)}
+#debts .vd-link b{color:#ffe29a}
+.vd-summary{margin-top:8px;border-color:#6e5a22!important;background:linear-gradient(135deg,#302911,#1c1b17)!important;text-align:center}
+.vd-summary small{display:block;color:#c9b373;font-size:11px}
+.vd-summary b{display:block;margin:4px 0 2px;font-size:26px;color:#ffd24d}
+.vd-summary span{font-size:10px;color:#a99968}
+.vd-add{width:100%;margin:8px 0 10px}
+.vd-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;align-items:center;width:100%;margin:0 0 7px;padding:10px 12px;border:1px solid #6e5a22;border-radius:13px;background:linear-gradient(135deg,#2c250f,#1a1a1c);color:#ffe9b8;font:inherit;text-align:left;cursor:pointer;box-sizing:border-box}
+.vd-row:active{border-color:#b8962f}
+.vd-row b{font-size:14px;color:#ffd24d;white-space:nowrap}
+.vd-row .vd-name{font-size:13px;font-weight:600;color:#fff1cc;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vd-row small{grid-column:1/-1;color:#b9a56a;font-size:10px}
+.vd-row .vd-bar{grid-column:1/-1;height:3px;border-radius:3px;background:#4a3f1e;overflow:hidden;margin-top:5px}
+.vd-row .vd-bar i{display:block;height:100%;background:linear-gradient(90deg,#c9a227,#ffd24d)}
+.vd-row.done{opacity:.62}
+.vd-row.done b{color:#8de2c2}
+.vd-block-title{display:flex;justify-content:space-between;align-items:baseline;margin:16px 2px 8px;font-size:12px;font-weight:700;color:#ffd24d}
+.vd-block-title small{font-weight:400;font-size:10px;color:#a99968}
+.vd-detail-total{margin:0 0 10px;padding:10px 12px;border:1px solid #6e5a22;border-radius:13px;background:#2a240f;text-align:center}
+.vd-detail-total small{display:block;font-size:11px;color:#c9b373}
+.vd-detail-total b{font-size:24px;color:#ffd24d}
+.vd-pay-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-top:1px solid #29384f;font-size:12px}
+.vd-pay-row>div{flex:1;min-width:0}
+.vd-pay-row small{display:block;color:var(--muted);font-size:10px;margin-top:1px}
+.vd-pay-row b{color:#8de2c2;white-space:nowrap}
+.vd-pay-row button{padding:5px 8px!important;min-height:30px!important;font-size:10px!important}
+.vd-pay-empty{padding:8px 0;font-size:11px;color:var(--muted)}
+#vdDetailRows{max-height:36vh;overflow-y:auto;margin-bottom:10px}
+.vd-pay-btn{background:linear-gradient(135deg,#c9a227,#e6bf3d)!important;color:#1d1700!important;border:0!important}
+#vdFormDelete{flex:1 1 100%}
+#vdFormDelete[hidden]{display:none!important}
+</style>
+<script id="voluntary-debts-script">
 (function(){
-  const grid=document.querySelector('#debts .debt-action-grid');
-  const listPage=$('debtListPage');
-  if(!grid||!listPage)return;
-  const legacy=$('openDebtForm');
-  legacy.classList.add('debt-action','debt-action-legacy');
-  legacy.innerHTML='<span aria-hidden="true">＋</span>Внести старый долг';
-  grid.appendChild(legacy);
-  const voluntaryButton=document.createElement('button');
-  voluntaryButton.type='button';voluntaryButton.id='openVoluntaryDebtForm';
-  voluntaryButton.className='debt-action debt-action-voluntary';
-  voluntaryButton.innerHTML='<span aria-hidden="true">↩</span>Добровольный возврат долга';
-  grid.appendChild(voluntaryButton);
-  const style=document.createElement('style');
-  style.textContent='#debts .debt-action-legacy,#debts .debt-action-voluntary{grid-column:1/-1;width:100%;min-height:42px!important;margin:0!important;padding:8px 9px!important;border-radius:10px;font:inherit;font-size:12px!important;font-weight:500}#debts .debt-action-legacy{border:1px solid #3b5275!important;background:linear-gradient(135deg,#243650,#1b2635)!important;color:#eef4ff!important}#debts .debt-action-voluntary{border:1px solid #8b7139;background:linear-gradient(135deg,#4a3b20,#2b281e);color:#ffe0a0}#debts .debt-action-legacy span,#debts .debt-action-voluntary span{font-size:15px}.voluntary-debt-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding:11px 2px;border-top:1px solid #5a4a2b}.voluntary-debt-row:first-child{border-top:0}.voluntary-debt-row strong{display:block;font-size:12px;font-weight:600}.voluntary-debt-row small{display:block;margin-top:4px;color:#c6b68f;font-size:10px;line-height:1.4}.voluntary-debt-row b{color:#ffda8d;font-size:13px;white-space:nowrap}.voluntary-debt-row button{grid-column:1/-1;min-height:34px;padding:7px 10px!important;border-color:#80682f;background:#322a1c;color:#ffe0a0;font-size:11px}.voluntary-debt-empty{padding:10px 0;color:var(--muted);font-size:11px;line-height:1.45}.voluntary-note{margin:0 0 10px;color:#c8b988;font-size:11px;line-height:1.45}';
-  document.head.appendChild(style);
-  const historyStyle=document.createElement('style');historyStyle.textContent='.voluntary-debt-row .voluntary-delete{border-color:#70414b;background:#302027;color:#ffc3c8}.voluntary-history-row{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:9px 2px;border-top:1px solid #293240}.voluntary-history-row:first-child{border-top:0}.voluntary-history-row strong{font-size:11px;font-weight:500}.voluntary-history-row small{display:block;color:#9ba8bc;font-size:10px;margin-top:3px}.voluntary-history-row b{font-size:12px;color:#ff9ba5;white-space:nowrap}';document.head.appendChild(historyStyle);
-  const voluntaryMenu=document.createElement('button');
-  voluntaryMenu.type='button';voluntaryMenu.className='card debt-subpage-link';
-  voluntaryMenu.id='openVoluntaryDebtList';
-  voluntaryMenu.innerHTML='<span><b>Добровольный возврат</b><small>Прощённые долги, которые ты решил вернуть</small></span><span aria-hidden="true">›</span>';
-  $('openDebtHistoryPage').after(voluntaryMenu);
-  const page=document.createElement('div');page.id='voluntaryDebtPage';page.className='debt-subpage';page.hidden=true;
-  page.innerHTML='<div class="card debt-subpage-heading"><button class="secondary debt-back-button" id="backFromVoluntaryDebt" type="button">← К списку долгов</button><h2>Добровольный возврат</h2></div><div class="card"><p class="voluntary-note">Эти суммы отделены от обычных долгов и не входят в общий итог. Добавляй возвраты по своему желанию.</p><div id="voluntaryDebtList"></div></div><div class="card"><h3 style="margin:0 0 8px;font-size:14px">История возвратов</h3><div id="voluntaryDebtHistory"></div></div>';
-  listPage.after(page);
-  const modal=document.createElement('div');modal.id='voluntaryDebtModal';modal.className='expense-modal';modal.hidden=true;
-  modal.innerHTML='<div class="expense-sheet" role="dialog" aria-modal="true" aria-labelledby="voluntaryDebtTitle"><div class="expense-head"><div><h2 id="voluntaryDebtTitle">Добровольный возврат долга</h2><div class="hint">Учёт прощённого долга, который ты решил вернуть.</div></div><button class="expense-close" id="voluntaryDebtClose" type="button" aria-label="Закрыть">×</button></div><div class="debt-form"><div class="field"><label for="voluntaryDebtName">Кому вернуть</label><input id="voluntaryDebtName" type="text" placeholder="Имя человека" autocomplete="name"></div><div class="field"><label for="voluntaryDebtAmount">Сумма, ₽</label><input id="voluntaryDebtAmount" type="number" min="0.01" step="1" placeholder="0" inputmode="numeric"></div><div class="field"><label for="voluntaryDebtNote">Примечание</label><input id="voluntaryDebtNote" type="text" placeholder="Необязательно"></div><button class="primary" id="voluntaryDebtSave" type="button">Добавить в список</button><div class="status" id="voluntaryDebtStatus"></div><button class="secondary" id="voluntaryDebtCancel" type="button">Отмена</button></div></div>';
-  document.body.appendChild(modal);
-  const payModal=document.createElement('div');payModal.id='voluntaryPayModal';payModal.className='expense-modal';payModal.hidden=true;
-  payModal.innerHTML='<div class="expense-sheet" role="dialog" aria-modal="true" aria-labelledby="voluntaryPayTitle"><div class="expense-head"><div><h2 id="voluntaryPayTitle">Внести возврат</h2><div class="hint" id="voluntaryPayHint"></div></div><button class="expense-close" id="voluntaryPayClose" type="button" aria-label="Закрыть">×</button></div><div class="debt-form"><div class="field"><label for="voluntaryPayAmount">Сумма, ₽</label><input id="voluntaryPayAmount" type="number" min="0.01" step="1" placeholder="0" inputmode="numeric"></div><div class="field"><label for="voluntaryPayAccount">Счёт списания</label><select id="voluntaryPayAccount"></select></div><button class="primary" id="voluntaryPaySave" type="button">Записать возврат</button><div class="status" id="voluntaryPayStatus"></div><button class="secondary" id="voluntaryPayCancel" type="button">Отмена</button></div></div>';
-  document.body.appendChild(payModal);
-  const render=()=>{
-    state.voluntaryDebts=Array.isArray(state.voluntaryDebts)?state.voluntaryDebts:[];
-    const root=$('voluntaryDebtList');
-    root.innerHTML=state.voluntaryDebts.length?state.voluntaryDebts.map(d=>`<div class="voluntary-debt-row"><div><strong>${escapeHtml(d.name)}</strong><small>${escapeHtml(d.note||'Добровольный возврат')}${d.date?' · с '+escapeHtml(debtDateLabel(d.date)):''}</small></div><b>${fmt(d.remaining||0)}</b>${Number(d.remaining)>0?`<button class="secondary" type="button" data-voluntary-pay="${escapeHtml(d.id)}">Внести возврат</button>`:'<small>Возвращён полностью</small>'}<button class="secondary voluntary-delete" type="button" data-voluntary-delete="${escapeHtml(d.id)}">Удалить должника</button></div>`).join(''):'<div class="voluntary-debt-empty">Пока нет записей. Добавь долг кнопкой «Добровольный возврат долга».</div>';
-    const history=Array.isArray(state.voluntaryDebtHistory)?state.voluntaryDebtHistory:[];
-    $('voluntaryDebtHistory').innerHTML=history.length?[...history].reverse().map(h=>{const account=(accountOptions().find(a=>String(a[1])===String(h.accountKey))||[])[0]||'Счёт';return `<div class="voluntary-history-row"><div><strong>${escapeHtml(h.name)}</strong><small>${escapeHtml(h.date||'')} · ${escapeHtml(account)}</small></div><b>−${fmt(h.amount)}</b></div>`}).join(''):'<div class="voluntary-debt-empty">Платежей пока нет.</div>';
-  };
-  const previousRenderDebts=window.renderDebts;
-  if(typeof previousRenderDebts==='function')window.renderDebts=function(){previousRenderDebts.apply(this,arguments);render()};
-  window.renderVoluntaryDebts=render;
-  const close=()=>{modal.hidden=true;$('voluntaryDebtStatus').classList.remove('show')};
-  voluntaryButton.onclick=()=>{ $('voluntaryDebtName').value='';$('voluntaryDebtAmount').value='';$('voluntaryDebtNote').value='';$('voluntaryDebtStatus').classList.remove('show');modal.hidden=false;$('voluntaryDebtName').focus(); };
-  $('voluntaryDebtClose').onclick=close;$('voluntaryDebtCancel').onclick=close;
-  modal.addEventListener('click',e=>{if(e.target===modal)close()});
-  const closePay=()=>{payModal.hidden=true;$('voluntaryPayStatus').classList.remove('show')};
-  $('voluntaryPayClose').onclick=closePay;$('voluntaryPayCancel').onclick=closePay;payModal.addEventListener('click',e=>{if(e.target===payModal)closePay()});
-  $('voluntaryDebtSave').onclick=()=>{
-    const name=$('voluntaryDebtName').value.trim(),amount=Number($('voluntaryDebtAmount').value),note=$('voluntaryDebtNote').value.trim();
-    if(!name||!Number.isFinite(amount)||amount<=0){$('voluntaryDebtStatus').textContent='Укажи имя и сумму больше нуля.';$('voluntaryDebtStatus').classList.add('show');return}
-    state.voluntaryDebts=Array.isArray(state.voluntaryDebts)?state.voluntaryDebts:[];
-    state.voluntaryDebts.push({id:'voluntary_'+Date.now(),name,original:amount,remaining:amount,note,date:localToday(),payments:[]});
-    persist();close();render();showToast('Добавлено в добровольные возвраты');
-  };
-  voluntaryMenu.onclick=()=>{listPage.hidden=true;$('debtPeoplePage').hidden=true;$('debtHistoryPage').hidden=true;page.hidden=false;render()};
-  $('openDebtorsPage').addEventListener('click',()=>{page.hidden=true});
-  $('backFromVoluntaryDebt').onclick=()=>{page.hidden=true;listPage.hidden=false};
-  $('voluntaryDebtList').addEventListener('click',e=>{
-    const remove=e.target.closest('[data-voluntary-delete]');
-    if(remove){const debt=(state.voluntaryDebts||[]).find(x=>String(x.id)===String(remove.dataset.voluntaryDelete));if(!debt)return;if(!confirm('Удалить '+debt.name+' из активного списка? История возвратов сохранится, остаток будет удалён.'))return;state.voluntaryDebts=state.voluntaryDebts.filter(x=>String(x.id)!==String(debt.id));persist();render();showToast('Должник удалён из списка');return}
-    const button=e.target.closest('[data-voluntary-pay]');if(!button)return;
-    const debt=(state.voluntaryDebts||[]).find(x=>String(x.id)===String(button.dataset.voluntaryPay));if(!debt)return;
-    $('voluntaryPayHint').textContent=debt.name+' · остаток '+fmt(debt.remaining);
-    $('voluntaryPayAmount').value='';$('voluntaryPayAccount').innerHTML=accountOptions().map(([name,key])=>`<option value="${escapeHtml(key)}">${escapeHtml(name)} · ${fmt(accountBalance(key))}</option>`).join('');
-    payModal.dataset.debtId=debt.id;$('voluntaryPayStatus').classList.remove('show');payModal.hidden=false;
-  });
-  $('voluntaryPaySave').onclick=()=>{
-    const debt=(state.voluntaryDebts||[]).find(x=>String(x.id)===String(payModal.dataset.debtId));if(!debt)return;
-    const amount=Number($('voluntaryPayAmount').value),key=$('voluntaryPayAccount').value;
-    if(!Number.isFinite(amount)||amount<=0){$('voluntaryPayStatus').textContent='Введи сумму больше нуля.';$('voluntaryPayStatus').classList.add('show');return}
-    if(amount>Number(debt.remaining)){$('voluntaryPayStatus').textContent='Сумма больше оставшегося долга.';$('voluntaryPayStatus').classList.add('show');return}
-    if(accountBalance(key)<amount){$('voluntaryPayStatus').textContent='На выбранном счёте недостаточно денег.';$('voluntaryPayStatus').classList.add('show');return}
-    setAccountBalance(key,accountBalance(key)-amount);debt.remaining=Math.max(0,Number(debt.remaining)-amount);
-    debt.payments=Array.isArray(debt.payments)?debt.payments:[];const payment={id:'voluntary_pay_'+Date.now(),name:debt.name,debtId:debt.id,amount,date:localToday(),accountKey:key};debt.payments.push(payment);state.voluntaryDebtHistory=Array.isArray(state.voluntaryDebtHistory)?state.voluntaryDebtHistory:[];state.voluntaryDebtHistory.push(payment);
-    persist();closePay();render();renderDashboard();showToast('Добровольный возврат записан');
-  };
-  render();
+ const list=()=>{if(!Array.isArray(state.voluntaryDebts))state.voluntaryDebts=[];return state.voluntaryDebts};
+ const round=n=>Math.round((Number(n)||0)*100)/100;
+ const uid=p=>p+'_'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+ const paidOf=d=>round((d.payments||[]).reduce((n,p)=>n+(Number(p.amount)||0),0));
+ const remOf=d=>Math.max(0,round((Number(d.amount)||0)-paidOf(d)));
+ const find=id=>list().find(d=>String(d.id)===String(id));
+ const dlabel=v=>typeof debtDateLabel==='function'?debtDateLabel(v):v;
+ let activeId=null,editingId=null,from='landing';
+ const status=(el,msg)=>{el.textContent=msg;el.classList.add('show')};
+
+ function rowMarkup(d){const rem=remOf(d),paid=paidOf(d),pct=d.amount>0?Math.min(100,paid/d.amount*100):0;
+  return '<button type="button" class="vd-row'+(rem<=0?' done':'')+'" data-vd="'+escapeHtml(d.id)+'"><span class="vd-name">'+escapeHtml(d.name)+'</span><b>'+(rem>0?fmt(rem):'Возвращено')+'</b><small>'+(d.date?'с '+escapeHtml(dlabel(d.date))+' · ':'')+'возвращено '+fmt(paid)+' из '+fmt(d.amount)+'</small><span class="vd-bar"><i style="width:'+pct.toFixed(1)+'%"></i></span></button>'}
+ const sorted=()=>[...list()].sort((a,b)=>(remOf(a)>0?0:1)-(remOf(b)>0?0:1)||String(b.date||'').localeCompare(String(a.date||'')));
+ function render(){
+  const total=list().reduce((n,d)=>n+remOf(d),0),note=$('vdLandingNote');
+  if(note){note.hidden=!list().some(d=>remOf(d)>0);$('vdLandingTotal').textContent=fmt(total)}
+  if($('vdSummaryTotal'))$('vdSummaryTotal').textContent=fmt(total);
+  const pl=$('vdPageList');if(pl)pl.innerHTML=list().length?sorted().map(rowMarkup).join(''):'<div class="empty">Пока ничего нет. Нажми «Добавить», чтобы записать долг, который тебе простили.</div>';
+  const pb=$('vdPeopleBlock');if(pb){const active=sorted().filter(d=>remOf(d)>0);pb.innerHTML=active.length?'<div class="vd-block-title"><span>Добровольные возвраты</span><small>не входят в сумму · '+fmt(total)+'</small></div>'+active.map(rowMarkup).join(''):''}
+  document.querySelectorAll('[data-vd]').forEach(r=>r.onclick=()=>openDetail(r.dataset.vd));
+ }
+ window.renderVoluntaryDebts=render;
+
+ /* navigation */
+ const origShow=window.showDebtSubpage;
+ window.showDebtSubpage=function(id){origShow(id);$('debtVoluntaryPage').hidden=id!=='debtVoluntaryPage';if(id==='debtVoluntaryPage')render();const m=document.querySelector('main');if(m)m.scrollTop=0};
+ function openPage(f){from=f;window.showDebtSubpage('debtVoluntaryPage')}
+ $('openVoluntaryDebt').onclick=()=>openPage('landing');
+ $('vdLandingNote').onclick=()=>openPage('landing');
+ $('openVoluntaryPage').onclick=()=>openPage('list');
+ $('vdBack').onclick=()=>{if(from==='list')window.showDebtSubpage('debtListPage');else{$('debtVoluntaryPage').hidden=true;$('debtsLanding').hidden=false;const m=document.querySelector('main');if(m)m.scrollTop=0}};
+ const origBackList=$('backFromDebtList').onclick;
+ const origRender=window.renderDebts;
+ window.renderDebts=function(){origRender.apply(this,arguments);render()};
+ const origShowPage=window.showPage;
+ window.showPage=function(id){if(id==='debts'){$('debtVoluntaryPage').hidden=true;['debtListPage','debtPeoplePage','debtHistoryPage'].forEach(x=>$(x).hidden=true);$('debtsLanding').hidden=false}return origShowPage.apply(this,arguments)};
+
+ /* form */
+ function fillNames(){const names=new Set();(state.debtContacts||[]).forEach(c=>c.name&&names.add(c.name));list().forEach(d=>d.name&&names.add(d.name));$('vdNames').innerHTML=[...names].map(n=>'<option value="'+escapeHtml(n)+'"></option>').join('')}
+ function openForm(id){editingId=id||null;const d=id?find(id):null;fillNames();$('vdFormStatus').classList.remove('show');$('vdFormTitle').textContent=d?'Изменить добровольный долг':'Добровольный возврат';$('vdFormSave').textContent=d?'Сохранить изменения':'Добавить';$('vdFormDelete').hidden=!d;$('vdName').value=d?d.name:'';$('vdAmount').value=d?d.amount:'';$('vdDate').value=d?d.date||'':localToday();$('vdNote').value=d?d.note||'':'';$('vdFormModal').hidden=false;setTimeout(()=>$(d?'vdAmount':'vdName').focus(),0)}
+ const closeForm=()=>{$('vdFormModal').hidden=true;editingId=null};
+ $('vdAddBtn').onclick=()=>openForm();
+ $('vdFormClose').onclick=closeForm;$('vdFormCancel').onclick=closeForm;
+ $('vdFormSave').onclick=()=>{
+  const name=$('vdName').value.trim(),amount=round($('vdAmount').value),date=$('vdDate').value||localToday(),note=$('vdNote').value.trim();
+  if(!name||!(amount>0))return status($('vdFormStatus'),'Укажи имя и сумму больше нуля.');
+  if(editingId){const d=find(editingId);if(!d)return closeForm();if(amount+0.001<paidOf(d))return status($('vdFormStatus'),'Сумма не может быть меньше уже возвращённой ('+fmt(paidOf(d))+').');d.name=name;d.amount=amount;d.date=date;d.note=note;showToast('Изменения сохранены')}
+  else{list().push({id:uid('vd'),name,amount,date,note,createdAt:new Date().toISOString(),payments:[]});showToast('Добровольный долг добавлен')}
+  persist();closeForm();render();if(activeId&&!$('vdDetailModal').hidden)openDetail(activeId);if(window.renderHistory)renderHistory();
+ };
+ $('vdFormDelete').onclick=()=>{const d=find(editingId);if(!d)return;const has=(d.payments||[]).length;openOperationConfirm(has?'Удалить добровольный долг «'+d.name+'»? Все его возвраты будут отменены, деньги вернутся на счета.':'Удалить добровольный долг «'+d.name+'»?',()=>{const cur=find(d.id);if(!cur)return;for(const p of cur.payments||[])if(!restoreMoney(p))return;state.voluntaryDebts=list().filter(x=>x.id!==cur.id);persist();closeForm();$('vdDetailModal').hidden=true;activeId=null;render();renderDashboard();if(window.renderHistory)renderHistory();showToast('Добровольный долг удалён')})};
+
+ /* detail */
+ function openDetail(id){const d=find(id);if(!d)return;activeId=id;const rem=remOf(d);$('vdDetailName').textContent=d.name;$('vdDetailSub').textContent=[d.date?'с '+dlabel(d.date):'','сумма '+fmt(d.amount),d.note].filter(Boolean).join(' · ');$('vdDetailRemaining').textContent=fmt(rem);
+  $('vdDetailRows').innerHTML=(d.payments||[]).length?[...d.payments].reverse().map(p=>'<div class="vd-pay-row"><div><span>'+escapeHtml(dlabel(p.date)||'Без даты')+'</span><small>'+escapeHtml(p.accountName||'')+(p.comment?' · '+escapeHtml(p.comment):'')+'</small></div><b>'+fmt(p.amount)+'</b><button type="button" class="secondary" data-vd-cancel="'+escapeHtml(p.id)+'">Отменить</button></div>').join(''):'<div class="vd-pay-empty">Возвратов пока нет.</div>';
+  $('vdDetailPay').disabled=rem<=0;$('vdDetailModal').hidden=false;
+  $('vdDetailRows').querySelectorAll('[data-vd-cancel]').forEach(b=>b.onclick=()=>cancelPayment(d.id,b.dataset.vdCancel));
+ }
+ const closeDetail=()=>{$('vdDetailModal').hidden=true;activeId=null};
+ $('vdDetailClose').onclick=closeDetail;
+ $('vdDetailEdit').onclick=()=>{const id=activeId;closeDetail();openForm(id)};
+ $('vdDetailPay').onclick=()=>openPay(activeId);
+ window.openVoluntaryDebtDetail=openDetail;
+
+ /* payment */
+ function restoreMoney(p){const key=p.accountKey;if(String(key).startsWith('custom:')&&!(state.customAccounts||[]).some(a=>a.id===String(key).slice(7))){showToast('Счёт «'+(p.accountName||key)+'» удалён, вернуть деньги нельзя');return false}setAccountBalance(key,accountBalance(key)+(Number(p.amount)||0));return true}
+ function cancelPayment(debtId,payId){const d=find(debtId),p=d&&(d.payments||[]).find(x=>String(x.id)===String(payId));if(!p)return;openOperationConfirm('Отменить возврат '+fmt(p.amount)+'? Деньги вернутся на счёт «'+(p.accountName||p.accountKey)+'».',()=>{const dd=find(debtId),pp=dd&&(dd.payments||[]).find(x=>String(x.id)===String(payId));if(!pp||!restoreMoney(pp))return;dd.payments=dd.payments.filter(x=>String(x.id)!==String(payId));persist();render();renderDashboard();if(window.renderHistory)renderHistory();openDetail(debtId);showToast('Возврат отменён')})}
+ function openPay(id){const d=find(id);if(!d)return;const rem=remOf(d);$('vdPaySub').textContent=d.name+' · осталось '+fmt(rem);$('vdPayAccount').innerHTML=accountOptions().map(([n,k])=>'<option value="'+escapeHtml(k)+'">'+escapeHtml(n)+' · '+fmt(accountBalance(k))+'</option>').join('');$('vdPayAmount').value='';$('vdPayAmount').max=rem;$('vdPayDate').value=localToday();$('vdPayComment').value='';$('vdPayStatus').classList.remove('show');$('vdPayModal').hidden=false;setTimeout(()=>$('vdPayAmount').focus(),0)}
+ const closePay=()=>{$('vdPayModal').hidden=true};
+ $('vdPayClose').onclick=closePay;$('vdPayCancel').onclick=closePay;
+ $('vdPaySave').onclick=()=>{const d=find(activeId);if(!d)return closePay();const amount=round($('vdPayAmount').value),key=$('vdPayAccount').value,date=$('vdPayDate').value||localToday(),rem=remOf(d);
+  if(!(amount>0))return status($('vdPayStatus'),'Введи сумму больше нуля.');
+  if(amount>rem+0.001)return status($('vdPayStatus'),'Сумма больше остатка ('+fmt(rem)+').');
+  if(amount>accountBalance(key)+0.001)return status($('vdPayStatus'),'На выбранном счёте недостаточно денег.');
+  const acc=accountOptions().find(a=>a[1]===key);
+  setAccountBalance(key,accountBalance(key)-amount);
+  d.payments=d.payments||[];d.payments.push({id:uid('vdp'),amount,date,accountKey:key,accountName:acc?acc[0]:key,comment:$('vdPayComment').value.trim(),createdAt:new Date().toISOString()});
+  persist();closePay();render();renderDashboard();if(window.renderHistory)renderHistory();openDetail(d.id);showToast(remOf(d)<=0?'Долг возвращён полностью':'Возврат записан')};
+ ['vdFormModal','vdDetailModal','vdPayModal'].forEach(id=>$(id).addEventListener('click',e=>{if(e.target===$(id))$(id).hidden=true}));
+
+ /* history integration */
+ const origOps=window.getUnifiedOperations;
+ window.getUnifiedOperations=function(){const ops=origOps.apply(this,arguments);list().forEach(d=>(d.payments||[]).forEach(p=>ops.push({id:'vd_'+p.id,type:'debtPayment',date:p.date||'',createdAt:p.createdAt||'',amount:Number(p.amount)||0,title:'Добровольный возврат · '+d.name,detail:(p.accountName||'')+(p.comment?' · '+p.comment:''),recordId:p.id,debtId:d.id,voluntary:true,accountKey:p.accountKey||'',accountName:p.accountName||'',categoryName:''})));return ops};
+ const origTappable=window.operationTappable;
+ window.operationTappable=function(o){return o&&o.voluntary?true:origTappable.apply(this,arguments)};
+ const hl=$('unifiedHistoryList');
+ const voluntaryRow=e=>{const row=e.target.closest('.operation-row[data-tap]');if(!row||row.dataset.opType!=='debtPayment')return null;for(const d of list())if((d.payments||[]).some(p=>String(p.id)===row.dataset.opId))return d;return null};
+ hl.addEventListener('click',e=>{const d=voluntaryRow(e);if(d){e.stopPropagation();openDetail(d.id)}},true);
+ hl.addEventListener('keydown',e=>{if(e.key!=='Enter'&&e.key!==' ')return;const d=voluntaryRow(e);if(d){e.preventDefault();e.stopPropagation();openDetail(d.id)}},true);
+ render();
 })();
 </script>
 <script>
