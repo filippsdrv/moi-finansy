@@ -421,7 +421,7 @@ button.primary{background:linear-gradient(100deg,#2f82ff,#70aaff);color:#07152b;
 @media(max-width:620px){body:has(#home.active) main{overflow-x:hidden;overflow-y:auto;overscroll-behavior-y:contain;touch-action:pan-y}body:has(#home.active) #home{max-height:none;overflow:visible}}
 </style></head><body>
 <span id="headerSubtitle" class="sr-only">Счета и финансовые цели в одном месте.</span>
-<main><nav class="tabs" aria-label="Основная навигация"><button class="tab active" data-page="home"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3.5 10 8.5-6.7 8.5 6.7v9.2a1.3 1.3 0 0 1-1.3 1.3h-4.2v-6h-6v6H4.8a1.3 1.3 0 0 1-1.3-1.3z"/></svg></span><span>Главная</span></button><button class="tab" data-page="debts"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9.2 14.8 5.6-5.6"/><path d="M7.2 16.8H6a4.2 4.2 0 0 1 0-8.4h4"/><path d="M16.8 7.2H18a4.2 4.2 0 0 1 0 8.4h-4"/></svg></span><span>Долги</span></button><button class="tab" data-page="history"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5a8.5 8.5 0 1 1-6.2 2.7"/><path d="M3.5 4.5v4.2h4.2"/><path d="M12 7v5l3.2 1.9"/></svg></span><span>История</span></button><button class="tab" data-page="analytics" aria-label="Аналитика" title="Аналитика"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h16"/><path d="M7 20v-6M12 20V6M17 20v-9"/></svg></span><span>Аналитика</span></button><button class="tab" data-page="parameters" aria-label="Настройки" title="Настройки"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="2"/><circle cx="15" cy="12" r="2"/><circle cx="10" cy="18" r="2"/></svg></span><span class="nav-label-settings">Настройки</span></button></nav>
+<main><div id="artBg" aria-hidden="true"></div><nav class="tabs" aria-label="Основная навигация"><button class="tab active" data-page="home"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3.5 10 8.5-6.7 8.5 6.7v9.2a1.3 1.3 0 0 1-1.3 1.3h-4.2v-6h-6v6H4.8a1.3 1.3 0 0 1-1.3-1.3z"/></svg></span><span>Главная</span></button><button class="tab" data-page="history"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6h14M5 12h14M5 18h9"/></svg></span><span>История</span></button><button type="button" class="tab-add" id="navAdd" aria-label="Добавить операцию" aria-haspopup="dialog"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button><button class="tab" data-page="debts"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h11l-3-3"/><path d="M17 17H6l3 3"/></svg></span><span>Долги</span></button><button class="tab" data-page="analytics" aria-label="Аналитика" title="Аналитика"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5v8.5h8.5A8.5 8.5 0 1 1 12 3.5z"/><path d="M15.5 3.8a8.5 8.5 0 0 1 4.7 4.7h-4.7z"/></svg></span><span>Аналитика</span></button><button class="tab" data-page="parameters" aria-label="Настройки" title="Настройки"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 3v2.5M12 18.5V21M3 12h2.5M18.5 12H21M5.6 5.6l1.8 1.8M16.6 16.6l1.8 1.8M18.4 5.6l-1.8 1.8M7.4 16.6l-1.8 1.8"/></svg></span><span class="nav-label-settings">Настройки</span></button></nav>
 <section id="home" class="page active">
 <section class="dashboard-intro" aria-label="Обзор личных финансов">
   <div class="intro-copy"><span class="intro-kicker">Персональная финансовая система</span><h1>Мои <span>финансы</span></h1><p>Полный контроль сегодня<br>для больших целей завтра</p></div>
@@ -429,28 +429,21 @@ button.primary{background:linear-gradient(100deg,#2f82ff,#70aaff);color:#07152b;
   <svg class="intro-chart" viewBox="0 0 720 170" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="introLine" x1="0" x2="1"><stop offset="0" stop-color="#ff5577"/><stop offset=".44" stop-color="#ff5577"/><stop offset=".53" stop-color="#18e5a5"/><stop offset="1" stop-color="#18e5a5"/></linearGradient><linearGradient id="introTrail" x1="0" x2="1"><stop offset="0" stop-color="#ff426b" stop-opacity="0"/><stop offset="1" stop-color="#ff426b" stop-opacity=".22"/></linearGradient></defs><path class="intro-trail" d="M0 100 C90 90 145 124 220 112 S280 118 324 139" fill="none" stroke="url(#introTrail)" stroke-width="2"/><path class="intro-main-line" d="M0 101 C90 100 145 122 220 111 C270 104 302 145 355 135 C420 124 455 91 515 87 C590 80 625 26 720 14" fill="none" stroke="url(#introLine)" stroke-width="3.5" vector-effect="non-scaling-stroke"/><g class="intro-drops"><path d="M220 111V170M355 135V170M515 87V170M650 39V170M695 18V170"/><circle cx="220" cy="111" r="4"/><circle cx="355" cy="135" r="6"/><circle cx="515" cy="87" r="5"/><circle cx="650" cy="39" r="5"/><circle cx="695" cy="18" r="7"/></g></svg>
   <div class="home-financial-mode" id="homeFinancialModeStatus" aria-live="polite"></div>
 </section>
-<section class="financial-health" aria-label="Быстрая оценка финансового состояния">
-
-<div class="health-grid">
-<div class="health-metric health-total"><span>Общий баланс</span><b id="dashTotalBalance">0 ₽</b></div>
-<div class="health-metric health-buffer"><span>В буфере</span><b id="dashBuffer">0 ₽</b></div>
-<div class="health-metric"><span>Накоплено на аренду</span><b id="dashRent">0 ₽</b></div>
-<div class="health-metric health-debt" id="dashReserveDebtTile" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Открыть расшифровку долга резервам" title="Нажмите, чтобы посмотреть состав долга"><span>Долг резервам</span><b id="dashReserveDebt">0 ₽</b></div>
-<div class="health-metric"><span>В подушке</span><b id="dashCushion">0 ₽</b></div>
-</div>
+<section class="hm-top" aria-label="Главные счета">
+ <div class="hm-hero"><div class="hm-hero-main"><span>Можно тратить сейчас</span><b id="dashBuffer">0 ₽</b></div><div class="hm-hero-side"><span>Общий баланс</span><b id="dashTotalBalance">0 ₽</b></div></div>
+ <div class="hm-pair">
+  <button type="button" class="hm-tile hm-rent" data-go="accounts"><span>Аренда</span><b id="dashRent">0 ₽</b><i class="hm-bar"><u id="dashRentBar"></u></i><small id="dashRentProg"></small></button>
+  <button type="button" class="hm-tile hm-cushion" data-go="accounts"><span>Подушка</span><b id="dashCushion">0 ₽</b><small>запас на чёрный день</small></button>
+ </div>
+ <div class="hm-debt health-debt" id="dashReserveDebtTile" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Открыть расшифровку долга резервам"><span>Долг резервам</span><b id="dashReserveDebt">0 ₽</b></div>
 </section>
-<section class="month-flow" aria-label="Доходы и расходы за текущий месяц">
+<button class="hm-all" id="openAccountsStack" type="button" aria-label="Открыть все счета"><span>Все счета</span><small id="dashAccountCount">10 счетов</small><b id="dashAccountsTotal">0 ₽</b><i aria-hidden="true">›</i></button>
+<section class="month-flow hm-flow" aria-label="Доходы и расходы за текущий месяц">
   <div class="month-flow-item income-flow" id="dashMonthIncomeTile" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Показать доходы за месяц"><span id="dashMonthIncomeLabel">Доход за месяц</span><b id="dashMonthIncome">0 ₽</b></div>
   <div class="month-flow-item expense-flow" id="dashMonthExpenseTile" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Показать расходы за месяц"><span id="dashMonthExpenseLabel">Расход за месяц</span><b id="dashMonthExpense">0 ₽</b></div>
 </section>
 <div id="monthSummaryModal" class="expense-modal month-summary-modal" hidden aria-hidden="true"><section class="expense-sheet month-summary-sheet" role="dialog" aria-modal="true" aria-labelledby="monthSummaryTitle"><div class="expense-head"><div><h2 id="monthSummaryTitle">Доходы за месяц</h2><small id="monthSummaryPeriod"></small></div><button type="button" class="expense-close" id="monthSummaryClose" aria-label="Закрыть">×</button></div><div class="month-summary-total"><span id="monthSummaryTotalLabel">Всего доходов</span><strong id="monthSummaryTotal">0 ₽</strong></div><section class="month-summary-section"><h3 id="monthSummaryGroupTitle">По источникам</h3><div id="monthSummaryGroups"></div></section><section class="month-summary-section"><h3 id="monthSummaryOperationsTitle">Операции месяца</h3><div id="monthSummaryOperations"></div></section></section></div>
-<div class="dash-actions"><button class="dash-action income" id="dashAddIncome" type="button">Доход</button><button class="dash-action transfer" id="dashAddTransfer" type="button">Перевод</button><button class="dash-action expense" id="dashAddExpense" type="button">Расход</button></div>
-<button class="accounts-stack" id="openAccountsStack" type="button" aria-label="Открыть все счета">
-  <span class="stack-visual" aria-hidden="true"><i></i><i></i><i></i><b>₽</b></span>
-  <span class="stack-copy"><strong>Все счета</strong><small id="dashAccountCount">10 счетов</small></span>
-  <span class="stack-total" id="dashAccountsTotal">0 ₽</span>
-  <span class="stack-chevron" aria-hidden="true">›</span>
-</button>
+<div class="dash-actions hm-actions"><button class="dash-action transfer" id="dashAddTransfer" type="button">Перевод</button><button class="dash-action income" id="dashAddIncome" type="button">Доход</button><button class="dash-action expense" id="dashAddExpense" type="button">Расход</button></div>
 </section>
 <section id="accounts" class="page accounts-page">
  <div class="acc-top"><button type="button" class="acc-back" id="accountsBack" aria-label="Назад">←</button><h2>Счета</h2></div>
@@ -2157,7 +2150,7 @@ body{background-image:linear-gradient(180deg,#101a30 0%,#0e172a 18%,rgba(8,15,29
 @media(max-width:620px){#home .dashboard-intro{height:clamp(150px,50vw,240px)!important;min-height:150px!important;max-height:240px!important;margin:0 0 10px!important;padding:0!important;overflow:hidden!important;border:0!important;border-radius:0!important;background:transparent url("moi-finansy-header-art.png") center 20%/cover no-repeat!important;box-shadow:none!important}#home .intro-copy,#home .intro-chart,#home .intro-gain{display:none!important}body:has(#home.active){background-image:linear-gradient(180deg,#101a30 0%,#0e172a 90px,#080f1d 260px)!important;background-size:100% 260px!important;background-position:center top!important;background-repeat:no-repeat!important;background-attachment:fixed!important}}
 @media(min-width:621px){#home .dashboard-intro{height:clamp(190px,28vw,260px)!important;min-height:0!important;margin:0 0 12px!important;padding:0!important;overflow:hidden!important;border:0!important;border-radius:0!important;background:transparent url("moi-finansy-header-art.png") center 20%/cover no-repeat!important;box-shadow:none!important}#home .intro-copy,#home .intro-chart,#home .intro-gain{display:none!important}body:has(#home.active){background-image:linear-gradient(180deg,#101a30 0%,#0e172a 110px,#080f1d 300px)!important;background-size:100% 300px!important;background-position:center top!important;background-repeat:no-repeat!important;background-attachment:fixed!important}}
 </style><style id="shared-art-background-all-pages">
-body,body:has(#home.active){background-color:#080f1d!important;background-image:linear-gradient(180deg,transparent 62%,#080f1d 100%),linear-gradient(180deg,rgba(8,15,29,.12) 0%,transparent 16%,transparent 68%,rgba(8,15,29,.35) 87%,#080f1d 100%),url("moi-finansy-header-art.png")!important;background-size:100% var(--art-h),100% 50vw,100% auto!important;background-position:center top,center top!important;background-repeat:no-repeat,no-repeat!important;background-attachment:fixed,fixed!important}
+body,body:has(#home.active){background-color:#080f1d!important;background-image:linear-gradient(180deg,rgba(8,15,29,.12) 0%,transparent 16%,transparent 68%,rgba(8,15,29,.35) 87%,#080f1d 100%),url("moi-finansy-header-art.png")!important;background-size:100% 50vw,100% auto!important;background-position:center top,center top!important;background-repeat:no-repeat,no-repeat!important;background-attachment:fixed,fixed!important}
 #home .dashboard-intro{background:transparent!important}
 </style><style id="debts-page-compact-center">
 #debts{width:min(100%,430px)!important;margin-left:auto!important;margin-right:auto!important}
@@ -2223,7 +2216,7 @@ body,body:has(#home.active){background-color:#080f1d!important;background-image:
 </style><style id="home-content-lowered-below-mode">
 @media(max-width:620px){body:has(#home.active) #home>.financial-health{margin-top:14px!important}}
 </style><style id="settings-pages-analytics">
-:root{--art-h:33.2018vw}
+:root{--art-h:clamp(150px,50vw,240px)}
 .tabs{grid-template-columns:repeat(5,minmax(0,1fr))}
 @media(max-width:620px){
 html:has(#parameters.active),html:has(#analytics.active){height:100%;overflow:hidden}
@@ -2963,22 +2956,125 @@ body.adv-off .acc-tile .acc-debt{display:none}
  render();
 })();
 </script>
+<style id="home-redesign-style">
+.hm-top{display:flex;flex-direction:column;gap:9px;margin:12px 0 0}
+.hm-hero{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;padding:16px 18px;border:1px solid #33507a;border-radius:22px;background:linear-gradient(145deg,#1d3558,#101c30 72%)}
+.hm-hero span{display:block;font-size:12px;color:#a7bbd8;margin-bottom:4px}
+.hm-hero-main b{display:block;font-size:clamp(30px,9vw,38px);font-weight:750;letter-spacing:-.6px;line-height:1.05;color:#fff}
+.hm-hero-side{text-align:right;min-width:0}
+.hm-hero-side span{font-size:10px;color:#7f93b3}
+.hm-hero-side b{font-size:15px;font-weight:650;color:#c9d8ef;white-space:nowrap}
+.hm-pair{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.hm-tile{position:relative;display:flex;flex-direction:column;gap:5px;min-height:92px;padding:12px 14px;text-align:left;border:1px solid #2b4466;border-radius:18px;background:linear-gradient(150deg,#16263f,#0e1828 75%);color:var(--text);font:inherit;cursor:pointer;overflow:hidden}
+.hm-tile:before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:3px;border-radius:0 3px 3px 0;background:var(--c)}
+.hm-rent{--c:#79a8e0}.hm-cushion{--c:#6fc7a0;background:linear-gradient(150deg,#14302d,#0e1828 75%);border-color:#2b5650}
+.hm-tile span{font-size:12px;color:#c3d1e8}
+.hm-tile b{font-size:21px;font-weight:700;letter-spacing:-.3px;white-space:nowrap}
+.hm-tile small{font-size:10px;color:#8ea0bd}
+.hm-tile small.ok{color:#7ddba8}
+.hm-bar{display:block;height:5px;border-radius:5px;background:#ffffff14;overflow:hidden;margin-top:2px}
+.hm-bar u{display:block;height:100%;width:0;border-radius:5px;background:var(--c);text-decoration:none}
+.hm-debt{display:flex;align-items:center;justify-content:space-between;padding:9px 14px;border:1px solid #4a3d56;border-radius:14px;background:#1b1626;cursor:pointer}
+.hm-debt span{font-size:12px;color:#c9b6d8}.hm-debt b{font-size:14px;color:#f0dcff}
+body.adv-off .hm-debt{display:none!important}
+.hm-all{display:flex;align-items:center;gap:8px;width:100%;margin:9px 0 0;padding:11px 14px;border:1px solid #2a3b55;border-radius:14px;background:#0e1626;color:var(--text);font:inherit;cursor:pointer}
+.hm-all span{font-size:13px;font-weight:600}
+.hm-all small{flex:1;text-align:left;font-size:11px;color:#7f93b3}
+.hm-all b{font-size:13px;color:#c9d8ef;white-space:nowrap}
+.hm-all i{font-style:normal;font-size:20px;color:#7f93b3;line-height:1}
+.hm-flow.month-flow{display:grid!important;grid-template-columns:1fr 1fr!important;gap:8px!important;margin:9px 0 0!important;padding:0!important;border:0!important;background:none!important;box-shadow:none!important}
+.hm-flow .month-flow-item{display:flex;align-items:baseline;justify-content:space-between;gap:6px;padding:9px 11px!important;border-radius:13px}
+.hm-flow .month-flow-item span{margin:0!important;font-size:10px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hm-flow .month-flow-item b{font-size:14px!important;white-space:nowrap}
+.dash-actions.hm-actions{display:grid!important;grid-template-columns:.8fr 1fr 1.5fr!important;gap:9px!important;margin:auto 0 0!important;padding-top:14px;position:sticky;bottom:0}
+.hm-actions .dash-action{min-height:54px;padding:10px 6px!important;font-size:14px!important;border-radius:16px}
+.hm-actions .dash-action.transfer{min-height:46px;align-self:end;font-size:12px!important;opacity:.92}
+.hm-actions .dash-action.expense{min-height:66px;font-size:18px!important;font-weight:750}
+#home:after{display:none!important}
+/* flat bottom navigation */
+.tabs{left:0!important;right:0!important;bottom:0!important;width:100%!important;max-width:780px!important;margin:0 auto!important;min-height:58px;padding:4px 4px calc(4px + env(safe-area-inset-bottom))!important;gap:0!important;border-radius:0!important;border-width:1px 0 0!important;border-color:#22324a!important;background:#0a111d!important;box-shadow:0 -6px 22px #0007!important}
+.tab{flex-direction:column!important;gap:2px!important;min-height:50px!important;padding:6px 2px 4px!important;border:0!important;border-radius:10px!important;background:transparent!important;box-shadow:none!important;color:#7a8ca8!important}
+.tab>span:not(.nav-icon){position:static!important;width:auto!important;height:auto!important;margin:0!important;clip:auto!important;overflow:visible!important;font-size:10px!important;font-weight:600;line-height:1.1;white-space:nowrap!important}
+.tab .nav-icon{width:26px!important;height:26px!important;background:none!important;box-shadow:none!important;color:inherit!important;filter:none!important}
+.tab .nav-icon svg{width:23px!important;height:23px!important;stroke-width:1.7!important}
+.tab.active{color:#6fb0ff!important;background:transparent!important}
+.tab.active:before{content:"";position:absolute;top:-4px;left:28%;right:28%;height:3px;border-radius:0 0 3px 3px;background:#4d9bff}
+@media(max-width:620px){
+html:has(#home.active){height:100%;overflow:hidden}
+body:has(#home.active){height:100dvh!important;overflow:hidden!important;padding-bottom:0!important}
+body:has(#home.active) main{position:fixed!important;top:0;left:0;right:0;bottom:0;height:auto!important;max-width:780px;margin:0 auto!important;overflow-x:hidden!important;overflow-y:auto!important;overscroll-behavior-y:contain;padding:0 15px calc(78px + env(safe-area-inset-bottom))!important}
+#home.active{display:flex!important;flex-direction:column;height:auto!important;min-height:calc(100dvh - 84px - env(safe-area-inset-bottom))!important;overflow:visible!important;justify-content:flex-start!important}
+}
+.nav-label-settings{display:inline!important;font-size:10px!important;letter-spacing:0!important}
+</style>
+<script id="home-redesign-script">
+(function(){
+ function prog(){
+  let t=0;try{t=Math.max(0,Number(currentVersion().params.rentTarget)||0)}catch(e){}
+  const v=Number((state.balances||{}).rent)||0,bar=$('dashRentBar'),tx=$('dashRentProg');if(!bar||!tx)return;
+  bar.style.width=(t>0?Math.min(100,Math.round(v/t*100)):0)+'%';
+  tx.className=t>0&&v>=t?'ok':'';tx.textContent=t>0?(v>=t?'накоплена ✓':fmt(v)+' из '+fmt(t)):'';
+ }
+ const orig=window.renderDashboard;
+ window.renderDashboard=function(){const r=orig.apply(this,arguments);prog();return r};
+ document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.go)));
+ prog();
+})();
+</script>
+<style id="nav-add-style">
+.tabs{grid-template-columns:1fr 1fr 70px 1fr 1fr 1fr!important;align-items:end}
+.tab-add{position:relative;justify-self:center;align-self:start;width:56px;height:56px;margin-top:-22px;display:grid;place-items:center;padding:0;border:4px solid #080f1d;border-radius:50%;background:linear-gradient(145deg,#2f7bf0,#5aa2ff);color:#fff;cursor:pointer;box-shadow:0 6px 18px #2f7bf055}
+.tab-add svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round}
+.tab-add:active{transform:scale(.94)}
+.dash-actions.hm-actions{display:none!important}
+.add-menu{position:fixed;inset:0;z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px;background:#04080fcc}
+.add-menu[hidden]{display:none}
+.add-menu-sheet{width:min(100%,320px);display:flex;flex-direction:column;gap:10px;padding:16px;border:1px solid #2b3d5a;border-radius:22px;background:#0e1626;box-shadow:0 20px 50px #000a}
+.add-menu-sheet button{border:1px solid transparent;border-radius:16px;color:#fff;font:inherit;font-weight:700;cursor:pointer}
+.add-menu-sheet .am-exp{min-height:68px;font-size:20px;background:linear-gradient(135deg,#b92f45,#f05263);border-color:#ff6978}
+.add-menu-sheet .am-inc{min-height:54px;font-size:16px;background:linear-gradient(135deg,#147d61,#22b98b);border-color:#36c79b}
+.add-menu-sheet .am-tr{min-height:46px;font-size:14px;background:linear-gradient(135deg,#1f5fd1,#4f9bff);border-color:#6aaaff}
+</style>
+<div class="add-menu" id="addMenu" hidden><div class="add-menu-sheet" role="dialog" aria-modal="true" aria-label="Новая операция"><button type="button" class="am-exp" data-do="dashAddExpense">Расход</button><button type="button" class="am-inc" data-do="dashAddIncome">Доход</button><button type="button" class="am-tr" data-do="dashAddTransfer">Перевод</button></div></div>
+<script id="nav-add-script">
+(function(){
+ const m=document.getElementById('addMenu'),open=()=>{m.hidden=false},close=()=>{m.hidden=true};
+ document.getElementById('navAdd').addEventListener('click',open);
+ m.addEventListener('click',e=>{if(e.target===m){close();return}const b=e.target.closest('[data-do]');if(!b)return;close();const t=document.getElementById(b.dataset.do);if(t)setTimeout(()=>t.click(),0)});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!m.hidden)close()});
+})();
+</script>
+<style id="header-art-style">
+:root{--art-h:calc(min(100vw,780px)/3.012)}
+body,body:has(#home.active),body:has(#accounts.active),body:has(#distribution.active),body:has(#debts.active),body:has(#analytics.active),body:has(#parameters.active),body:has(#history.active){background-image:none!important;background-color:#080f1d!important}
+#artBg{position:absolute;z-index:-1;left:0;right:0;top:0;height:var(--art-h);pointer-events:none;background:url("moi-finansy-header-art.png") center top/100% auto no-repeat;-webkit-mask-image:linear-gradient(180deg,#000 0,#000 62%,transparent 100%);mask-image:linear-gradient(180deg,#000 0,#000 62%,transparent 100%)}
+@media(max-width:620px){
+body:has(#home.active) main,body:has(#accounts.active) main,body:has(#distribution.active) main,body:has(#debts.active) main,body:has(#analytics.active) main,body:has(#parameters.active) main,body:has(#history.active) main{top:0!important;padding-top:calc(var(--art-h) + 8px)!important}
+body:has(#home.active) main{padding-top:0!important}
+#artBg{left:0;right:0;margin:0 -15px}
+#home .dashboard-intro{height:var(--art-h)!important;min-height:0!important;max-height:none!important;margin:0 0 66px!important;background:none!important;overflow:visible!important}
+#home .home-financial-mode{top:calc(100% + 4px)!important;bottom:auto!important;left:0!important;right:0!important;transform:none!important}
+}
+</style>
 <script>
 (function desktopPhonePreview(){
-  const params = new URLSearchParams(window.location.search);
-  if (params.has('phonePreview') || window.top !== window || !window.matchMedia('(min-width: 700px)').matches) return;
-  const previewUrl = new URL(window.location.href);
-  previewUrl.searchParams.set('phonePreview', '1');
-  previewUrl.hash = '';
-  document.body.innerHTML = `
-    <div style="height:100vh;min-height:0;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:8px 16px;background:radial-gradient(ellipse at 50% 0%,#202d45 0,transparent 48%),#0e1014;color:#929baa;font:500 11px Montserrat,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;overflow:hidden;">
-      <div style="flex:0 0 auto;letter-spacing:1.4px;text-transform:uppercase;">Предпросмотр · iPhone 13 Pro</div>
-      <div style="flex:0 1 auto;min-height:0;padding:7px;border:1px solid #343b49;border-radius:38px;background:linear-gradient(145deg,#424957,#111318 34%,#292e38);box-shadow:0 16px 48px rgba(0,0,0,.45),inset 0 0 0 1px rgba(255,255,255,.08);line-height:0;">
-        <iframe title="Предпросмотр приложения на iPhone 13 Pro" src="${previewUrl.href}" style="display:block;width:min(390px, calc((100vh - 74px) * 0.462));height:min(844px, calc(100vh - 74px));border:0;border-radius:31px;background:#0e1014;overflow:hidden;" loading="eager"></iframe>
+  const params=new URLSearchParams(window.location.search);
+  if(params.has('phonePreview')||!/^(https?|file):$/.test(location.protocol))return;
+  const W=390,H=844,PAD=7,wide=()=>window.innerWidth>430;
+  if(!wide())return;
+  const url=new URL(window.location.href);url.searchParams.set('phonePreview','1');url.hash='';
+  document.body.innerHTML=`<div id="pp-stage" style="position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 0%,#202d45 0,transparent 48%),#0e1014;color:#929baa;font:500 11px Montserrat,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;overflow:hidden">
+    <div id="pp-box" style="flex:none;display:flex;flex-direction:column;align-items:center;gap:8px;transform-origin:center center">
+      <div style="letter-spacing:1.4px;text-transform:uppercase">Предпросмотр · iPhone 13 Pro</div>
+      <div style="padding:${PAD}px;border:1px solid #343b49;border-radius:46px;background:linear-gradient(145deg,#424957,#111318 34%,#292e38);box-shadow:0 16px 48px rgba(0,0,0,.45),inset 0 0 0 1px rgba(255,255,255,.08);line-height:0">
+        <iframe title="Предпросмотр на iPhone 13 Pro" src="${url.href}" style="display:block;width:${W}px;height:${H}px;border:0;border-radius:39px;background:#080f1d"></iframe>
       </div>
-      <div style="flex:0 0 auto;color:#6f7888;font-size:10px;text-align:center;">390 × 844 · мобильный интерфейс</div>
-    </div>`;
-  document.body.style.cssText = 'margin:0;padding:0;height:100vh;min-height:0;overflow:hidden;background:#0e1014;';
-})();;
+      <div style="color:#6f7888;font-size:10px">390 × 844 · мобильный интерфейс</div>
+    </div></div>`;
+  document.body.style.cssText='margin:0;padding:0;overflow:hidden;background:#0e1014;height:100vh';
+  const box=document.getElementById('pp-box');
+  const fit=()=>{const k=Math.min(1,(window.innerHeight-12)/(H+2*PAD+50),(window.innerWidth-12)/(W+2*PAD+2));box.style.transform='scale('+k+')'};
+  fit();window.addEventListener('resize',fit);
+})();
 </script>
 </body></html>
